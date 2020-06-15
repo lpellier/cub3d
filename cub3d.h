@@ -55,7 +55,7 @@ typedef struct	data_s
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	// t_img 	img;
+	t_img 	img;
 }		data_t;
 
 typedef struct	game_s
@@ -93,7 +93,7 @@ int				max(int x, int y);
 
 // Engine functions
 
-// void putVerticalLineToImage(data_t *data, int x, int drawStart, int drawEnd, int color);
+void putVerticalLineToImage(data_t *data, int x, int drawStart, int drawEnd, int color);
 
 void raycasting(data_t data, state_t *state, int **map, int width, int height);
 

@@ -2,6 +2,8 @@
 
 void raycasting(data_t data, state_t *state, int **worldMap, int width, int height)
 {
+	data.img.img_ptr = mlx_new_image(data.mlx_ptr, width, height);
+	data.img.data = (int *)mlx_get_data_addr(data.img.img_ptr, &data.img.bpp, &data.img.size_l, &data.img.endian);
     for (int x = 0; x < width; x++)
 	{
 		double cameraX = 2 * x / (double)width - 1;
@@ -82,17 +84,19 @@ void raycasting(data_t data, state_t *state, int **worldMap, int width, int heig
 		else if (worldMap[mapX][mapY] == 2)
 			color = 1000000;
         if (side == 1) 
-            color = color / 2;
+            color = 8224000;
 		// printf("drawStart[%d] == %d && drawEnd[%d] == %d && color == %d && worldMap[%d][%d] == %d && stepX == %d && stepY == %d\n", \
 		x, drawStart, x, drawEnd, color, mapX, mapY, worldMap[mapX][mapY], stepX, stepY);
-		drawVerticalLine(data, x, drawStart, drawEnd, color);
+		// drawVerticalLine(data, x, drawStart, drawEnd, color);
+		putVerticalLineToImage(&data, x, drawStart, drawEnd, color);
 	}
-	state->oldTime = state->time;
-	state->time = (double)clock();
-	double frameTime = (state->time - state->oldTime) / 1000.0;
+	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.img_ptr, 0, 0);
+	// state->oldTime = state->time;
+	// state->time = (double)clock();
+	// double frameTime = (state->time - state->oldTime) / 1000.0;
 	
-	double moveSpeed = frameTime * 5.0;
-	double rotationSpeed = frameTime * 3.0;
+	// double moveSpeed = frameTime * 5.0;
+	// double rotationSpeed = frameTime * 3.0;
 	// printf("%f\n", frameTime);
 	// movePlayer();
 }
