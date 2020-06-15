@@ -1,17 +1,39 @@
 #include "cub3d.h"
 
-void
-
 int				events(int keyCode, void *param) {
-	state_t *test;
-	test = (state_t *)param;
+	cub_t *cub;
+	
+	cub = (cub_t *)param;
+	// cub->state.oldTime = cub->state.time;
+	// cub->state.time = (double)clock();
+	// double frameTime = (cub->state.time - cub->state.oldTime) / 1000.0;
+	double moveSpeed = 0.2;
 	if (keyCode == KEY_ESC) {
 		exit(0);
 	}
 	else if (keyCode == KEY_FORWARD) {
-		test->posX += test->dirX * 5.0;
-		test->posY += test->dirY *5.0;
+		if (cub->state.posX + cub->state.dirX * moveSpeed >= 0) {
+			if(cub->game.worldMap[(int)(cub->state.posX + cub->state.dirX * moveSpeed)][(int)cub->state.posY] == 0) 
+				cub->state.posX += cub->state.dirX * moveSpeed;
+		}
+		else
+		{
+			if(cub->game.worldMap[0][(int)cub->state.posY] == 0) 
+				cub->state.posX = 0;
+		}
+		if (cub->state.posY + cub->state.dirY * moveSpeed >= 0) {
+			if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY + cub->state.dirY * moveSpeed)] == 0)
+				cub->state.posY += cub->state.dirY * moveSpeed;
+		}
+		else
+		{
+			if(cub->game.worldMap[(int)cub->state.posX][0] == 0)
+				cub->state.posY = 0;
+		}
+		printf("%f	%f\n", cub->state.posX, cub->state.posY);	
+		raycasting(cub->data, &cub->state, cub->game.worldMap, 800, 640);
 	}
+	
 	return (0);
 }
 
@@ -106,6 +128,7 @@ int main(void)
 	data_t		data;
 	game_t		game;
 	state_t state;
+	cub_t cub;
 	int			width;
 	int			height;
 
@@ -134,11 +157,12 @@ int main(void)
 	if ((data.win_ptr = mlx_new_window(data.mlx_ptr, width, height, "cub3d")) == NULL)
 		return (EXIT_FAILURE);
 
-	raycasting(data, &state, game.worldMap, width, height);
-
-	mlx_key_hook(data.win_ptr, events, &state);
-
-	// mlx_loop_hook(data.mlx_ptr, &update, )
+	
+	cub.data = data;
+	cub.game = game;
+	cub.state = state;
+	raycasting(cub.data, &cub.state, cub.game.worldMap, 800, 640);
+	mlx_key_hook(data.win_ptr, events, &cub);
 	mlx_hook(data.win_ptr, 17, 0, exitWdw, NULL);
 	mlx_loop(data.mlx_ptr);
 	return (EXIT_SUCCESS);

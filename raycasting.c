@@ -1,10 +1,5 @@
 #include "cub3d.h"
 
-// void raycasting(data_t data, state_t *state, int **worldMap, int width, int height)
-// {
-// 	for (int x = 0; x < width; x++)
-// }
-
 void raycasting(data_t data, state_t *state, int **worldMap, int width, int height)
 {
     for (int x = 0; x < width; x++)
@@ -98,6 +93,6 @@ void raycasting(data_t data, state_t *state, int **worldMap, int width, int heig
 	
 	double moveSpeed = frameTime * 5.0;
 	double rotationSpeed = frameTime * 3.0;
-	printf("%f\n", frameTime);
+	// printf("%f\n", frameTime);
 	// movePlayer();
 }

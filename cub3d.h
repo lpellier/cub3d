@@ -42,10 +42,20 @@
 # define KEY_ESC	53
 # define KEY_TAB	48
 
+typedef struct	s_img
+{
+	void		*img_ptr;
+	int			*data;
+	int			size_l;
+	int			bpp;
+	int			endian;
+}				t_img;
+
 typedef struct	data_s
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	// t_img 	img;
 }		data_t;
 
 typedef struct	game_s
@@ -68,6 +78,13 @@ typedef struct	state_s
 	double			oldTime;
 }		state_t;
 
+typedef struct cub_s
+{
+	data_t data;
+	game_t game;
+	state_t state;
+}	cub_t;
+
 // Math functions
 
 int				abs(int x);
@@ -75,6 +92,8 @@ int				min(int x, int y);
 int				max(int x, int y);
 
 // Engine functions
+
+// void putVerticalLineToImage(data_t *data, int x, int drawStart, int drawEnd, int color);
 
 void raycasting(data_t data, state_t *state, int **map, int width, int height);
 

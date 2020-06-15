@@ -42,6 +42,23 @@ void    drawVerticalLine(data_t data, int x, int drawStart, int drawEnd, int col
     }
 }
 
+void putVerticalLineToImage(data_t *data, int x, int drawStart, int drawEnd, int color) {
+	int count_h = -1;
+	int width = 640;
+	while (++count_h < width) {
+		if (count_h < drawStart) {
+			data->img.data[count_h * width + x] = 0xFFFFFF;
+		}
+		else if (count_h >= drawStart && count_h <= drawEnd) {
+			data->img.data[count_h * width + x] = color;
+		}
+		else
+		{
+			data->img.data[count_h * width + x] = 0xFFFFFF;
+		}
+	}
+}
+
 void        drawSquare(data_t data, int x, int y, int width, int height)
 {
     drawLine(data, x, y, x + width, y); // first horizontal
