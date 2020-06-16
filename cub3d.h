@@ -15,6 +15,9 @@
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
 
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
+
 # define KEY_1			18
 # define KEY_2			19
 # define KEY_3			20
@@ -95,7 +98,7 @@ int				max(int x, int y);
 
 void putVerticalLineToImage(data_t *data, int x, int drawStart, int drawEnd, int color);
 
-void raycasting(data_t data, state_t *state, int **map, int width, int height);
+void raycasting(data_t data, state_t *state, int **map);
 
 void     drawVerticalLine(data_t data, int x0, int y0, int x1, int y1);
 void    drawHorizontalLine(data_t data, int x0, int y0, int x1, int y1);

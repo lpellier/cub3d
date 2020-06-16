@@ -1,12 +1,12 @@
 #include "cub3d.h"
 
-void raycasting(data_t data, state_t *state, int **worldMap, int width, int height)
+void raycasting(data_t data, state_t *state, int **worldMap)
 {
-	data.img.img_ptr = mlx_new_image(data.mlx_ptr, width, height);
+	data.img.img_ptr = mlx_new_image(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	data.img.data = (int *)mlx_get_data_addr(data.img.img_ptr, &data.img.bpp, &data.img.size_l, &data.img.endian);
-    for (int x = 0; x < width; x++)
+    for (int x = 0; x < WIN_WIDTH; x++)
 	{
-		double cameraX = 2 * x / (double)width - 1;
+		double cameraX = 2 * x / (double)WIN_WIDTH - 1;
 		double rayDirX =state->dirX + state->planeX * cameraX;
 		double rayDirY = state->dirY + state->planeY * cameraX;
 
@@ -69,22 +69,20 @@ void raycasting(data_t data, state_t *state, int **worldMap, int width, int heig
 			perpWallDist = (mapX - state->posX + (1 - stepX) / 2) / rayDirX;
 		else
 			perpWallDist = (mapY - state->posY + (1 - stepY) / 2) / rayDirY;
-		int lineHeight = (int)(height / perpWallDist);
+		int lineHeight = (int)(WIN_HEIGHT / perpWallDist);
 
-		int drawStart = -lineHeight / 2 + height / 2;
+		int drawStart = -lineHeight / 2 + WIN_HEIGHT / 2;
 		if (drawStart < 0)
 			drawStart = 0;
-		int drawEnd = lineHeight / 2 + height / 2;
-		if (drawEnd >= height)
-			drawEnd = height - 1;
+		int drawEnd = lineHeight / 2 + WIN_HEIGHT / 2;
+		if (drawEnd >= WIN_HEIGHT)
+			drawEnd = WIN_HEIGHT - 1;
 
 		int color;
 		if (worldMap[mapX][mapY] == 1)
-			color = 16776960;	
-		else if (worldMap[mapX][mapY] == 2)
-			color = 1000000;
+			color = 16776960;
         if (side == 1) 
-            color = 8224000;
+            color /= 2;
 		// printf("drawStart[%d] == %d && drawEnd[%d] == %d && color == %d && worldMap[%d][%d] == %d && stepX == %d && stepY == %d\n", \
 		x, drawStart, x, drawEnd, color, mapX, mapY, worldMap[mapX][mapY], stepX, stepY);
 		// drawVerticalLine(data, x, drawStart, drawEnd, color);

@@ -25,5 +25,5 @@ fclean : clean
 re : fclean all
 
 test : $(NAME)
-	@gcc -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit -lz -o exec $(NAME)
+	@gcc -O3 -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit -lz -o exec $(NAME)
 	@./exec
