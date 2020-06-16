@@ -46,14 +46,14 @@ void putVerticalLineToImage(data_t *data, int x, int drawStart, int drawEnd, int
 	int count_h = -1;
 	while (++count_h < WIN_HEIGHT) {
 		if (count_h < drawStart) {
-			data->img.data[count_h * WIN_WIDTH + x] = 0;
+			data->img.data[count_h * WIN_WIDTH + x] = 1973790;
 		}
 		else if (count_h >= drawStart && count_h <= drawEnd) {
 			data->img.data[count_h * WIN_WIDTH + x] = color;
 		}
 		else
 		{
-			data->img.data[count_h * WIN_WIDTH + x] = 0;
+			data->img.data[count_h * WIN_WIDTH + x] = 1973820;
 		}
 	}
 }

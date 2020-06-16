@@ -15,8 +15,8 @@
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
 
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1920	
+# define WIN_HEIGHT 1080
 
 # define KEY_1			18
 # define KEY_2			19
@@ -64,8 +64,6 @@ typedef struct	data_s
 typedef struct	game_s
 {
 	int 		**worldMap;
-	int			mapHeight;
-	int			mapWidth;
 }		game_t;
 
 typedef struct	state_s
@@ -76,6 +74,7 @@ typedef struct	state_s
 	double			dirY;
 	double			planeX;
 	double 			planeY;
+
 	// variables for time.h
 	double			time;
 	double			oldTime;

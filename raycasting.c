@@ -25,7 +25,6 @@ void raycasting(data_t data, state_t *state, int **worldMap)
 
 		int hit = 0;
 		int side;
-
 		if (rayDirX < 0)
 		{
 			stepX = -1;
