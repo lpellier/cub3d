@@ -18,6 +18,9 @@
 # define WIN_WIDTH 1920	
 # define WIN_HEIGHT 1080
 
+# define MOVE_SPEED 0.2
+# define ROT_SPEED 0.1
+
 # define KEY_1			18
 # define KEY_2			19
 # define KEY_3			20
@@ -52,21 +55,35 @@ typedef struct	s_img
 	int			size_l;
 	int			bpp;
 	int			endian;
+	int			height;
+	int			width;
 }				t_img;
 
-typedef struct	data_s
+typedef struct	s_tex
+{
+	void		*img_ptr;
+	int			*data;
+	int			size_l;
+	int			bpp;
+	int			endian;
+	int			height;
+	int			width;
+}				t_tex;
+
+typedef struct	s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img 	img;
-}		data_t;
+}		t_data;
 
-typedef struct	game_s
+typedef struct	s_game
 {
 	int 		**worldMap;
-}		game_t;
+	
+}		t_game;
 
-typedef struct	state_s
+typedef struct	s_state
 {
 	double 			posX;
 	double			posY;
@@ -75,17 +92,27 @@ typedef struct	state_s
 	double			planeX;
 	double 			planeY;
 
+
+	int			height;
+	int			width;
+	int			*heightWidth;
+	int			cellnbr;
+
+	int *oneDMap;
+
 	// variables for time.h
 	double			time;
 	double			oldTime;
-}		state_t;
+}		t_state;
 
-typedef struct cub_s
+typedef struct s_cub
 {
-	data_t data;
-	game_t game;
-	state_t state;
-}	cub_t;
+	t_data data;
+	t_game game;
+	t_state state;
+	t_img minimap;
+
+}	t_cub;
 
 // Math functions
 
@@ -95,14 +122,19 @@ int				max(int x, int y);
 
 // Engine functions
 
-void putVerticalLineToImage(data_t *data, int x, int drawStart, int drawEnd, int color);
+void putVerticalLineToImage(t_data *data, int x, int drawStart, int drawEnd, int color);
 
-void raycasting(data_t data, state_t *state, int **map);
+void raycasting(t_cub *cub);
 
-void     drawVerticalLine(data_t data, int x0, int y0, int x1, int y1);
-void    drawHorizontalLine(data_t data, int x0, int y0, int x1, int y1);
-void        drawSquare(data_t data, int x, int y, int width, int height);
+void drawMinimap(t_cub *cub);
 
-int				exit_hook(game_t *game);
+// Event functions
+
+void		moveForward(t_cub *cub);
+void		moveBackwards(t_cub *cub);
+void		strafeLeft(t_cub *cub);
+void		strafeRight(t_cub *cub);
+void		rotateLeft(t_cub *cub);
+void		rotateRight(t_cub *cub);
 
 #endif

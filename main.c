@@ -1,82 +1,33 @@
 #include "cub3d.h"
 
 int				events(int keyCode, void *param) {
-	cub_t *cub;
+	t_cub *cub;
 	
-	cub = (cub_t *)param;
+	cub = (t_cub *)param;
 	// cub->state.oldTime = cub->state.time;
 	// cub->state.time = (double)clock();
 	// double frameTime = (cub->state.time - cub->state.oldTime) / 1000.0;
-	double moveSpeed = 0.2;
-	double rotSpeed = 0.1;
 	
 	if (keyCode == KEY_ESC) {
+		int i = 0;
+		free(cub->game.worldMap);
+		mlx_destroy_image(cub->data.mlx_ptr, cub->data.img.img_ptr);
+		mlx_destroy_window(cub->data.mlx_ptr, cub->data.win_ptr);
 		exit(0);
 	}
-	else if (keyCode == KEY_FORWARD) {
-		if (cub->state.posX + cub->state.dirX * moveSpeed >= 0) {
-			if(cub->game.worldMap[(int)(cub->state.posX + cub->state.dirX * moveSpeed)][(int)cub->state.posY] == 0) 
-				cub->state.posX += cub->state.dirX * moveSpeed;
-		}
-		else
-		{
-			if(cub->game.worldMap[0][(int)cub->state.posY] == 0) 
-				cub->state.posX = 0;
-		}
-		if (cub->state.posY + cub->state.dirY * moveSpeed >= 0) {
-			if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY + cub->state.dirY * moveSpeed)] == 0)
-				cub->state.posY += cub->state.dirY * moveSpeed;
-		}
-		else
-		{
-			if(cub->game.worldMap[(int)cub->state.posX][0] == 0)
-				cub->state.posY = 0;
-		}
-		printf("%f	%f\n", cub->state.posX, cub->state.posY);	
-		raycasting(cub->data, &cub->state, cub->game.worldMap);
-	}
-	else if (keyCode == KEY_BACKWARD) {
-		if (cub->state.posX - cub->state.dirX * moveSpeed >= 0) {
-			if(cub->game.worldMap[(int)(cub->state.posX - cub->state.dirX * moveSpeed)][(int)cub->state.posY] == 0) 
-				cub->state.posX -= cub->state.dirX * moveSpeed;
-		}
-		else
-		{
-			if(cub->game.worldMap[0][(int)cub->state.posY] == 0) 
-				cub->state.posX = 0;
-		}
-		if (cub->state.posY - cub->state.dirY * moveSpeed >= 0) {
-			if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY - cub->state.dirY * moveSpeed)] == 0)
-				cub->state.posY -= cub->state.dirY * moveSpeed;
-		}
-		else
-		{
-			if(cub->game.worldMap[(int)cub->state.posX][0] == 0)
-				cub->state.posY = 0;
-		}
-		printf("%f	%f\n", cub->state.posX, cub->state.posY);	
-		raycasting(cub->data, &cub->state, cub->game.worldMap);
-	}
+	else if (keyCode == KEY_W) 
+		moveForward(cub);
+	else if (keyCode == KEY_S) 
+		moveBackwards(cub);
+	else if (keyCode == KEY_A) 
+		strafeLeft(cub);
+	else if (keyCode == KEY_D) 
+		strafeRight(cub);
 	else if (keyCode == KEY_RIGHT)
-	{
-		double oldDirX = cub->state.dirX;
-		cub->state.dirX = cub->state.dirX * cos(-rotSpeed) - cub->state.dirY * sin(-rotSpeed);
-		cub->state.dirY = oldDirX * sin(-rotSpeed) + cub->state.dirY * cos(-rotSpeed);
-		double oldPlaneX = cub->state.planeX;
-		cub->state.planeX = cub->state.planeX * cos(-rotSpeed) - cub->state.planeY * sin(-rotSpeed);
-		cub->state.planeY = oldPlaneX * sin(-rotSpeed) + cub->state.planeY * cos(-rotSpeed);
-		raycasting(cub->data, &cub->state, cub->game.worldMap);
-	}
+		rotateRight(cub);
 	else if (keyCode == KEY_LEFT)
-	{
-		double oldDirX = cub->state.dirX;
-		cub->state.dirX = cub->state.dirX * cos(rotSpeed) - cub->state.dirY * sin(rotSpeed);
-		cub->state.dirY = oldDirX * sin(rotSpeed) + cub->state.dirY * cos(rotSpeed);
-		double oldPlaneX = cub->state.planeX;
-		cub->state.planeX = cub->state.planeX * cos(rotSpeed) - cub->state.planeY * sin(rotSpeed);
-		cub->state.planeY = oldPlaneX * sin(rotSpeed) + cub->state.planeY * cos(rotSpeed);
-		raycasting(cub->data, &cub->state, cub->game.worldMap);
-	}
+		rotateLeft(cub);
+	raycasting(cub);
 	return (0);
 }
 
@@ -86,9 +37,9 @@ int			exitWdw(int event, void *param) {
 	exit(0);
 }
 
-void getPos(int x, int y, char orientation, state_t *state) {
-	state->posX = y;
-	state->posY = x;
+void getPos(int x, int y, char orientation, t_state *state) {
+	state->posX = y + 0.5;
+	state->posY = x + 0.5;
 	orientation -= 48;
 	if (orientation == 30) { // N
 		state->dirX = -1;
@@ -114,16 +65,19 @@ void getPos(int x, int y, char orientation, state_t *state) {
 		state->planeX = -0.66;
 		state->planeY = 0;
 	}
-	printf("dirX = %f && dirY == %f\nposX = %f && posY = %f\n", state->dirX, state->dirY, state->posX, state->posY);
 }
 
-int				*strto_intp(char *str, int height, state_t *state)
+int				*strto_intp(char *str, int height, t_state *state)
 {
 	int		i;
 	int count;
 	int		*map;
+	int len = ft_strlen(str);
 
-	if (!(map = malloc(sizeof(int) * ft_strlen(str))))
+	state->heightWidth[height] = len;
+	if (len > state->width)
+		state->width = len;
+	if (!(map = malloc(sizeof(int) * len)))
 		return (NULL);
 	i = 0;
 	while (str[i])
@@ -141,14 +95,15 @@ int				*strto_intp(char *str, int height, state_t *state)
 			map[i] = str[i] - 48;
 		}
 		printf("%d ", map[i]);
-		// printf("%d %c\n", i, str[i]);
+		state->cellnbr++;
 		i++;
 	}
+	free(str);
 	printf("\n");
 	return (map);
 }
 
-void				getMap(game_t *game, state_t *state)
+void				getMap(t_cub *cub)
 {
 	int				fd;
 	int				height;
@@ -156,73 +111,70 @@ void				getMap(game_t *game, state_t *state)
 	char			*line;
 
 	line = NULL;
-	height = 0;
-	fd = open("testmap.cub", O_RDONLY);
+	height = 1;
+	fd = open("shortmap.cub", O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
+		free(line);
 		height++;
 	}
-	fd = open("testmap.cub", O_RDONLY);
+	free(line);
+	close(fd);
+	if (!(cub->state.heightWidth = malloc(sizeof(int) * height)))
+		return ;
+	cub->state.height = height;
+	cub->state.width = 0;
+	cub->state.cellnbr = 0;
+	fd = open("shortmap.cub", O_RDONLY);
 	line = NULL;
-	
 	if (!(map = malloc(sizeof(int *) * height)))
 		return ;
 	height = 0;
 	while (get_next_line(fd, &line))
 	{
-		map[height] = strto_intp(line, height, state);
+		map[height] = strto_intp(line, height, &cub->state);
 		height++;
 	}
-	map[height] = strto_intp(line, height, state);
-	game->worldMap = map;
+	close(fd);
+	map[height] = strto_intp(line, height, &cub->state);
+	cub->game.worldMap = map;
+	printf("height = %d && width = %d\n", cub->state.height, cub->state.width);
 	return ;
 }
 
-
-
-void initState(game_t game, state_t *state) {
-	state->time = (double)clock();
-	state->oldTime = 0;
+void initState(t_cub *cub) {
+	cub->state.time = (double)clock();
+	cub->state.oldTime = 0;
 }
 
 int main(void)
 {
-	data_t		data;
-	game_t		game;
-	state_t state;
-	cub_t cub;
+	t_cub cub;
+	// t_tex tex;
 
-	initState(game, &state);
-	getMap(&game, &state);
+	if ((cub.data.mlx_ptr = mlx_init()) == NULL)
+		return (EXIT_FAILURE);
+	if ((cub.data.win_ptr = mlx_new_window(cub.data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "cub3d")) == NULL)
+		return (EXIT_FAILURE);
+
+	// tex.width = tex.height = 10;
+	initState(&cub);
+	getMap(&cub);
+
+
+	cub.minimap.width = cub.minimap.height = 300;
+	cub.minimap.img_ptr = mlx_new_image(cub.data.mlx_ptr, cub.minimap.width, cub.minimap.height);
+	cub.minimap.data = (int *)mlx_get_data_addr(cub.minimap.img_ptr, &cub.minimap.bpp, &cub.minimap.size_l, &cub.minimap.endian);
+
+	cub.data.img.img_ptr = mlx_new_image(cub.data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	cub.data.img.data = (int *)mlx_get_data_addr(cub.data.img.img_ptr, &cub.data.img.bpp, &cub.data.img.size_l, &cub.data.img.endian);
 	
-	// TEST
-	// int i = 0;
-	// int j;
-	// while (i < game.mapHeight)
-	// {
-	// 	j = 0;
-	// 	while (j < game.mapWidth)
-	// 	{
-	// 		printf("%d	", game.worldMap[i][j]);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// 	printf("\n");
-	// }
-	// printf("Height = %d\n", game.mapHeight);
-	// printf("Width = %d\n", game.mapWidth);
-	if ((data.mlx_ptr = mlx_init()) == NULL)
-		return (EXIT_FAILURE);
-	if ((data.win_ptr = mlx_new_window(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "cub3d")) == NULL)
-		return (EXIT_FAILURE);
-
-	cub.data = data;
-	cub.game = game;
-	cub.state = state;
-	raycasting(cub.data, &cub.state, cub.game.worldMap);
-	// printf("test\n");
-	mlx_hook(data.win_ptr, 17, 0, exitWdw, NULL);
-	mlx_hook(data.win_ptr, 2, 1L << 0, events, &cub);
-	mlx_loop(data.mlx_ptr);
+	
+	printf("dirX = %f && dirY == %f\nposX = %f && posY = %f\n", cub.state.dirX, cub.state.dirY, cub.state.posX, cub.state.posY);
+	raycasting(&cub);
+	// mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, mlx_xpm_file_to_image(data.mlx_ptr, "textures/eagle.xpm", &tex.width, &tex.height), 100, 100);
+	mlx_hook(cub.data.win_ptr, 17, 0, exitWdw, NULL);
+	mlx_hook(cub.data.win_ptr, 2, 1L << 0, events, &cub);
+	mlx_loop(cub.data.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

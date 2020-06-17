@@ -2,7 +2,7 @@ NAME = cub3d.a
 
 FLAGS = -Wall -Werror -Wextra
 
-SRCS =	main.c draw.c math.c raycasting.c
+SRCS =	main.c draw.c math.c raycasting.c events.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -25,5 +25,5 @@ fclean : clean
 re : fclean all
 
 test : $(NAME)
-	@gcc -O3 -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit -lz -o exec $(NAME)
+	@gcc -O3 -fsanitize=address -g -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit -lz -o exec $(NAME)
 	@./exec
