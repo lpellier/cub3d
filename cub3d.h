@@ -7,7 +7,10 @@
 #include <mlx.h>
 #include <math.h>
 #include <time.h>
-#include "libft/libft.h"
+#include <fcntl.h>
+#include <unistd.h>
+
+#define BUFFER_SIZE 32
 
 # define LEFT_CLICK 	1
 # define RIGHT_CLICK 	2
@@ -15,8 +18,8 @@
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
 
-# define WIN_WIDTH 1920	
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 3070	
+# define WIN_HEIGHT 1920
 
 # define MOVE_SPEED 0.2
 # define ROT_SPEED 0.1
@@ -136,5 +139,14 @@ void		strafeLeft(t_cub *cub);
 void		strafeRight(t_cub *cub);
 void		rotateLeft(t_cub *cub);
 void		rotateRight(t_cub *cub);
+
+// Utility functions
+
+int		get_next_line(int fd, char **line);
+int			check_n(char *stock);
+char		*ft_strdup(const char *s1);
+char		*ft_strjoin(const char *s1, const char *s2);
+char		*ft_substr(const char *s, unsigned int start, size_t len);
+size_t		ft_strlen(const char *s1);
 
 #endif

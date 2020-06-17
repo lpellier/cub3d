@@ -69,7 +69,7 @@ int *oneDArray(int **worldMap, t_state *state) {
 	int count_w;
 	int i = 0;
 
-	printf("number of cells = %d\n", state->cellnbr);
+	// printf("number of cells = %d\n", state->cellnbr);
 	if (!(map = malloc(sizeof(int) * state->cellnbr)))
 		return (NULL);
 	while (count_h < state->height) {
@@ -96,7 +96,7 @@ void drawMinimap(t_cub *cub) {
 
 	int rX = cub->minimap.width / cub->state.width;
 	int rY = cub->minimap.height / cub->state.height;
-	printf("rx = %d && ry = %d\n", rX, rY);
+	// printf("rx = %d && ry = %d\n", rX, rY);
 	while (count < cub->state.cellnbr)
 	{
 		if (map[count] == 1)
