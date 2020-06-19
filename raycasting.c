@@ -7,8 +7,8 @@ void minimap(t_cub *cub) {
 
 void raycasting(t_cub *cub)
 {
-	
-    for (int x = 0; x < WIN_WIDTH; x++)
+	int x = -1;
+    while (++x < WIN_WIDTH)
 	{
 		double cameraX = 2 * x / (double)WIN_WIDTH - 1;
 		double rayDirX = cub->state.dirX + cub->state.planeX * cameraX;
@@ -81,15 +81,52 @@ void raycasting(t_cub *cub)
 		if (drawEnd >= WIN_HEIGHT)
 			drawEnd = WIN_HEIGHT - 1;
 
-		int color;
-		if (cub->game.worldMap[mapX][mapY] == 1)
-			color = 16776960;
-        if (side == 1) 
-            color /= 2;
-		putVerticalLineToImage(&cub->data, x, drawStart, drawEnd, color);
+		unsigned int color;
+		//texturing calculations
+		int texNum = 0; // chooseTexture(cub); //1 subtracted from it so that texture 0 can be used!
+
+		//calculate value of wallX
+		double wallX; //where exactly the wall was hit
+		if (side == 0) wallX = cub->state.posY + perpWallDist * rayDirY;
+		else           wallX = cub->state.posX + perpWallDist * rayDirX;
+		wallX -= floor((wallX));
+
+		//x coordinate on the texture
+		int texX = (int)(wallX * (double)(cub->texture[texNum].width));
+		if(side == 0 && rayDirX > 0) texX = cub->texture[texNum].width - texX - 1;
+		if(side == 1 && rayDirY < 0) texX = cub->texture[texNum].width - texX - 1;
+	
+		// How much to increase the texture coordinate per screen pixel
+		double step = 1.0 * cub->texture[texNum].height / lineHeight;
+		// Starting texture coordinate
+		double texPos = (drawStart - WIN_HEIGHT / 2 + lineHeight / 2) * step;
+		for (int y = 0; y < drawStart; y++) {
+			color = 1973790;
+			cub->buffer[y][x] = color;
+		}
+		for(int y = drawStart; y < drawEnd; y++)
+		{
+			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+			int texY = (int)texPos & (cub->texture[texNum].height - 1);
+			texPos += step;
+			color = cub->texture[texNum].data[cub->texture[texNum].height * texY + texX];
+			//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+			if(side == 1) color = (color >> 1) & 8355711;
+			cub->buffer[y][x] = color;
+		}
+		for (int y = drawEnd; y < WIN_HEIGHT; y++) {
+			color = 1973820;
+			cub->buffer[y][x] = color;
+		}
+		// if (cub->game.worldMap[mapX][mapY] == 1)
+		// 	color = 16776960;
+        // if (side == 1) 
+        //     color /= 2;
+		// putVerticalLineToImage(&cub->data, x, drawStart, drawEnd, color);
 	}
+	drawBuffer(cub);
 	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, cub->data.img.img_ptr, 0, 0);
-	minimap(cub);
+	// minimap(cub);
 	// cub->state.oldTime = cub->state.time;
 	// cub->state.time = (double)clock();
 	// double frameTime = (cub->state.time - cub->state.oldTime) / 1000.0;

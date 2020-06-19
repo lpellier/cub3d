@@ -18,8 +18,8 @@
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
 
-# define WIN_WIDTH 3070	
-# define WIN_HEIGHT 1920
+# define WIN_WIDTH 1000	
+# define WIN_HEIGHT 700
 
 # define MOVE_SPEED 0.2
 # define ROT_SPEED 0.1
@@ -51,27 +51,16 @@
 # define KEY_ESC	53
 # define KEY_TAB	48
 
-typedef struct	s_img
+typedef struct		s_img
 {
-	void		*img_ptr;
-	int			*data;
-	int			size_l;
-	int			bpp;
-	int			endian;
-	int			height;
-	int			width;
-}				t_img;
-
-typedef struct	s_tex
-{
-	void		*img_ptr;
-	int			*data;
-	int			size_l;
-	int			bpp;
-	int			endian;
-	int			height;
-	int			width;
-}				t_tex;
+	void			*img_ptr;
+	unsigned int	*data;
+	int				size_l;
+	int				bpp;
+	int				endian;
+	int				height;
+	int				width;
+}					t_img;
 
 typedef struct	s_data
 {
@@ -114,6 +103,8 @@ typedef struct s_cub
 	t_game game;
 	t_state state;
 	t_img minimap;
+	t_img texture[4];
+	unsigned int buffer[WIN_HEIGHT][WIN_WIDTH];
 
 }	t_cub;
 
@@ -125,11 +116,13 @@ int				max(int x, int y);
 
 // Engine functions
 
-void putVerticalLineToImage(t_data *data, int x, int drawStart, int drawEnd, int color);
+void putVerticalLineToImage(t_data *data, int x, int drawStart, int drawEnd, unsigned int color);
 
 void raycasting(t_cub *cub);
 
 void drawMinimap(t_cub *cub);
+
+void drawBuffer(t_cub *cub);
 
 // Event functions
 
