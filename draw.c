@@ -1,49 +1,6 @@
 #include "cub3d.h"
 
-void    drawLine(t_data data, int x0, int y0, int x1, int y1)
-{
-    int dx, dy, p, x, y, target;
-
-    dx = abs(x1 - x0);
-    dy = abs(y1 - y0);
-
-    x = min(x0, x1);
-    y = min(y0, y1);
-    target = max(x0, x1);
-
-    p = 2 * dy - dx;
-    while (x < target)
-    {
-        if (p >= 0)
-        {
-            mlx_pixel_put(data.mlx_ptr, data.win_ptr, x, y, 16777215);
-            y += 1;
-            p += 2 * dy - 2 * dx;
-        }
-        else
-        {
-            mlx_pixel_put(data.mlx_ptr, data.win_ptr, x, y, 16777215);
-            p += 2 * dy;
-        }
-        x += 1;
-    } 
-}
-
-void putVerticalLineToImage(t_data *data, int x, int drawStart, int drawEnd, unsigned int color) {
-	int count_h = -1;
-	while (++count_h < WIN_HEIGHT) {
-		if (count_h < drawStart) {
-			data->img.data[count_h * WIN_WIDTH + x] = 1973790;
-		}
-		else if (count_h >= drawStart && count_h <= drawEnd) {
-			data->img.data[count_h * WIN_WIDTH + x] = color;
-		}
-		else
-		{
-			data->img.data[count_h * WIN_WIDTH + x] = 1973820;
-		}
-	}
-}
+// USED FUNCTIONS
 
 void putPixel(t_img *img, int x, int y, unsigned int color) {
 	img->data[y * img->width + x] = color;
@@ -59,6 +16,24 @@ void drawBuffer(t_cub *cub) {
 			j++;
 		}
 		i++;
+	}
+}
+
+// NOT SO USED FUNCTIONS
+
+void putVerticalLineToImage(t_data *data, int x, int drawStart, int drawEnd, unsigned int color) {
+	int count_h = -1;
+	while (++count_h < WIN_HEIGHT) {
+		if (count_h < drawStart) {
+			data->img.data[count_h * WIN_WIDTH + x] = 1973790;
+		}
+		else if (count_h >= drawStart && count_h <= drawEnd) {
+			data->img.data[count_h * WIN_WIDTH + x] = color;
+		}
+		else
+		{
+			data->img.data[count_h * WIN_WIDTH + x] = 1973820;
+		}
 	}
 }
 

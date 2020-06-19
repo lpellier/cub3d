@@ -110,9 +110,9 @@ typedef struct s_cub
 
 // Math functions
 
-int				abs(int x);
-int				min(int x, int y);
-int				max(int x, int y);
+// int				abs(int x);
+// int				min(int x, int y);
+// int				max(int x, int y);
 
 // Engine functions
 
