@@ -172,10 +172,10 @@ int main(void)
 	initState(&cub);
 	getMap(&cub);
 
-	getTexture(&cub, 0,"textures/eagle.xpm");
-	getTexture(&cub, 1 ,"textures/bluestone.xpm");
-	getTexture(&cub, 2 ,"textures/redbrick.xpm");
-	getTexture(&cub, 3 ,"textures/greystone.xpm");
+	getTexture(&cub, 0,"textures/minecraft/cobblestone.XPM");  				// SOUTH
+	getTexture(&cub, 1 ,"textures/minecraft/nether_bricks.XPM");		// NORTH
+	getTexture(&cub, 2 ,"textures/minecraft/granite.XPM");		 // EAST
+	getTexture(&cub, 3 ,"textures/minecraft/stone_bricks.XPM"); 	   // WEST
 
 	// for (int i = 0; i < cub.texture[0].width * cub.texture[0].height; i++)
 	// 	printf("index : %d -> color = %u\n", i, cub.texture[0].data[i]);

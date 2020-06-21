@@ -64,14 +64,26 @@ void raycasting(t_cub *cub)
 				mapY += stepY;
 				side = 1;
 			}
-			if (cub->game.worldMap[mapX][mapY] > 0)
+			if (cub->game.worldMap[mapX][mapY] > 0) 
 				hit = 1;
 		}
 
-		if (side == 0)
+		int texNum;
+
+		if (side == 0) {
 			perpWallDist = (mapX - cub->state.posX + (1 - stepX) / 2) / rayDirX;
-		else
+			if (rayDirX > 0)
+				texNum = 0; // SOUTH
+			else
+				texNum = 1; // NORTH
+		}
+		else {
 			perpWallDist = (mapY - cub->state.posY + (1 - stepY) / 2) / rayDirY;
+			if (rayDirY > 0)
+				texNum = 2; // EAST
+			else
+				texNum = 3; // WEST
+		}
 		int lineHeight = (int)(WIN_HEIGHT / perpWallDist);
 
 		int drawStart = -lineHeight / 2 + WIN_HEIGHT / 2;
@@ -83,7 +95,6 @@ void raycasting(t_cub *cub)
 
 		unsigned int color;
 		//texturing calculations
-		int texNum = 0; // chooseTexture(cub); //1 subtracted from it so that texture 0 can be used!
 
 		//calculate value of wallX
 		double wallX; //where exactly the wall was hit

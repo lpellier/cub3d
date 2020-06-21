@@ -18,7 +18,7 @@
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
 
-# define WIN_WIDTH 1000	
+# define WIN_WIDTH 960	
 # define WIN_HEIGHT 700
 
 # define MOVE_SPEED 0.2

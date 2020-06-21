@@ -2,7 +2,8 @@ NAME = cub3d.a
 
 FLAGS = -Wall -Werror -Wextra
 
-SRCS =	main.c draw.c raycasting.c events.c utils.c utils2.c
+SRCS =	main.c draw.c raycasting.c events.c \
+utils/utils.c utils/utils2.c
 
 OBJS = $(SRCS:.c=.o)
 
