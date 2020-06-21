@@ -2,7 +2,10 @@ NAME = cub3d.a
 
 FLAGS = -Wall -Werror -Wextra
 
-SRCS =	main.c draw.c raycasting.c events.c \
+SRCS =	main.c \
+engine/draw.c engine/raycasting.c \
+events/rotEvents.c events/moveEvents.c events/handleEvents.c \
+parsing/mapInit.c parsing/fileParsing.c \
 utils/utils.c utils/utils2.c
 
 OBJS = $(SRCS:.c=.o)

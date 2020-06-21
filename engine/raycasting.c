@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void minimap(t_cub *cub) {
 	drawMinimap(cub);

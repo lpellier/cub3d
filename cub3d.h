@@ -124,7 +124,12 @@ void drawMinimap(t_cub *cub);
 
 void drawBuffer(t_cub *cub);
 
+int		freeAndDestroy(t_cub *cub);
+
 // Event functions
+
+int				events(int keyCode, void *param);
+int			exitWdw(int event, void *param);
 
 void		moveForward(t_cub *cub);
 void		moveBackwards(t_cub *cub);
@@ -132,6 +137,14 @@ void		strafeLeft(t_cub *cub);
 void		strafeRight(t_cub *cub);
 void		rotateLeft(t_cub *cub);
 void		rotateRight(t_cub *cub);
+
+// Map Parsing functions
+
+
+int fileParsing(t_cub *cub);
+void getPos(int x, int y, char orientation, t_state *state);
+int				*strto_intp(char *str, int height, t_state *state);
+void				getMap(t_cub *cub);
 
 // Utility functions
 
