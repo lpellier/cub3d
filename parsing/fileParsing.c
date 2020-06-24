@@ -1,14 +1,14 @@
 #include "../cub3d.h"
 
-int nextNumber(char *str) {
+int nextNumber(char *str, int *index) {
 	int res = 0;
+	int i = 0;
 
-	while (*str != ' ' && *str) {
-		res = res * 10 + *str - 48;
-		printf("%c", *str);
-		printf("%d\n", res);
-		str++;
+	while (str[i] >= '0'  && str[i] <= '9' && str[i]) {
+		res = res * 10 + str[i] - 48;
+		i++;
 	}
+	*index = i;
 	return (res);
 }
 
@@ -27,11 +27,20 @@ int checkColors(t_cub *cub, char *str) {
 int checkResolution(t_cub *cub, char *str) {
 	int width;
 	int height;
+	int index = 0;
 	
-	width = nextNumber(str);
+	str++;
 	while (*str == ' ')
 		str++;
-	height = nextNumber(str);
+	printf("%s\n", str);
+	width = nextNumber(str, &index);
+	printf("index = %d\n", index);
+	str += index;
+	while (*str == ' ')
+		str++;
+	height = nextNumber(str, &index);
+	cub->data.img.width = width;
+	cub->data.img.height = height;
 	printf("width = %d height  = %d\n", width, height);
 	return (1);
 }
@@ -46,7 +55,7 @@ int checkFileElement(t_cub *cub, char *str) {
 		return (checkTextures(cub, str));
 	else if (*str == 'F' || *str == 'C')
 		return (checkColors(cub, str));
-	else if (*str == '\n')
+	else if (*str == '\n' || *str == '0' || *str == '1')
 		return (1);
 	else
 		return (0);
@@ -65,6 +74,7 @@ int fileParsing(t_cub *cub) {
 		// if (!checkFileElement(cub, line))
 		// 	return 1;
 		height++;
+		free(line);
 	}
 	cub->state.height = height;
 	free(line);
