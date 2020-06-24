@@ -11,6 +11,37 @@ int		freeAndDestroy(t_cub *cub) {
 	exit(0);
 }
 
+int			update(t_cub *cub) {
+	int upd = 0;
+
+	
+	if (cub->game.keys[KEY_W] && (upd = 1)) 
+		moveForward(cub);
+	else if (cub->game.keys[KEY_S] && (upd = 1)) 
+		moveBackwards(cub);
+	if (cub->game.keys[KEY_A] && (upd = 1)) 
+		strafeLeft(cub);
+	else if (cub->game.keys[KEY_D] && (upd = 1)) 
+		strafeRight(cub);
+	if (cub->game.keys[KEY_RIGHT] && (upd = 1))
+		rotateRight(cub);
+	else if (cub->game.keys[KEY_LEFT] && (upd = 1))
+		rotateLeft(cub);
+	if (upd)
+		raycasting(cub);
+
+	return (0);
+}
+
+int				release(int keyCode, void *param) {
+	t_cub *cub;
+
+	cub = (t_cub *)param;
+
+	cub->game.keys[keyCode] = 0;
+	return (0);
+}
+
 int				events(int keyCode, void *param) {
 	t_cub *cub;
 	
@@ -21,19 +52,18 @@ int				events(int keyCode, void *param) {
 	
 	if (keyCode == KEY_ESC)
 		freeAndDestroy(cub);
-	else if (keyCode == KEY_W) 
-		moveForward(cub);
+	if (keyCode == KEY_W) 
+		cub->game.keys[keyCode] = 1;  // moveForward(cub);
 	else if (keyCode == KEY_S) 
-		moveBackwards(cub);
-	else if (keyCode == KEY_A) 
-		strafeLeft(cub);
+		cub->game.keys[keyCode] = 1;  // moveBackwards(cub);
+	if (keyCode == KEY_A) 
+		cub->game.keys[keyCode] = 1;  // strafeLeft(cub);
 	else if (keyCode == KEY_D) 
-		strafeRight(cub);
-	else if (keyCode == KEY_RIGHT)
-		rotateRight(cub);
+		cub->game.keys[keyCode] = 1;  // strafeRight(cub);
+	if (keyCode == KEY_RIGHT)
+		cub->game.keys[keyCode] = 1;  // rotateRight(cub);
 	else if (keyCode == KEY_LEFT)
-		rotateLeft(cub);
-	raycasting(cub);
+		cub->game.keys[keyCode] = 1;  // rotateLeft(cub);
 	return (0);
 }
 

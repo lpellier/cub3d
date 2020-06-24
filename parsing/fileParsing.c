@@ -30,23 +30,26 @@ int checkResolution(t_cub *cub, char *str) {
 	int index = 0;
 	
 	str++;
-	while (*str == ' ')
+	while (*str == 32 || *str == 9 || *str == 10 \
+	|| *str == 11 || *str == 12 || *str == 13)
 		str++;
 	printf("%s\n", str);
 	width = nextNumber(str, &index);
 	printf("index = %d\n", index);
 	str += index;
-	while (*str == ' ')
+	while (*str == 32 || *str == 9 || *str == 10 \
+	|| *str == 11 || *str == 12 || *str == 13)
 		str++;
 	height = nextNumber(str, &index);
 	cub->data.img.width = width;
 	cub->data.img.height = height;
-	printf("width = %d height  = %d\n", width, height);
+	printf("WIN_width = %d WIN_height  = %d\n", width, height);
 	return (1);
 }
 
 int checkFileElement(t_cub *cub, char *str) {
-	while (*str == ' ')
+	while (*str == 32 || *str == 9 || *str == 10 \
+	|| *str == 11 || *str == 12 || *str == 13)
 		str++;
 	if (*str == 'R')
 		return (checkResolution(cub, str));
@@ -55,7 +58,7 @@ int checkFileElement(t_cub *cub, char *str) {
 		return (checkTextures(cub, str));
 	else if (*str == 'F' || *str == 'C')
 		return (checkColors(cub, str));
-	else if (*str == '\n' || *str == '0' || *str == '1')
+	else if (*str == '0' || *str == '1')
 		return (1);
 	else
 		return (0);
@@ -63,23 +66,29 @@ int checkFileElement(t_cub *cub, char *str) {
 
 int fileParsing(t_cub *cub) {
     int fd;
-    int height;
+	int len;
     char *line;
 
     line = NULL;
-    height = 1;
 	fd = open("maps/testmap.cub", O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
-		// if (!checkFileElement(cub, line))
-		// 	return 1;
-		height++;
+		if (!lineIsUseless(line)) {
+			cub->state.height++;
+			if ((len = ft_strlen(line)) > cub->state.width)
+				cub->state.width = len;
+		}
+		else
+			return (checkFileElement(cub, line));
 		free(line);
 	}
-	cub->state.height = height;
+	if (!lineIsUseless(line)) {
+		cub->state.height++;
+		if ((len = ft_strlen(line)) > cub->state.width)
+			cub->state.width = len;
+	}
 	free(line);
 	close(fd);
-    
     getMap(cub);
 	return (1);
 }

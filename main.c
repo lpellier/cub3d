@@ -3,6 +3,13 @@
 void initState(t_cub *cub) {
 	cub->state.time = (double)clock();
 	cub->state.oldTime = 0;
+
+	cub->state.width = 0;
+	cub->state.height = 0;
+
+	int i = -1;
+	while (++i < 6600)
+		cub->game.keys[i] = 0;
 }
 
 void getTexture(t_cub *cub, int index, char *path) {
@@ -29,11 +36,11 @@ int main(void)
 		exit(0);
 	}
 
-	getTexture(&cub, 0,"textures/minecraft/cobblestone.xpm");  				// SOUTH
-	getTexture(&cub, 1 ,"textures/minecraft/stone.xpm");		// NORTH
-	getTexture(&cub, 2 ,"textures/minecraft/cracked_stone_bricks.xpm");		 // EAST
-	getTexture(&cub, 3 ,"textures/minecraft/chiseled_stone_bricks.xpm"); 	   // WEST
-	// for (int i = 0; i < cub.texture[0].width * cub.texture[0].height; i++)
+	getTexture(&cub, 0,"textures/minecraft/cobblestone.xpm");  					// SOUTH
+	getTexture(&cub, 1 ,"textures/minecraft/stone.xpm");						// NORTH
+	getTexture(&cub, 2 ,"textures/minecraft/cracked_stone_bricks.xpm");		 	// EAST
+	getTexture(&cub, 3 ,"textures/minecraft/chiseled_stone_bricks.xpm"); 	  	// WEST
+	// for (int i = 0; i < cub.texture[0].width * cub.texture[0].height; i++)	
 	// 	printf("index : %d -> color = %u\n", i, cub.texture[0].data[i]);
 
 	// cub.minimap.width = cub.minimap.height = 300;
@@ -51,6 +58,8 @@ int main(void)
 
 	mlx_hook(cub.data.win_ptr, 17, 0, exitWdw, &cub);
 	mlx_hook(cub.data.win_ptr, 2, 1L << 0, events, &cub);
+	mlx_hook(cub.data.win_ptr, 3, 1L << 0, release, &cub);
+	mlx_loop_hook(cub.data.mlx_ptr, update, &cub);
 	mlx_loop(cub.data.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

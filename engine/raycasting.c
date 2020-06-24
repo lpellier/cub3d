@@ -1,10 +1,5 @@
 #include "../cub3d.h"
 
-void minimap(t_cub *cub) {
-	drawMinimap(cub);
-	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, cub->minimap.img_ptr, 0, 0);
-}
-
 void raycasting(t_cub *cub)
 {
 	int x = -1;
@@ -137,7 +132,6 @@ void raycasting(t_cub *cub)
 	}
 	drawBuffer(cub);
 	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, cub->data.img.img_ptr, 0, 0);
-	// minimap(cub);
 	// cub->state.oldTime = cub->state.time;
 	// cub->state.time = (double)clock();
 	// double frameTime = (cub->state.time - cub->state.oldTime) / 1000.0;

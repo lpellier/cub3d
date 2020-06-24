@@ -18,8 +18,8 @@
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
 
-# define WIN_WIDTH 960	
-# define WIN_HEIGHT 700
+# define WIN_WIDTH 1920	
+# define WIN_HEIGHT 1080
 
 # define MOVE_SPEED 0.2
 # define ROT_SPEED 0.1
@@ -72,7 +72,7 @@ typedef struct	s_data
 typedef struct	s_game
 {
 	int 		**worldMap;
-	
+	int			keys[6600];
 }		t_game;
 
 typedef struct	s_state
@@ -87,10 +87,6 @@ typedef struct	s_state
 
 	int			height;
 	int			width;
-	int			*heightWidth;
-	int			cellnbr;
-
-	int *oneDMap;
 
 	// variables for time.h
 	double			time;
@@ -108,19 +104,13 @@ typedef struct s_cub
 
 }	t_cub;
 
-// Math functions
-
-// int				abs(int x);
-// int				min(int x, int y);
-// int				max(int x, int y);
-
 // Engine functions
 
-void putVerticalLineToImage(t_data *data, int x, int drawStart, int drawEnd, unsigned int color);
-
+void putPixel(t_img *img, int x, int y, unsigned int color);
 void raycasting(t_cub *cub);
+void putSquare(t_img *img, int x, int y, int width, int height, unsigned int color);
 
-void drawMinimap(t_cub *cub);
+// void drawMinimap(t_cub *cub);
 
 void drawBuffer(t_cub *cub);
 
@@ -128,6 +118,8 @@ int		freeAndDestroy(t_cub *cub);
 
 // Event functions
 
+int			update(t_cub *cub);
+int				release(int keyCode, void *param);
 int				events(int keyCode, void *param);
 int			exitWdw(int event, void *param);
 
@@ -140,7 +132,7 @@ void		rotateRight(t_cub *cub);
 
 // Map Parsing functions
 
-
+int		lineIsUseless(char *str);
 int fileParsing(t_cub *cub);
 void getPos(int x, int y, char orientation, t_state *state);
 int				*strto_intp(char *str, int height, t_state *state);
