@@ -52,7 +52,7 @@ int				*strto_intp(char *str, int height, t_state *state)
 		else if (str[i] == '0' || str[i] == '2')
 			map[i] = 0;
 		else
-			printf("Error\n");
+			printf("Map Error\n");
 		printf("%d ", map[i]);
 	}
 	free(str);

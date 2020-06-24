@@ -32,7 +32,7 @@ int main(void)
 	initState(&cub);
 	if (!fileParsing(&cub))
 	{
-		printf("Error\n");
+		printf("Parsing Error\n");
 		exit(0);
 	}
 

@@ -58,7 +58,7 @@ int checkFileElement(t_cub *cub, char *str) {
 		return (checkTextures(cub, str));
 	else if (*str == 'F' || *str == 'C')
 		return (checkColors(cub, str));
-	else if (*str == '0' || *str == '1')
+	else if (*str == '0' || *str == '1' || !*str)
 		return (1);
 	else
 		return (0);
@@ -79,8 +79,10 @@ int fileParsing(t_cub *cub) {
 				cub->state.width = len;
 		}
 		else
-			return (checkFileElement(cub, line));
+			if (!checkFileElement(cub, line))
+				return (0);
 		free(line);
+		printf("allo\n");
 	}
 	if (!lineIsUseless(line)) {
 		cub->state.height++;
