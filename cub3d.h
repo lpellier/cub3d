@@ -100,9 +100,15 @@ typedef struct s_cub
 	t_state state;
 	t_img minimap;
 	t_img texture[4];
-	unsigned int buffer[WIN_HEIGHT][WIN_WIDTH];
-
+	unsigned int **buffer;
 }	t_cub;
+
+// Init functions
+
+int initBuffer(t_cub *cub);
+void initState(t_cub *cub);
+void getTexture(t_cub *cub, int index, char *path);
+
 
 // Engine functions
 
@@ -132,7 +138,7 @@ void		rotateRight(t_cub *cub);
 
 // Map Parsing functions
 
-int		lineIsUseless(char *str);
+int		lineIsMap(char *str);
 int fileParsing(t_cub *cub);
 void getPos(int x, int y, char orientation, t_state *state);
 int				*strto_intp(char *str, int height, t_state *state);

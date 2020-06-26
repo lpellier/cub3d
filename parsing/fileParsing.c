@@ -33,9 +33,7 @@ int checkResolution(t_cub *cub, char *str) {
 	while (*str == 32 || *str == 9 || *str == 10 \
 	|| *str == 11 || *str == 12 || *str == 13)
 		str++;
-	printf("%s\n", str);
 	width = nextNumber(str, &index);
-	printf("index = %d\n", index);
 	str += index;
 	while (*str == 32 || *str == 9 || *str == 10 \
 	|| *str == 11 || *str == 12 || *str == 13)
@@ -73,7 +71,7 @@ int fileParsing(t_cub *cub) {
 	fd = open("maps/testmap.cub", O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
-		if (!lineIsUseless(line)) {
+		if (lineIsMap(line)) {
 			cub->state.height++;
 			if ((len = ft_strlen(line)) > cub->state.width)
 				cub->state.width = len;
@@ -82,9 +80,8 @@ int fileParsing(t_cub *cub) {
 			if (!checkFileElement(cub, line))
 				return (0);
 		free(line);
-		printf("allo\n");
 	}
-	if (!lineIsUseless(line)) {
+	if (lineIsMap(line)) {
 		cub->state.height++;
 		if ((len = ft_strlen(line)) > cub->state.width)
 			cub->state.width = len;

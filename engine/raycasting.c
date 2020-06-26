@@ -3,9 +3,9 @@
 void raycasting(t_cub *cub)
 {
 	int x = -1;
-    while (++x < WIN_WIDTH)
+    while (++x < cub->data.img.width)
 	{
-		double cameraX = 2 * x / (double)WIN_WIDTH - 1;
+		double cameraX = 2 * x / (double)cub->data.img.width - 1;
 		double rayDirX = cub->state.dirX + cub->state.planeX * cameraX;
 		double rayDirY = cub->state.dirY + cub->state.planeY * cameraX;
 
@@ -79,14 +79,14 @@ void raycasting(t_cub *cub)
 			else
 				texNum = 3; // WEST
 		}
-		int lineHeight = (int)(WIN_HEIGHT / perpWallDist);
+		int lineHeight = (int)(cub->data.img.height / perpWallDist);
 
-		int drawStart = -lineHeight / 2 + WIN_HEIGHT / 2;
+		int drawStart = -lineHeight / 2 + cub->data.img.height / 2;
 		if (drawStart < 0)
 			drawStart = 0;
-		int drawEnd = lineHeight / 2 + WIN_HEIGHT / 2;
-		if (drawEnd >= WIN_HEIGHT)
-			drawEnd = WIN_HEIGHT - 1;
+		int drawEnd = lineHeight / 2 + cub->data.img.height / 2;
+		if (drawEnd >= cub->data.img.height)
+			drawEnd = cub->data.img.height - 1;
 
 		unsigned int color;
 		//texturing calculations
@@ -105,7 +105,7 @@ void raycasting(t_cub *cub)
 		// How much to increase the texture coordinate per screen pixel
 		double step = 1.0 * cub->texture[texNum].height / lineHeight;
 		// Starting texture coordinate
-		double texPos = (drawStart - WIN_HEIGHT / 2 + lineHeight / 2) * step;
+		double texPos = (drawStart - cub->data.img.height / 2 + lineHeight / 2) * step;
 		for (int y = 0; y < drawStart; y++) {
 			color = 1973790;
 			cub->buffer[y][x] = color;
@@ -120,7 +120,7 @@ void raycasting(t_cub *cub)
 			if(side == 1) color = (color >> 1) & 8355711;
 			cub->buffer[y][x] = color;
 		}
-		for (int y = drawEnd; y < WIN_HEIGHT; y++) {
+		for (int y = drawEnd; y < cub->data.img.height; y++) {
 			color = 1973820;
 			cub->buffer[y][x] = color;
 		}

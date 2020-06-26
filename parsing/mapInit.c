@@ -64,13 +64,13 @@ int				*strto_intp(char *str, int height, t_state *state)
 	return (map);
 }
 
-int		lineIsUseless(char *str) {
+int		lineIsMap(char *str) {
 	while (*str == 32 || *str == 9 || *str == 10 \
 	|| *str == 11 || *str == 12 || *str == 13)
 		str++;
 	if (*str != '1')
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 void				getMap(t_cub *cub)
@@ -88,13 +88,13 @@ void				getMap(t_cub *cub)
 		return ;
 	while (get_next_line(fd, &line))
 	{
-		if (!lineIsUseless(line)) 
+		if (lineIsMap(line)) 
 		{		
 			map[count_h] = strto_intp(line, count_h, &cub->state);
 			count_h++;
 		}
 	}
-	if (!lineIsUseless(line)) 	
+	if (lineIsMap(line)) 	
 			map[count_h] = strto_intp(line, count_h, &cub->state);
 	close(fd);
 	cub->game.worldMap = map;

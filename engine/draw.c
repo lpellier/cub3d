@@ -9,9 +9,9 @@ void putPixel(t_img *img, int x, int y, unsigned int color) {
 void drawBuffer(t_cub *cub) {
 	int i = 0;
 	int j;
-	while (i < WIN_HEIGHT) {
+	while (i < cub->data.img.height) {
 		j = 0;
-		while (j < WIN_WIDTH) {
+		while (j < cub->data.img.width) {
 			putPixel(&cub->data.img, j, i, cub->buffer[i][j]);
 			j++;
 		}
