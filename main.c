@@ -12,12 +12,14 @@ void initState(t_cub *cub) {
 		cub->game.keys[i] = 0;
 }
 
-void getTexture(t_cub *cub, int index, char *path) {
+int getTexture(t_cub *cub, int index) {
 	t_img *a = &cub->texture[index];
-	a->img_ptr = mlx_xpm_file_to_image(cub->data.mlx_ptr, path, &a->width, &a->height);
+	if (!(a->img_ptr = mlx_xpm_file_to_image(cub->data.mlx_ptr, a->path, &a->width, &a->height)))
+		return (0);
 	if (!(a->data = malloc(sizeof(unsigned int) * a->width * a->height)))
-		return;
+		return (0);
 	a->data = (unsigned int *)mlx_get_data_addr(a->img_ptr, &a->bpp, &a->size_l, &a->endian);
+	return (1);
 }
 
 int initBuffer(t_cub *cub) {
@@ -40,19 +42,21 @@ int main(void)
 		printf("Parsing Error\n");
 		exit(0);
 	}
+	printf("floor = %u ceiling = %u\n", cub.floorColor, cub.ceilColor);
 	if (!initBuffer(&cub))
 		return (0);
 	if ((cub.data.mlx_ptr = mlx_init()) == NULL)
-		return (EXIT_FAILURE);
+		return (0);
 	if ((cub.data.win_ptr = mlx_new_window(cub.data.mlx_ptr, cub.data.img.width, cub.data.img.height, "cub3d")) == NULL)
-		return (EXIT_FAILURE);
+		return (0);
 
-	getTexture(&cub, 0,"textures/minecraft/cobblestone.xpm");  					// SOUTH
-	getTexture(&cub, 1 ,"textures/minecraft/stone.xpm");						// NORTH
-	getTexture(&cub, 2 ,"textures/minecraft/cracked_stone_bricks.xpm");		 	// EAST
-	getTexture(&cub, 3 ,"textures/minecraft/chiseled_stone_bricks.xpm"); 	  	// WEST
-	// for (int i = 0; i < cub.texture[0].width * cub.texture[0].height; i++)	
-	// 	printf("index : %d -> color = %u\n", i, cub.texture[0].data[i]);
+	int i = -1;
+	while (++i < 4) {	
+		if (!getTexture(&cub, i)) {
+			printf("Texture Error\n");
+			return (0);
+		}
+	}
 
 	// cub.minimap.width = cub.minimap.height = 300;
 	// cub.minimap.img_ptr = mlx_new_image(cub.data.mlx_ptr, cub.minimap.width, cub.minimap.height);
@@ -70,5 +74,5 @@ int main(void)
 	mlx_hook(cub.data.win_ptr, 3, 1L << 0, release, &cub);
 	mlx_loop_hook(cub.data.mlx_ptr, update, &cub);
 	mlx_loop(cub.data.mlx_ptr);
-	return (EXIT_SUCCESS);
+	return (1);
 }

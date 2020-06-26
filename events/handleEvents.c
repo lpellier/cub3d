@@ -6,6 +6,13 @@ int		freeAndDestroy(t_cub *cub) {
 	while (++i < cub->state.height)
 		free(cub->game.worldMap[i]);
 	free(cub->game.worldMap);
+	i = -1;
+	while (++i < 4)
+		free(cub->texture[i].path);
+	i = -1;
+	while (++i < cub->data.img.height)
+		free(cub->buffer[i]);
+	free(cub->buffer);
 	mlx_destroy_image(cub->data.mlx_ptr, cub->data.img.img_ptr);
 	mlx_destroy_window(cub->data.mlx_ptr, cub->data.win_ptr);
 	exit(0);
@@ -14,7 +21,6 @@ int		freeAndDestroy(t_cub *cub) {
 int			update(t_cub *cub) {
 	int upd = 0;
 
-	
 	if (cub->game.keys[KEY_W] && (upd = 1)) 
 		moveForward(cub);
 	else if (cub->game.keys[KEY_S] && (upd = 1)) 

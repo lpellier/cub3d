@@ -107,7 +107,7 @@ void raycasting(t_cub *cub)
 		// Starting texture coordinate
 		double texPos = (drawStart - cub->data.img.height / 2 + lineHeight / 2) * step;
 		for (int y = 0; y < drawStart; y++) {
-			color = 1973790;
+			color = cub->ceilColor;
 			cub->buffer[y][x] = color;
 		}
 		for(int y = drawStart; y < drawEnd; y++)
@@ -121,14 +121,9 @@ void raycasting(t_cub *cub)
 			cub->buffer[y][x] = color;
 		}
 		for (int y = drawEnd; y < cub->data.img.height; y++) {
-			color = 1973820;
+			color = cub->floorColor;
 			cub->buffer[y][x] = color;
 		}
-		// if (cub->game.worldMap[mapX][mapY] == 1)
-		// 	color = 16776960;
-        // if (side == 1) 
-        //     color /= 2;
-		// putVerticalLineToImage(&cub->data, x, drawStart, drawEnd, color);
 	}
 	drawBuffer(cub);
 	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, cub->data.img.img_ptr, 0, 0);

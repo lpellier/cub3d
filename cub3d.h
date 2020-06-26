@@ -60,6 +60,7 @@ typedef struct		s_img
 	int				endian;
 	int				height;
 	int				width;
+	char			*path;
 }					t_img;
 
 typedef struct	s_data
@@ -99,15 +100,18 @@ typedef struct s_cub
 	t_game game;
 	t_state state;
 	t_img minimap;
-	t_img texture[4];
-	unsigned int **buffer;
+	t_img texture[4]; // 0 -> SO || 1 -> NO || 2 -> EA || 3 -> WE
+	t_img sprite;
+	int floorColor;
+	int ceilColor;
+	int **buffer;
 }	t_cub;
 
 // Init functions
 
 int initBuffer(t_cub *cub);
 void initState(t_cub *cub);
-void getTexture(t_cub *cub, int index, char *path);
+int getTexture(t_cub *cub, int index);
 
 
 // Engine functions
@@ -118,16 +122,16 @@ void putSquare(t_img *img, int x, int y, int width, int height, unsigned int col
 
 // void drawMinimap(t_cub *cub);
 
-void drawBuffer(t_cub *cub);
+void 	drawBuffer(t_cub *cub);
 
 int		freeAndDestroy(t_cub *cub);
 
 // Event functions
 
-int			update(t_cub *cub);
+int				update(t_cub *cub);
 int				release(int keyCode, void *param);
 int				events(int keyCode, void *param);
-int			exitWdw(int event, void *param);
+int				exitWdw(int event, void *param);
 
 void		moveForward(t_cub *cub);
 void		moveBackwards(t_cub *cub);
@@ -138,15 +142,15 @@ void		rotateRight(t_cub *cub);
 
 // Map Parsing functions
 
-int		lineIsMap(char *str);
-int fileParsing(t_cub *cub);
-void getPos(int x, int y, char orientation, t_state *state);
-int				*strto_intp(char *str, int height, t_state *state);
+int					lineIsMap(char *str);
+int 				fileParsing(t_cub *cub);
+void 				getPos(int x, int y, char orientation, t_state *state);
+int					*strto_intp(char *str, int height, t_state *state);
 void				getMap(t_cub *cub);
 
 // Utility functions
 
-int		get_next_line(int fd, char **line);
+int			get_next_line(int fd, char **line);
 int			check_n(char *stock);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(const char *s1, const char *s2);

@@ -1,5 +1,19 @@
 R		1920		1080
 
+C 33, 31, 41
+
+F 184, 179, 198
+
+NO ./textures/minecraft/chiseled_stone_bricks.xpm
+
+SO ./textures/minecraft/cobblestone.xpm
+
+EA ./textures/minecraft/cracked_stone_bricks.xpm
+
+S ./textures/greystone.xpm
+
+WE ./textures/minecraft/stone.xpm
+
         1111111111111111111111111
         1000000000110000000000001
         1011000001110000002000001
