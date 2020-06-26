@@ -1,18 +1,18 @@
 #include "../cub3d.h"
 
 void		moveForward(t_cub *cub) {
-	if (cub->state.posX + cub->state.dirX * MOVE_SPEED >= 0) {
-			if(cub->game.worldMap[(int)(cub->state.posX + cub->state.dirX * MOVE_SPEED)][(int)cub->state.posY] == 0) 
-				cub->state.posX += cub->state.dirX * MOVE_SPEED;
+	if (cub->state.posX + cub->state.dirX * MOV >= 0) {
+			if(cub->game.worldMap[(int)(cub->state.posX + cub->state.dirX * MOV)][(int)cub->state.posY] == 0) 
+				cub->state.posX += cub->state.dirX * MOV;
 		}
 	else
 	{
 		if(cub->game.worldMap[0][(int)cub->state.posY] == 0) 
 			cub->state.posX = 0;
 	}
-	if (cub->state.posY + cub->state.dirY * MOVE_SPEED >= 0) {
-		if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY + cub->state.dirY * MOVE_SPEED)] == 0)
-			cub->state.posY += cub->state.dirY * MOVE_SPEED;
+	if (cub->state.posY + cub->state.dirY * MOV >= 0) {
+		if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY + cub->state.dirY * MOV)] == 0)
+			cub->state.posY += cub->state.dirY * MOV;
 	}
 	else
 	{
@@ -22,18 +22,18 @@ void		moveForward(t_cub *cub) {
 }
 
 void		moveBackwards(t_cub *cub) {
-	if (cub->state.posX - cub->state.dirX * MOVE_SPEED >= 0) {
-		if(cub->game.worldMap[(int)(cub->state.posX - cub->state.dirX * MOVE_SPEED)][(int)cub->state.posY] == 0) 
-			cub->state.posX -= cub->state.dirX * MOVE_SPEED;
+	if (cub->state.posX - cub->state.dirX * MOV >= 0) {
+		if(cub->game.worldMap[(int)(cub->state.posX - cub->state.dirX * MOV)][(int)cub->state.posY] == 0) 
+			cub->state.posX -= cub->state.dirX * MOV;
 	}
 	else
 	{
 		if(cub->game.worldMap[0][(int)cub->state.posY] == 0) 
 			cub->state.posX = 0;
 	}
-	if (cub->state.posY - cub->state.dirY * MOVE_SPEED >= 0) {
-		if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY - cub->state.dirY * MOVE_SPEED)] == 0)
-			cub->state.posY -= cub->state.dirY * MOVE_SPEED;
+	if (cub->state.posY - cub->state.dirY * MOV >= 0) {
+		if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY - cub->state.dirY * MOV)] == 0)
+			cub->state.posY -= cub->state.dirY * MOV;
 	}
 	else
 	{
@@ -43,18 +43,18 @@ void		moveBackwards(t_cub *cub) {
 }
 
 void		strafeLeft(t_cub *cub) {
-	if (cub->state.posX - cub->state.planeX * MOVE_SPEED >= 0) {
-		if(cub->game.worldMap[(int)(cub->state.posX - cub->state.planeX * MOVE_SPEED)][(int)cub->state.posY] == 0) 
-			cub->state.posX -= cub->state.planeX * MOVE_SPEED;
+	if (cub->state.posX - cub->state.planeX * MOV >= 0) {
+		if(cub->game.worldMap[(int)(cub->state.posX - cub->state.planeX * MOV)][(int)cub->state.posY] == 0) 
+			cub->state.posX -= cub->state.planeX * MOV;
 	}
 	else
 	{
 		if(cub->game.worldMap[0][(int)cub->state.posY] == 0) 
 			cub->state.posX = 0;
 	}
-	if (cub->state.posY - cub->state.planeY * MOVE_SPEED >= 0) {
-		if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY - cub->state.planeY * MOVE_SPEED)] == 0)
-			cub->state.posY -= cub->state.planeY * MOVE_SPEED;
+	if (cub->state.posY - cub->state.planeY * MOV >= 0) {
+		if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY - cub->state.planeY * MOV)] == 0)
+			cub->state.posY -= cub->state.planeY * MOV;
 	}
 	else
 	{
@@ -64,18 +64,18 @@ void		strafeLeft(t_cub *cub) {
 }
 
 void		strafeRight(t_cub *cub) {
-	if (cub->state.posX + cub->state.planeX * MOVE_SPEED >= 0) {
-		if(cub->game.worldMap[(int)(cub->state.posX + cub->state.planeX * MOVE_SPEED)][(int)cub->state.posY] == 0) 
-			cub->state.posX += cub->state.planeX * MOVE_SPEED;
+	if (cub->state.posX + cub->state.planeX * MOV >= 0) {
+		if(cub->game.worldMap[(int)(cub->state.posX + cub->state.planeX * MOV)][(int)cub->state.posY] == 0) 
+			cub->state.posX += cub->state.planeX * MOV;
 	}
 	else
 	{
 		if(cub->game.worldMap[0][(int)cub->state.posY] == 0) 
 			cub->state.posX = 0;
 	}
-	if (cub->state.posY + cub->state.planeY * MOVE_SPEED >= 0) {
-		if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY + cub->state.planeY * MOVE_SPEED)] == 0)
-			cub->state.posY += cub->state.planeY * MOVE_SPEED;
+	if (cub->state.posY + cub->state.planeY * MOV >= 0) {
+		if(cub->game.worldMap[(int)cub->state.posX][(int)(cub->state.posY + cub->state.planeY * MOV)] == 0)
+			cub->state.posY += cub->state.planeY * MOV;
 	}
 	else
 	{

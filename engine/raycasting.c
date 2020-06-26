@@ -127,7 +127,4 @@ void raycasting(t_cub *cub)
 	}
 	drawBuffer(cub);
 	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, cub->data.img.img_ptr, 0, 0);
-	// cub->state.oldTime = cub->state.time;
-	// cub->state.time = (double)clock();
-	// double frameTime = (cub->state.time - cub->state.oldTime) / 1000.0;
 }

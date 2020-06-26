@@ -6,7 +6,8 @@ SRCS =	main.c \
 engine/draw.c engine/raycasting.c \
 events/rotEvents.c events/moveEvents.c events/handleEvents.c \
 parsing/mapInit.c parsing/fileParsing.c \
-utils/utils.c utils/utils2.c
+init/initFunctions.c \
+utils/utils.c utils/utils2.c utils/utils3.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -10,19 +10,16 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#define BUFFER_SIZE 32
+# define BUFFER_SIZE 32
+# define FPS 60
+# define MOV 0.15
+# define ROT 0.1
 
 # define LEFT_CLICK 	1
 # define RIGHT_CLICK 	2
 # define MIDDLE_CLICK	3
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
-
-# define WIN_WIDTH 1920	
-# define WIN_HEIGHT 1080
-
-# define MOVE_SPEED 0.2
-# define ROT_SPEED 0.1
 
 # define KEY_1			18
 # define KEY_2			19
@@ -67,13 +64,14 @@ typedef struct	s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	double	time_taken;
 	t_img 	img;
 }		t_data;
 
 typedef struct	s_game
 {
 	int 		**worldMap;
-	int			keys[6600];
+	int			keys[66000];
 }		t_game;
 
 typedef struct	s_state
@@ -105,6 +103,8 @@ typedef struct s_cub
 	int floorColor;
 	int ceilColor;
 	int **buffer;
+
+	clock_t t;
 }	t_cub;
 
 // Init functions
@@ -156,5 +156,7 @@ char		*ft_strdup(const char *s1);
 char		*ft_strjoin(const char *s1, const char *s2);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
 size_t		ft_strlen(const char *s1);
+static char	*ft_strrev(char *str);
+char		*ft_itoa(int nbr);
 
 #endif

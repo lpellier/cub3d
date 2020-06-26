@@ -1,5 +1,28 @@
 #include "../cub3d.h"
 
+int		framer(clock_t t, t_cub *cub)
+{
+	double	time_taken;
+	double	spf;
+	char	*fps;
+
+	t = clock() - t;
+	time_taken = ((double)t) / CLOCKS_PER_SEC;
+	spf = 1.0 / FPS;
+	if (time_taken < spf)
+	{
+		time_taken = spf;
+		nanosleep(&(struct timespec){0, time_taken * 1000000000}, 0);
+	}
+	cub->data.time_taken = time_taken;
+	fps = ft_itoa((int)(1.0 / time_taken));
+	mlx_string_put(cub->data.mlx_ptr, cub->data.win_ptr,
+			cub->data.img.width - (cub->data.img.width / 8),
+			cub->data.img.height / 16, 255101, fps);
+	free(fps);
+	return (0);
+}
+
 int		freeAndDestroy(t_cub *cub) {
 	int i = -1;
 
@@ -33,8 +56,10 @@ int			update(t_cub *cub) {
 		rotateRight(cub);
 	else if (cub->game.keys[KEY_LEFT] && (upd = 1))
 		rotateLeft(cub);
-	if (upd)
+	if (upd){
 		raycasting(cub);
+		framer(cub->t, cub);
+	}
 
 	return (0);
 }
@@ -50,11 +75,9 @@ int				release(int keyCode, void *param) {
 
 int				events(int keyCode, void *param) {
 	t_cub *cub;
-	
+
 	cub = (t_cub *)param;
-	// cub->state.oldTime = cub->state.time;
-	// cub->state.time = (double)clock();
-	// double frameTime = (cub->state.time - cub->state.oldTime) / 1000.0;
+	cub->t = clock();
 	
 	if (keyCode == KEY_ESC)
 		freeAndDestroy(cub);
