@@ -1,10 +1,27 @@
 #include "../cub3d.h"
 
+void sortSprites(t_cub *cub) {
+	int i;
+
+	i = -1;
+	while (++i < cub->numSprites) {
+		cub->sprt[i].dist = cub->spriteDistance[i];
+		cub->sprt[i].order = cub->spriteOrder[i];
+	}
+	// to be finished
+}
+
 void spriteCasting(t_cub *cub) 
 {
 	int i;
 
 	i = -1;
+	while (++i < cub->numSprites) {
+		cub->spriteOrder[i] = i;
+		cub->spriteDistance[i] = ((cub->state.posX - cub->sprites[i].posX) * (cub->state.posX - cub->sprites[i].posX) \
+		+ (cub->state.posY - cub->sprites[i].posY) * (cub->state.posY - cub->sprites[i].posY));
+	}
+	sortSprites(cub->spriteOrder, cub->spriteDistance, cub->numSprites);
 }
 
 void raycasting(t_cub *cub)

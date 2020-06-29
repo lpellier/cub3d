@@ -177,7 +177,10 @@ int fileParsing(t_cub *cub) {
 	}
 	free(line);
 	close(fd);
-	if (!(cub->sprites = malloc(sizeof(t_sprite) * cub->numSprites)))
+	if (!((cub->sprites = malloc(sizeof(t_sprite) * cub->numSprites) && (cub->spriteOrder = malloc(sizeof(int) * cub->numSprites)) \
+	&& (cub->spriteDistance = malloc(sizeof(double) * cub->numSprites)))))
+		return (0);
+	if (!(cub->sprt = malloc(sizeof(t_sprt) * cub->numSprites)))
 		return (0);
     getMap(cub);
 	return (1);

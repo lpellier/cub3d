@@ -20,11 +20,11 @@ int main(void)
 	printf("numSprites = %d\n", cub.numSprites);
 	if (!getTexSprite(&cub))
 		return (0);
-	// int i = -1;
-	// while (++i < cub.numSprites) {
-	// 	printf("index : %d, posX = %f, posY = %f, path = %s, height = %d, width = %d\n", \
-	// 	i, cub.sprites[i].posX, cub.sprites[i].posY, cub.sprites[i].texture->path, cub.sprites[i].texture->height, cub.sprites[i].texture->width);
-	// }
+	int i = -1;
+	while (++i < cub.numSprites) {
+		printf("index : %d, posX = %f, posY = %f, path = %s, height = %d, width = %d\n", \
+		i, cub.sprites[i].posX, cub.sprites[i].posY, cub.sprites[i].texture->path, cub.sprites[i].texture->height, cub.sprites[i].texture->width);
+	}
 	// cub.minimap.width = cub.minimap.height = 300;
 	// cub.minimap.img_ptr = mlx_new_image(cub.data.mlx_ptr, cub.minimap.width, cub.minimap.height);
 	// cub.minimap.data = (int *)mlx_get_data_addr(cub.minimap.img_ptr, &cub.minimap.bpp, &cub.minimap.size_l, &cub.minimap.endian);

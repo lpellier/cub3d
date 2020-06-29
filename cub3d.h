@@ -99,18 +99,29 @@ typedef struct s_sprite
 	t_img *texture;
 } t_sprite;
 
+typedef struct s_sprt
+{
+	double dist;
+	int order;
+} t_sprt;
+
 typedef struct s_cub
 {
 	t_data data;
 	t_game game;
 	t_state state;
 	t_img minimap;
-	t_img texture[4]; // 0 -> SO || 1 -> NO || 2 -> EA || 3 -> WE
+	t_img texture[4];  // 0 -> SO || 1 -> NO || 2 -> EA || 3 -> WE
+
 	t_img sprite[3]; // sprites tex
 	t_sprite *sprites; // actual sprites on map
-	double *zBuffer;
-	int numSprites;
-	int	spriteIndex;
+	t_sprt *sprt;
+	double *zBuffer; // 1d buffer for sprites
+	int numSprites; // number of actual objects (sprites) in the map 
+	int	spriteIndex; // only used in map parsing
+	int *spriteOrder; // sort of sprites
+	double *spriteDistance;
+
 	int floorColor;
 	int ceilColor;
 	int **buffer;
@@ -158,6 +169,7 @@ void		rotateRight(t_cub *cub);
 
 // Map Parsing functions
 
+void sortSprites(t_cub *cub);
 void countSprites(t_cub *cub, char *str);
 int					lineIsMap(char *str);
 int 				fileParsing(t_cub *cub);
