@@ -73,17 +73,16 @@ int checkColors(t_cub *cub, char *str) {
 		rgb = &cub->floorColor;
 	else if (*str == 'C')
 		rgb = &cub->ceilColor;
-	else
-	{
-		printf("Color Error\n");
-		return (0);
-	}
 	str++;
 	r = nextColor(str, &index);
 	str += index;
 	g = nextColor(str, &index);
 	str += index;
 	b = nextColor(str, &index);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
+		printf("Color Error - Please choose three integers between 0 and 255\n");
+		return (0);
+	}
 
 	*rgb = 65536 * r + 256 * g + b;
 	if (*rgb >= 0 && *rgb <= 2147483647)

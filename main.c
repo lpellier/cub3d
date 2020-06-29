@@ -46,7 +46,6 @@ int main(void)
 	
 	printf("dirX = %f && dirY == %f\nposX = %f && posY = %f\n", cub.state.dirX, cub.state.dirY, cub.state.posX, cub.state.posY);
 	raycasting(&cub);
-
 	mlx_hook(cub.data.win_ptr, 17, 0, exitWdw, &cub);
 	mlx_hook(cub.data.win_ptr, 2, 1L << 0, events, &cub);
 	mlx_hook(cub.data.win_ptr, 3, 1L << 0, release, &cub);

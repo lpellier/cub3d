@@ -128,6 +128,8 @@ int		freeAndDestroy(t_cub *cub);
 
 // Event functions
 
+int		framer(clock_t t, t_cub *cub);
+
 int				update(t_cub *cub);
 int				release(int keyCode, void *param);
 int				events(int keyCode, void *param);
@@ -156,7 +158,7 @@ char		*ft_strdup(const char *s1);
 char		*ft_strjoin(const char *s1, const char *s2);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
 size_t		ft_strlen(const char *s1);
-static char	*ft_strrev(char *str);
-char		*ft_itoa(int nbr);
+// static char	*ft_strrev(char *str);
+char		*ft_itoa(int n);
 
 #endif

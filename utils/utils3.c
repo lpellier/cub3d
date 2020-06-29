@@ -1,48 +1,100 @@
 #include "../cub3d.h"
 
-static char	*ft_strrev(char *str)
+int		ft_countchar(int n)
 {
-	int i;
-	int j;
-	int tmp;
+	int	i;
 
-	i = 0;
-	j = ft_strlen(str);
-	while (j > i)
+	i = 1;
+	if (n < 0)
+		n *= -1;
+	while (n >= 10)
 	{
-		j--;
-		tmp = str[i];
-		str[i] = str[j];
-		str[j] = tmp;
+		n /= 10;
 		i++;
 	}
-	return str;
+	return (i);
 }
 
-char	*ft_itoa(int nbr)
+char	*ft_int_str(char *str, int n, int len)
 {
-	int i;
-	int neg;
-	char *tmp;
+	int		start;
+
+	str[len] = '\0';
+	len -= 1;
+	if (n < 0)
+	{
+		n *= -1;
+		start = 1;
+		str[0] = '-';
+	}
+	else
+		start = 0;
+	while (len >= start)
+	{
+		str[len] = n % 10 + 48;
+		n /= 10;
+		len--;
+	}
+	return (str);
+}
+
+char	*ft_strnew(size_t size)
+{
+	char	*new;
+	size_t	i;
 
 	i = 0;
-	neg = 0;
-	tmp = malloc(sizeof(char) * 12);
-	if (tmp == NULL || nbr == 0)
-		return ((nbr == 0) ? "0" : NULL);
-	if (nbr == -2147483648)
-		return ("-2147483648");
-	if (nbr < 0)
+	if (!(new = (char *)malloc(sizeof(char) * size + 1)))
+		return (NULL);
+	while (i < size)
 	{
-		neg = 1;
-		nbr *= -1;
+		new[i] = '\0';
+		i++;
 	}
-	while (nbr)
+	new[i] = '\0';
+	return (new);
+}
+
+int		ft_blacksheep(int n, void *str)
+{
+	char	*ptsr;
+	int		x;
+	char	*ftsr;
+
+	ptsr = (char *)str;
+	if (n == -2147483648)
 	{
-		tmp[i++] = (nbr % 10) + '0';
-		nbr /= 10;
+		x = 0;
+		ftsr = "-2147483648";
+		while (x <= 12)
+		{
+			ptsr[x] = ftsr[x];
+			x++;
+		}
+		return (1);
 	}
-	if (neg)
-		tmp[i] = '-';
-	return ft_strrev(tmp);
+	else if (n == 0)
+	{
+		ptsr[0] = '0';
+		ptsr[1] = '\0';
+		return (1);
+	}
+	return (0);
+}
+
+char	*ft_itoa(int n)
+{
+	char			*str;
+	long long int	len;
+
+	len = ft_countchar(n);
+	if (n < 0)
+		len += 1;
+	str = ft_strnew(len);
+	if (ft_blacksheep(n, str))
+		return (str);
+	if (!str)
+		return (NULL);
+	str = ft_int_str(str, n, len);
+	return (str);
 }

@@ -16,6 +16,7 @@ int		framer(clock_t t, t_cub *cub)
 	}
 	cub->data.time_taken = time_taken;
 	fps = ft_itoa((int)(1.0 / time_taken));
+	// printf("%s\n", fps);
 	mlx_string_put(cub->data.mlx_ptr, cub->data.win_ptr,
 			cub->data.img.width - (cub->data.img.width / 8),
 			cub->data.img.height / 16, 255101, fps);
@@ -56,11 +57,10 @@ int			update(t_cub *cub) {
 		rotateRight(cub);
 	else if (cub->game.keys[KEY_LEFT] && (upd = 1))
 		rotateLeft(cub);
-	if (upd){
+	if (upd) {
 		raycasting(cub);
 		framer(cub->t, cub);
 	}
-
 	return (0);
 }
 
