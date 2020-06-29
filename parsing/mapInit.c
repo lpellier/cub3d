@@ -30,13 +30,13 @@ void getPos(int x, int y, char orientation, t_state *state) {
 	}
 }
 
-int				*strto_intp(char *str, int height, t_state *state)
+int				*strto_intp(char *str, int height, t_cub *cub)
 {
 	int		i;
 	int count;
 	int		*map;
 
-	if (!(map = malloc(sizeof(int) * state->width)))
+	if (!(map = malloc(sizeof(int) * cub->state.width)))
 		return (NULL);
 	i = -1;
 	while (str[++i])
@@ -45,18 +45,25 @@ int				*strto_intp(char *str, int height, t_state *state)
 			map[i] = 1;
 		else if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W') {
 			map[i] = 0;
-			getPos(i, height, str[i], state);
+			getPos(i, height, str[i], &cub->state);
 		}
 		else if (str[i] == '1')
 			map[i] = 1;
-		else if (str[i] == '0' || str[i] == '2')
+		else if (str[i] == '0')
 			map[i] = 0;
+		else if (str[i] >= '2') {
+			map[i] = str[i] - 48;
+			cub->sprites[cub->spriteIndex].posX = i + 0.5;
+			cub->sprites[cub->spriteIndex].posY = height + 0.5;
+			cub->sprites[cub->spriteIndex].texture = &cub->sprite[str[i] - 48 - 2];
+			cub->spriteIndex += 1;
+		}
 		else
 			printf("Map Error\n");
 		printf("%d ", map[i]);
 	}
 	free(str);
-	while (i++ < state->width) {
+	while (i++ < cub->state.width) {
 		map[i] = 1;
 		printf("%d ", map[i]);
 	}
@@ -90,12 +97,12 @@ void				getMap(t_cub *cub)
 	{
 		if (lineIsMap(line)) 
 		{		
-			map[count_h] = strto_intp(line, count_h, &cub->state);
+			map[count_h] = strto_intp(line, count_h, cub);
 			count_h++;
 		}
 	}
 	if (lineIsMap(line)) 	
-			map[count_h] = strto_intp(line, count_h, &cub->state);
+		map[count_h] = strto_intp(line, count_h, cub);
 	close(fd);
 	cub->game.worldMap = map;
 }

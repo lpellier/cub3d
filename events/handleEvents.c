@@ -102,3 +102,12 @@ int			exitWdw(int event, void *param) {
 	
 	return(freeAndDestroy(cub));
 }
+
+void loop(t_cub *cub) {
+	raycasting(cub);
+	mlx_hook(cub->data.win_ptr, 17, 0, exitWdw, cub);
+	mlx_hook(cub->data.win_ptr, 2, 1L << 0, events, cub);
+	mlx_hook(cub->data.win_ptr, 3, 1L << 0, release, cub);
+	mlx_loop_hook(cub->data.mlx_ptr, update, cub);
+	mlx_loop(cub->data.mlx_ptr);
+}

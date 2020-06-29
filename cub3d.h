@@ -92,6 +92,13 @@ typedef struct	s_state
 	double			oldTime;
 }		t_state;
 
+typedef struct s_sprite
+{
+	double posX;
+	double posY;
+	t_img *texture;
+} t_sprite;
+
 typedef struct s_cub
 {
 	t_data data;
@@ -99,7 +106,11 @@ typedef struct s_cub
 	t_state state;
 	t_img minimap;
 	t_img texture[4]; // 0 -> SO || 1 -> NO || 2 -> EA || 3 -> WE
-	t_img sprite;
+	t_img sprite[3]; // sprites tex
+	t_sprite *sprites; // actual sprites on map
+	double *zBuffer;
+	int numSprites;
+	int	spriteIndex;
 	int floorColor;
 	int ceilColor;
 	int **buffer;
@@ -112,7 +123,8 @@ typedef struct s_cub
 int initBuffer(t_cub *cub);
 void initState(t_cub *cub);
 int getTexture(t_cub *cub, int index);
-
+int getSprite(t_cub *cub, int index);
+int getTexSprite(t_cub *cub);
 
 // Engine functions
 
@@ -130,6 +142,8 @@ int		freeAndDestroy(t_cub *cub);
 
 int		framer(clock_t t, t_cub *cub);
 
+void loop(t_cub *cub);
+
 int				update(t_cub *cub);
 int				release(int keyCode, void *param);
 int				events(int keyCode, void *param);
@@ -144,10 +158,11 @@ void		rotateRight(t_cub *cub);
 
 // Map Parsing functions
 
+void countSprites(t_cub *cub, char *str);
 int					lineIsMap(char *str);
 int 				fileParsing(t_cub *cub);
 void 				getPos(int x, int y, char orientation, t_state *state);
-int					*strto_intp(char *str, int height, t_state *state);
+int					*strto_intp(char *str, int height, t_cub *cub);
 void				getMap(t_cub *cub);
 
 // Utility functions

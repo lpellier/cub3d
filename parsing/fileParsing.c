@@ -52,12 +52,19 @@ int checkTextures(t_cub *cub, char *str){
 }
 
 int checkSprite(t_cub *cub, char *str) {
+	int index;
+	
 	str += 1;
-
+	index = 0;
+	if (*str == '2')
+		index = 1;
+	else if (*str == '3')
+		index = 2;
+	str += 1;
 	while (*str == 32 || *str == 9 || *str == 10 \
 	|| *str == 11 || *str == 12 || *str == 13)
 		str++;
-	if (!(cub->sprite.path = ft_strdup(str)))
+	if (!(cub->sprite[index].path = ft_strdup(str)))
 		return (0);
 	return (1);
 }
@@ -131,6 +138,17 @@ int checkFileElement(t_cub *cub, char *str) {
 		return (0);
 }
 
+void countSprites(t_cub *cub, char *str) {
+	while (*str == 32 || *str == 9 || *str == 10 \
+	|| *str == 11 || *str == 12 || *str == 13)
+		str++;
+	while (*str) {
+		if (*str == '2' || *str == '3' || *str == '4')
+			cub->numSprites += 1;
+		str++;
+	}
+}
+
 int fileParsing(t_cub *cub) {
     int fd;
 	int len;
@@ -144,6 +162,7 @@ int fileParsing(t_cub *cub) {
 			cub->state.height++;
 			if ((len = ft_strlen(line)) > cub->state.width)
 				cub->state.width = len;
+			countSprites(cub, line);
 		}
 		else
 			if (!checkFileElement(cub, line))
@@ -154,9 +173,12 @@ int fileParsing(t_cub *cub) {
 		cub->state.height++;
 		if ((len = ft_strlen(line)) > cub->state.width)
 			cub->state.width = len;
+		countSprites(cub, line);
 	}
 	free(line);
 	close(fd);
+	if (!(cub->sprites = malloc(sizeof(t_sprite) * cub->numSprites)))
+		return (0);
     getMap(cub);
 	return (1);
 }

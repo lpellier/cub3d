@@ -1,5 +1,12 @@
 #include "../cub3d.h"
 
+void spriteCasting(t_cub *cub) 
+{
+	int i;
+
+	i = -1;
+}
+
 void raycasting(t_cub *cub)
 {
 	int x = -1;
@@ -59,7 +66,7 @@ void raycasting(t_cub *cub)
 				mapY += stepY;
 				side = 1;
 			}
-			if (cub->game.worldMap[mapX][mapY] > 0) 
+			if (cub->game.worldMap[mapX][mapY] == 1) 
 				hit = 1;
 		}
 
@@ -106,7 +113,8 @@ void raycasting(t_cub *cub)
 		double step = 1.0 * cub->texture[texNum].height / lineHeight;
 		// Starting texture coordinate
 		double texPos = (drawStart - cub->data.img.height / 2 + lineHeight / 2) * step;
-		for (int y = 0; y < drawStart; y++) {
+		for (int y = 0; y < drawStart; y++) 
+		{
 			color = cub->ceilColor;
 			cub->buffer[y][x] = color;
 		}
@@ -120,11 +128,14 @@ void raycasting(t_cub *cub)
 			if(side == 1) color = (color >> 1) & 8355711;
 			cub->buffer[y][x] = color;
 		}
-		for (int y = drawEnd; y < cub->data.img.height; y++) {
+		for (int y = drawEnd; y < cub->data.img.height; y++) 
+		{
 			color = cub->floorColor;
 			cub->buffer[y][x] = color;
 		}
+		cub->zBuffer[x] = perpWallDist;
 	}
+	spriteCasting(cub);
 	drawBuffer(cub);
 	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, cub->data.img.img_ptr, 0, 0);
 }
