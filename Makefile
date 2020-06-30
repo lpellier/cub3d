@@ -27,4 +27,3 @@ re : fclean all
 
 test : $(NAME)
 	@gcc -O3 -fsanitize=address -g -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit -lz -o exec $(NAME)
-	@./exec

@@ -4,12 +4,12 @@ int cmp(const void *left, const void *right) {
 	t_sprt *a = (t_sprt *)left;
 	t_sprt *b = (t_sprt *)right;
 
-	if (b->order < a->order)
-		return (-1);
-	else if (a->order < b->order)
+	if (b->dist < a->dist)
 		return (1);
+	else if (a->dist < b->dist)
+		return (-1);
 	else
-		return ((a->dist < b->dist) - (b->dist < a->dist));
+		return ((a->order < b->order) - (b->order < a->order));
 }
 
 void sortSprites(t_cub *cub) {
@@ -210,6 +210,7 @@ void raycasting(t_cub *cub)
 			color = cub->texture[texNum].data[cub->texture[texNum].height * texY + texX];
 			//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
 			if(side == 1) color = (color >> 1) & 8355711;
+			if (perpWallDist > 5) color = (color >> 1) & 8355711;
 			cub->buffer[y][x] = color;
 		}
 		for (int y = drawEnd; y < cub->data.img.height; y++) 

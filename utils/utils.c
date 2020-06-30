@@ -1,82 +1,59 @@
 #include "../cub3d.h"
 
-char	*line_def(char *stock, int i)
+static int		ft_get_that_line(char **line, char *buff, int fctr, int len)
 {
-	char	*new;
-	int		len;
+	int		i;
+	int		j;
+	char	*tmp;
 
-	if (stock == NULL)
-		return (ft_strdup("\0"));
-	len = ft_strlen(stock);
-	if (i == -1)
-		new = ft_substr(stock, 0, len);
-	else
-		new = ft_substr(stock, 0, i);
-	return (new);
-}
-
-char	*update_stock(char *stock, int i)
-{
-	char	*temp;
-	int		len;
-
-	len = ft_strlen(stock);
-	if (i == -1)
-		i++;
-	temp = ft_substr(stock, i + 1, len);
-	free(stock);
-	stock = temp;
-	return (stock);
-}
-
-char	*init_stock(char *stock, char *buf)
-{
-	char *temp;
-
-	if (stock == NULL)
-		stock = ft_strdup(buf);
-	else
+	tmp = *line;
+	i = -1;
+	j = -1;
+	if (!(*line = (char *)malloc(sizeof(**line) * (BUFFER_SIZE * fctr + 1))))
 	{
-		temp = ft_strjoin(stock, buf);
-		free(stock);
-		stock = temp;
-	}
-	return (stock);
-}
-
-int		append_and_update(char **stock, char **line)
-{
-	int i;
-
-	if ((i = check_n(*stock)) > 0)
-	{
-		*line = line_def(*stock, i - 1);
-		*stock = update_stock(*stock, i - 1);
-		return (i);
-	}
-	return (0);
-}
-
-int		get_next_line(int fd, char **line)
-{
-	int			ret;
-	int			i;
-	static char	*stock = NULL;
-	char		buf[BUFFER_SIZE + 1];
-
-	if (!(fd >= 0 && BUFFER_SIZE > 0 && line != NULL && !read(fd, buf, 0)))
+		free(tmp);
 		return (-1);
-	while ((ret = read(fd, buf, BUFFER_SIZE)))
-	{
-		buf[ret] = '\0';
-		stock = init_stock(stock, buf);
-		if ((i = append_and_update(&stock, line)))
-			return (1);
 	}
-	if ((i = append_and_update(&stock, line)))
-		return (1);
-	*line = line_def(stock, i - 1);
-	free(stock);
-	stock = NULL;
+	while (tmp && tmp[++i])
+		(*line)[i] = tmp[i];
+	i = (i < 0) ? 0 : i;
+	while (++j < len)
+		(*line)[i + j] = buff[j];
+	(*line)[i + j] = 0;
+	j = (buff[j]) ? j + 1 : j;
+	i = 0;
+	while (buff[j])
+		buff[i++] = buff[j++];
+	buff[i] = 0;
+	free(tmp);
+	return (1);
+}
+
+int				get_next_line(int fd, char **line)
+{
+	static char	buff[BUFFER_SIZE + 1];
+	int			len;
+	int			fctr;
+	int			ret;
+
+	fctr = 0;
+	ret = 1;
+	if (!(*line = NULL) && (BUFFER_SIZE < 1 || read(fd, buff, 0)))
+		return (-1);
+	while (ret)
+	{
+		if (!(buff[0]))
+		{
+			ret = read(fd, buff, BUFFER_SIZE);
+			buff[ret] = 0;
+		}
+		len = 0;
+		while (buff[len] && buff[len] != '\n')
+			len++;
+		if (buff[len] == '\n')
+			return (ft_get_that_line(line, buff, ++fctr, len));
+		if (ft_get_that_line(line, buff, ++fctr, len) == -1)
+			return (-1);
+	}
 	return (0);
 }

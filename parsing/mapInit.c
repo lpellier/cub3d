@@ -100,6 +100,8 @@ void				getMap(t_cub *cub)
 			map[count_h] = strto_intp(line, count_h, cub);
 			count_h++;
 		}
+		else
+			free(line);
 	}
 	if (lineIsMap(line)) 	
 		map[count_h] = strto_intp(line, count_h, cub);

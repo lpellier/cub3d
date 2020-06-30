@@ -30,6 +30,7 @@ int		freeAndDestroy(t_cub *cub) {
 	while (++i < cub->state.height)
 		free(cub->game.worldMap[i]);
 	free(cub->game.worldMap);
+	// free(cub->data.mapPath);
 	i = -1;
 	while (++i < 4)
 		free(cub->texture[i].path);

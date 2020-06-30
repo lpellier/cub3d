@@ -1,10 +1,16 @@
 #include "cub3d.h"
 
-int main(void)
+int main(int ac, char **av)
 {
 	t_cub cub;
+	// char *mapPath;
 
 	initState(&cub);
+	// if (ac != 2) {
+	// 	printf("arg error\n");
+	// 	return (0);
+	// }
+	// mapPath = ft_strdup(av[1]);
 	if (!fileParsing(&cub))
 	{
 		printf("Parsing Error\n");

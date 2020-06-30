@@ -1,6 +1,13 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+// TO DO LIST
+// - Si la taille de fenêtre demandée dans la map est plus grande que celle de l’écran,
+//   la taille de fenêtre doit être celle de l’écran.
+// - map path in first arg
+// - error handling for map
+// - if error, program must return(?) "Error\n" followed by another explication
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
