@@ -1,14 +1,31 @@
 #include "../cub3d.h"
 
+int cmp(const void *left, const void *right) {
+	t_sprt *a = (t_sprt *)left;
+	t_sprt *b = (t_sprt *)right;
+
+	if (b->order < a->order)
+		return (-1);
+	else if (a->order < b->order)
+		return (1);
+	else
+		return ((a->dist < b->dist) - (b->dist < a->dist));
+}
+
 void sortSprites(t_cub *cub) {
 	int i;
 
 	i = -1;
 	while (++i < cub->numSprites) {
 		cub->sprt[i].dist = cub->spriteDistance[i];
-		cub->sprt[i].order = cub->spriteOrder[i];
+		cub->sprt[i].order = cub->spriteOrder[i];	
 	}
-	// to be finished
+	qsort(cub->sprt, cub->numSprites, sizeof(t_sprt), cmp);
+	i = -1;
+	while (++i < cub->numSprites) {
+		cub->spriteDistance[i] = cub->sprt[cub->numSprites - i - 1].dist;
+		cub->spriteOrder[i] = cub->sprt[cub->numSprites - i - 1].order;
+	}
 }
 
 void spriteCasting(t_cub *cub) 
@@ -21,7 +38,57 @@ void spriteCasting(t_cub *cub)
 		cub->spriteDistance[i] = ((cub->state.posX - cub->sprites[i].posX) * (cub->state.posX - cub->sprites[i].posX) \
 		+ (cub->state.posY - cub->sprites[i].posY) * (cub->state.posY - cub->sprites[i].posY));
 	}
-	sortSprites(cub->spriteOrder, cub->spriteDistance, cub->numSprites);
+	sortSprites(cub);
+	i = -1;
+	// printf("player pos : x = %f, y = %f\n", cub->state.posX, cub->state.posY);
+	while (++i < cub->numSprites)
+	{
+		double spriteX = cub->sprites[cub->spriteOrder[i]].posX - cub->state.posX;
+		double spriteY = cub->sprites[cub->spriteOrder[i]].posY - cub->state.posY;
+		// printf("i = %d && order = %d\n", i, cub->spriteOrder[i]);
+		// printf("spriteX = %f, spriteY = %f\n", spriteX, spriteY);
+		// printf("x = %f && y = %f\n\n", cub->sprites[cub->spriteOrder[i]].posX, cub->sprites[cub->spriteOrder[i]].posY);
+		double invDet = 1.0 / (cub->state.planeX * cub->state.dirY - cub->state.dirX * cub->state.planeY);
+
+		double transformX = invDet * (cub->state.dirY * spriteX - cub->state.dirX * spriteY);
+		double transformY = invDet * (-cub->state.planeY * spriteX + cub->state.planeX * spriteY);
+		// printf("%f %f\n", transformX, transformY);
+		int spriteScreenX = (int)((cub->data.img.width / 2) * (1 + transformX / transformY));
+
+		int spriteHeight = abs((int)(cub->data.img.height / (transformY)));
+
+		int drawStartY = -spriteHeight / 2 + cub->data.img.height / 2;
+		if (drawStartY < 0)
+			drawStartY = 0;
+		int drawEndY = spriteHeight / 2 + cub->data.img.height / 2;
+		if (drawEndY >= cub->data.img.height)
+			drawEndY = cub->data.img.height - 1;
+		
+		int spriteWidth = abs((int)(cub->data.img.height / (transformY)));
+		int drawStartX = -spriteWidth / 2 + spriteScreenX;
+		if (drawStartX < 0)
+			drawStartX = 0;
+		int drawEndX = spriteWidth / 2 + spriteScreenX;
+		if (drawEndX >= cub->data.img.width)
+			drawEndX = cub->data.img.width - 1;
+		int stripe = drawStartX - 1;
+		while (++stripe < drawEndX)
+		{
+			int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * cub->sprites[cub->spriteOrder[i]].texture->width / spriteWidth) / 256;
+			if (transformY > 0 && stripe > 0 && stripe < cub->data.img.width && transformY < cub->zBuffer[stripe])
+			{
+				int y = drawStartY - 1;
+				while (++y < drawEndY)
+				{
+					int d = (y) * 256 - cub->data.img.height * 128 + spriteHeight * 128;
+					int texY = ((d * cub->sprites[cub->spriteOrder[i]].texture->height) / spriteHeight) / 256;
+					int color = cub->sprites[cub->spriteOrder[i]].texture->data[cub->sprites[cub->spriteOrder[i]].texture->width * texY + texX];
+					if ((color & 0x00FFFFFF) != 0)
+						cub->buffer[y][stripe] = color;
+				}
+			}
+		}
+	}
 }
 
 void raycasting(t_cub *cub)

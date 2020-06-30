@@ -53,8 +53,8 @@ int				*strto_intp(char *str, int height, t_cub *cub)
 			map[i] = 0;
 		else if (str[i] >= '2') {
 			map[i] = str[i] - 48;
-			cub->sprites[cub->spriteIndex].posX = i + 0.5;
-			cub->sprites[cub->spriteIndex].posY = height + 0.5;
+			cub->sprites[cub->spriteIndex].posX = height + 0.5;
+			cub->sprites[cub->spriteIndex].posY = i + 0.5;
 			cub->sprites[cub->spriteIndex].texture = &cub->sprite[str[i] - 48 - 2];
 			cub->spriteIndex += 1;
 		}
