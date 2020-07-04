@@ -221,6 +221,7 @@ void raycasting(t_cub *cub)
 		cub->zBuffer[x] = perpWallDist;
 	}
 	spriteCasting(cub);
+	drawMinimap(cub);
 	drawBuffer(cub);
 	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, cub->data.img.img_ptr, 0, 0);
 }

@@ -3,15 +3,16 @@
 int main(int ac, char **av)
 {
 	t_cub cub;
-	// char *mapPath;
+	int screenX, screenY;
+	char *mapPath;
 
 	initState(&cub);
 	// if (ac != 2) {
 	// 	printf("arg error\n");
 	// 	return (0);
 	// }
-	// mapPath = ft_strdup(av[1]);
-	if (!fileParsing(&cub))
+	mapPath = ft_strdup(av[1]);
+	if (!fileParsing(&cub, mapPath))
 	{
 		printf("Parsing Error\n");
 		exit(0);
@@ -21,8 +22,15 @@ int main(int ac, char **av)
 		return (0);
 	if ((cub.data.mlx_ptr = mlx_init()) == NULL)
 		return (0);
+	mlx_get_screen_size(cub.data.mlx_ptr, &screenX, &screenY);
+	if (cub.data.img.width > screenX)
+		cub.data.img.width = screenX;
+	if (cub.data.img.height > screenY)
+		cub.data.img.height = screenY;
 	if ((cub.data.win_ptr = mlx_new_window(cub.data.mlx_ptr, cub.data.img.width, cub.data.img.height, "cub3d")) == NULL)
 		return (0);
+	
+	printf("screenX = %d && screenY = %d\n", screenX, screenY);
 	printf("numSprites = %d\n", cub.numSprites);
 	if (!getTexSprite(&cub))
 		return (0);

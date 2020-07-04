@@ -10,7 +10,7 @@ SO ./textures/minecraft/cobblestone.xpm
 
 EA ./textures/minecraft/cracked_stone_bricks.xpm
 
-S1 ./sprites/mechahitler.xpm
+S1 ./sprites/barrel.xpm
 S2 ./sprites/greenlight.xpm
 S3 ./sprites/pillar.xpm
 

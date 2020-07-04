@@ -149,13 +149,13 @@ void countSprites(t_cub *cub, char *str) {
 	}
 }
 
-int fileParsing(t_cub *cub) {
+int fileParsing(t_cub *cub, char *mapPath) {
     int fd;
 	int len;
     char *line;
 
     line = NULL;
-	fd = open("maps/testmap.cub", O_RDONLY);
+	fd = open(mapPath, O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
 		if (lineIsMap(line)) {
@@ -185,6 +185,6 @@ int fileParsing(t_cub *cub) {
 		return (0);
 	if (!(cub->sprt = malloc(sizeof(t_sprt) * cub->numSprites)))
 		return (0);
-    getMap(cub);
+    getMap(cub, mapPath);
 	return (1);
 }

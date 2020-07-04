@@ -22,7 +22,7 @@ void initState(t_cub *cub) {
 	cub->numSprites = 0;
 	cub->spriteIndex = 0;
 	int i = -1;
-	while (++i < 6600)
+	while (++i < 66000)
 		cub->game.keys[i] = 0;
 }
 

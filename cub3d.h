@@ -3,8 +3,8 @@
 
 // TO DO LIST
 // - Si la taille de fenêtre demandée dans la map est plus grande que celle de l’écran,
-//   la taille de fenêtre doit être celle de l’écran.
-// - map path in first arg
+//   la taille de fenêtre doit être celle de l’écran. --> done for mms lib, still need opengl version
+// - map path in first arg --> done
 // - error handling for map
 // - if error, program must return(?) "Error\n" followed by another explication
 
@@ -16,6 +16,14 @@
 #include <time.h>
 #include <fcntl.h>
 #include <unistd.h>
+
+# define RESX_MAX_MAC 3072
+# define RESY_MAX_MAC 1920
+
+# define WHITE 16777215
+# define RED 16711680
+# define GREEN 65280
+# define BLUE 255
 
 # define BUFFER_SIZE 32
 # define FPS 60
@@ -148,9 +156,9 @@ int getTexSprite(t_cub *cub);
 
 void putPixel(t_img *img, int x, int y, unsigned int color);
 void raycasting(t_cub *cub);
-void putSquare(t_img *img, int x, int y, int width, int height, unsigned int color);
+void putSquare(t_cub *cub, int x, int y, int width, int height, unsigned int color);
 
-// void drawMinimap(t_cub *cub);
+void drawMinimap(t_cub *cub);
 
 void 	drawBuffer(t_cub *cub);
 
@@ -179,10 +187,10 @@ void		rotateRight(t_cub *cub);
 void sortSprites(t_cub *cub);
 void countSprites(t_cub *cub, char *str);
 int					lineIsMap(char *str);
-int 				fileParsing(t_cub *cub);
+int 				fileParsing(t_cub *cub, char *mapPath);
 void 				getPos(int x, int y, char orientation, t_state *state);
 int					*strto_intp(char *str, int height, t_cub *cub);
-void				getMap(t_cub *cub);
+void				getMap(t_cub *cub, char *mapPath);
 
 // Utility functions
 

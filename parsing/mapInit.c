@@ -80,7 +80,7 @@ int		lineIsMap(char *str) {
 	return (1);
 }
 
-void				getMap(t_cub *cub)
+void				getMap(t_cub *cub, char *mapPath)
 {
 	int				fd;
     int             count_h;
@@ -89,7 +89,7 @@ void				getMap(t_cub *cub)
 
 	line = NULL;
     count_h = 0;
-	fd = open("maps/testmap.cub", O_RDONLY);
+	fd = open(mapPath, O_RDONLY);
 	line = NULL;
 	if (!(map = malloc(sizeof(int *) * cub->state.height)))
 		return ;
