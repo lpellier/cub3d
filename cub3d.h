@@ -30,6 +30,8 @@
 # define MOV 0.15
 # define ROT 0.1
 
+# define ENNEMYMOV 0.1
+
 # define LEFT_CLICK 	1
 # define RIGHT_CLICK 	2
 # define MIDDLE_CLICK	3
@@ -190,7 +192,7 @@ int					lineIsMap(char *str);
 int 				fileParsing(t_cub *cub, char *mapPath);
 void 				getPos(int x, int y, char orientation, t_state *state);
 int					*strto_intp(char *str, int height, t_cub *cub);
-void				getMap(t_cub *cub, char *mapPath);
+int				getMap(t_cub *cub, char *mapPath);
 
 // Utility functions
 

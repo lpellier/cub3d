@@ -12,11 +12,9 @@ void drawBuffer(t_cub *cub) {
 	while (i < cub->data.img.height) {
 		j = 0;
 		while (j < cub->data.img.width) {
-			// printf("%d ",cub->buffer[i][j]);
 			putPixel(&cub->data.img, j, i, cub->buffer[i][j]);
 			j++;
 		}
-		// printf("\n");
 		i++;
 	}
 }
@@ -34,7 +32,6 @@ void putSquare(t_cub *cub, int x, int y, int width, int height, unsigned int col
 		}
 		i++;
 	}
-	// printf("%d %d\n", x, y);
 }
 
 void drawMinimap(t_cub *cub)

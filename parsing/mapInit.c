@@ -35,7 +35,7 @@ int				*strto_intp(char *str, int height, t_cub *cub)
 	int		i;
 	int count;
 	int		*map;
-
+	
 	if (!(map = malloc(sizeof(int) * cub->state.width)))
 		return (NULL);
 	i = -1;
@@ -75,12 +75,43 @@ int		lineIsMap(char *str) {
 	while (*str == 32 || *str == 9 || *str == 10 \
 	|| *str == 11 || *str == 12 || *str == 13)
 		str++;
-	if (*str != '1')
-		return (0);
-	return (1);
+	if (*str == '1' || *str == '0')
+		return (1);
+	return (0);
 }
 
-void				getMap(t_cub *cub, char *mapPath)
+// int lineIsZero(char *str) {
+// 	while (*str == 32 || *str == 9 || *str == 10 \
+// 	|| *str == 11 || *str == 12 || *str == 13)
+// 		str++;
+// 	if (*str != '0')
+// 		return (0);
+// 	return (1);
+// }
+
+int mapError(t_cub *cub, int **map) {
+	int i;
+
+	i = -1;
+	// MAP [-Y] [X]
+	printf("mapWidth = %d && mapHeight = %d\n", cub->state.width, cub->state.height);
+	while (++i < cub->state.width) {
+		if (map[0][i] != 1  || map[cub->state.height - 1][i] != 1) {
+			printf("Error 1: %d\nMap not right\n", i);
+			return (1);
+		}
+	}
+	i = -1;
+	while (++i < cub->state.height) {
+		if (map[i][0] != 1 || map[i][cub->state.width - 1] != 1) {
+			printf("Error 2: %d\nMap not right\n", i);
+			return (1);
+		}
+	}
+	return (0);
+}
+
+int				getMap(t_cub *cub, char *mapPath)
 {
 	int				fd;
     int             count_h;
@@ -92,7 +123,7 @@ void				getMap(t_cub *cub, char *mapPath)
 	fd = open(mapPath, O_RDONLY);
 	line = NULL;
 	if (!(map = malloc(sizeof(int *) * cub->state.height)))
-		return ;
+		return (0);
 	while (get_next_line(fd, &line))
 	{
 		if (lineIsMap(line)) 
@@ -106,5 +137,12 @@ void				getMap(t_cub *cub, char *mapPath)
 	if (lineIsMap(line)) 	
 		map[count_h] = strto_intp(line, count_h, cub);
 	close(fd);
-	cub->game.worldMap = map;
+	// if (!mapError(cub, map))
+		cub->game.worldMap = map;
+	// else
+		// return(0);
+	return (1);
+	
+	// else
+		// return;
 }

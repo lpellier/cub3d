@@ -185,6 +185,7 @@ int fileParsing(t_cub *cub, char *mapPath) {
 		return (0);
 	if (!(cub->sprt = malloc(sizeof(t_sprt) * cub->numSprites)))
 		return (0);
-    getMap(cub, mapPath);
+    if (!getMap(cub, mapPath))
+		return (0);
 	return (1);
 }
