@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 20:06:32 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/07 20:58:18 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/07 21:07:53 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,11 @@ void		draw_minimap(t_cub *cub)
 		while (++j < cub->state.height)
 		{
 			if (cub->game.world_map[j][i] == 1)
-				put_square(cub, (int)(i * cub->resx), (int)(j * cub->resy), WHITE);
+				put_square(cub, (int)(i * cub->resx), (int)(j * cub->resy), \
+				WHITE);
 			else if (cub->game.world_map[j][i] >= 2)
-				put_square(cub, (int)(i * cub->resx), (int)(j * cub->resy), BLUE);
+				put_square(cub, (int)(i * cub->resx), (int)(j * cub->resy), \
+				BLUE);
 		}
 	}
 }

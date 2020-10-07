@@ -121,9 +121,16 @@ typedef struct s_sprt
 	int order;
 } t_sprt;
 
+typedef struct s_ray
+{
+	double dist;
+	int order;
+} t_ray;
+
 typedef struct s_cub
 {
 	t_data data;
+	t_ray ray;
 	t_game game;
 	t_state state;
 	t_img minimap;

@@ -1,9 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/07 21:09:25 by lpellier          #+#    #+#             */
+/*   Updated: 2020/10/07 21:12:34 by lpellier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
-int cmp(const void *left, const void *right) {
-	t_sprt *a = (t_sprt *)left;
-	t_sprt *b = (t_sprt *)right;
+int cmp(const void *left, const void *right)
+{
+	t_sprt *a;
+	t_sprt *b;
 
+	a = (t_sprt *)left;
+	b = (t_sprt *)right;
 	if (b->dist < a->dist)
 		return (1);
 	else if (a->dist < b->dist)
@@ -12,7 +27,8 @@ int cmp(const void *left, const void *right) {
 		return ((a->order < b->order) - (b->order < a->order));
 }
 
-void sort_sprites(t_cub *cub) {
+void sort_sprites(t_cub *cub)
+{
 	int i;
 
 	i = -1;
@@ -33,7 +49,8 @@ void sprite_casting(t_cub *cub)
 	int i;
 
 	i = -1;
-	while (++i < cub->num_sprites) {
+	while (++i < cub->num_sprites)
+	{
 		cub->sprite_order[i] = i;
 		cub->sprite_distance[i] = ((cub->state.pos_x - cub->sprites[i].pos_x) * (cub->state.pos_x - cub->sprites[i].pos_x) \
 		+ (cub->state.pos_y - cub->sprites[i].pos_y) * (cub->state.pos_y - cub->sprites[i].pos_y));
