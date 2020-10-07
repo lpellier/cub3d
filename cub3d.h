@@ -138,6 +138,10 @@ typedef struct s_cub
 	int *sprite_order; /* sort of sprites */
 	double *sprite_distance;
 
+	int error;
+	int	resx;
+	int resy;
+
 	int floor_color;
 	int ceil_color;
 	int **buffer;
@@ -157,7 +161,7 @@ int get_tex_sprite(t_cub *cub);
 
 void put_pixel(t_img *img, int x, int y, unsigned int color);
 void raycasting(t_cub *cub);
-void put_square(t_cub *cub, int x, int y, int width, int height, unsigned int color);
+void put_square(t_cub *cub, int x, int y, unsigned int color);
 
 void draw_minimap(t_cub *cub);
 
@@ -196,6 +200,7 @@ int					line_is_map(char *str);
 int 				file_parsing(t_cub *cub, char *map_path);
 void 				get_pos(int x, int y, char orientation, t_state *state);
 void		get_pos2(char orientation, t_state *state);
+int			strto_intp2(char c, int cur, int height, t_cub *cub);
 int					*strto_intp(char *str, int height, t_cub *cub);
 int				get_map(t_cub *cub, char *map_path);
 

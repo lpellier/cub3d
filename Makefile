@@ -5,7 +5,7 @@ FLAGS = -Wall -Werror -Wextra
 SRCS =	main.c \
 engine/draw.c engine/raycasting.c \
 events/rot_events.c events/move_events.c events/handle_events.c events/handle_events2.c \
-parsing/map_init.c parsing/file_parsing.c parsing/file_parsing2.c \
+parsing/map_init.c parsing/map_init2.c parsing/file_parsing.c parsing/file_parsing2.c \
 init/init_functions.c \
 utils/utils.c utils/utils2.c utils/utils3.c
 

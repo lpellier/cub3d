@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:00:58 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/07 18:01:01 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/07 20:50:19 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ void		init_state(t_cub *cub)
 	int		i;
 
 	cub->state.time = (double)clock();
+	cub->error = 0;
+	cub->resx = 0;
+	cub->resy = 0;
 	cub->state.old_time = 0;
 	cub->state.width = 0;
 	cub->state.height = 0;
