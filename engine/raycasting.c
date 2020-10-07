@@ -12,77 +12,77 @@ int cmp(const void *left, const void *right) {
 		return ((a->order < b->order) - (b->order < a->order));
 }
 
-void sortSprites(t_cub *cub) {
+void sort_sprites(t_cub *cub) {
 	int i;
 
 	i = -1;
-	while (++i < cub->numSprites) {
-		cub->sprt[i].dist = cub->spriteDistance[i];
-		cub->sprt[i].order = cub->spriteOrder[i];	
+	while (++i < cub->num_sprites) {
+		cub->sprt[i].dist = cub->sprite_distance[i];
+		cub->sprt[i].order = cub->sprite_order[i];	
 	}
-	qsort(cub->sprt, cub->numSprites, sizeof(t_sprt), cmp);
+	qsort(cub->sprt, cub->num_sprites, sizeof(t_sprt), cmp);
 	i = -1;
-	while (++i < cub->numSprites) {
-		cub->spriteDistance[i] = cub->sprt[cub->numSprites - i - 1].dist;
-		cub->spriteOrder[i] = cub->sprt[cub->numSprites - i - 1].order;
+	while (++i < cub->num_sprites) {
+		cub->sprite_distance[i] = cub->sprt[cub->num_sprites - i - 1].dist;
+		cub->sprite_order[i] = cub->sprt[cub->num_sprites - i - 1].order;
 	}
 }
 
-void spriteCasting(t_cub *cub) 
+void sprite_casting(t_cub *cub) 
 {
 	int i;
 
 	i = -1;
-	while (++i < cub->numSprites) {
-		cub->spriteOrder[i] = i;
-		cub->spriteDistance[i] = ((cub->state.posX - cub->sprites[i].posX) * (cub->state.posX - cub->sprites[i].posX) \
-		+ (cub->state.posY - cub->sprites[i].posY) * (cub->state.posY - cub->sprites[i].posY));
+	while (++i < cub->num_sprites) {
+		cub->sprite_order[i] = i;
+		cub->sprite_distance[i] = ((cub->state.pos_x - cub->sprites[i].pos_x) * (cub->state.pos_x - cub->sprites[i].pos_x) \
+		+ (cub->state.pos_y - cub->sprites[i].pos_y) * (cub->state.pos_y - cub->sprites[i].pos_y));
 	}
-	sortSprites(cub);
+	sort_sprites(cub);
 	i = -1;
-	// printf("player pos : x = %f, y = %f\n", cub->state.posX, cub->state.posY);
-	while (++i < cub->numSprites)
+	// printf("player pos : x = %f, y = %f\n", cub->state.pos_x, cub->state.pos_y);
+	while (++i < cub->num_sprites)
 	{
-		double spriteX = cub->sprites[cub->spriteOrder[i]].posX - cub->state.posX;
-		double spriteY = cub->sprites[cub->spriteOrder[i]].posY - cub->state.posY;
-		// printf("i = %d && order = %d\n", i, cub->spriteOrder[i]);
-		// printf("spriteX = %f, spriteY = %f\n", spriteX, spriteY);
-		// printf("x = %f && y = %f\n\n", cub->sprites[cub->spriteOrder[i]].posX, cub->sprites[cub->spriteOrder[i]].posY);
-		double invDet = 1.0 / (cub->state.planeX * cub->state.dirY - cub->state.dirX * cub->state.planeY);
+		double sprite_x = cub->sprites[cub->sprite_order[i]].pos_x - cub->state.pos_x;
+		double sprite_y = cub->sprites[cub->sprite_order[i]].pos_y - cub->state.pos_y;
+		// printf("i = %d && order = %d\n", i, cub->sprite_order[i]);
+		// printf("sprite_x = %f, sprite_y = %f\n", sprite_x, sprite_y);
+		// printf("x = %f && y = %f\n\n", cub->sprites[cub->sprite_order[i]].pos_x, cub->sprites[cub->sprite_order[i]].pos_y);
+		double inv_det = 1.0 / (cub->state.plane_x * cub->state.dir_y - cub->state.dir_x * cub->state.plane_y);
 
-		double transformX = invDet * (cub->state.dirY * spriteX - cub->state.dirX * spriteY);
-		double transformY = invDet * (-cub->state.planeY * spriteX + cub->state.planeX * spriteY);
-		// printf("%f %f\n", transformX, transformY);
-		int spriteScreenX = (int)((cub->data.img.width / 2) * (1 + transformX / transformY));
+		double transform_x = inv_det * (cub->state.dir_y * sprite_x - cub->state.dir_x * sprite_y);
+		double transform_y = inv_det * (-cub->state.plane_y * sprite_x + cub->state.plane_x * sprite_y);
+		// printf("%f %f\n", transform_x, transform_y);
+		int sprite_screen_x = (int)((cub->data.img.width / 2) * (1 + transform_x / transform_y));
 
-		int spriteHeight = abs((int)(cub->data.img.height / (transformY)));
+		int sprite_height = abs((int)(cub->data.img.height / (transform_y)));
 
-		int drawStartY = -spriteHeight / 2 + cub->data.img.height / 2;
-		if (drawStartY < 0)
-			drawStartY = 0;
-		int drawEndY = spriteHeight / 2 + cub->data.img.height / 2;
-		if (drawEndY >= cub->data.img.height)
-			drawEndY = cub->data.img.height - 1;
+		int draw_start_y = -sprite_height / 2 + cub->data.img.height / 2;
+		if (draw_start_y < 0)
+			draw_start_y = 0;
+		int draw_end_y = sprite_height / 2 + cub->data.img.height / 2;
+		if (draw_end_y >= cub->data.img.height)
+			draw_end_y = cub->data.img.height - 1;
 		
-		int spriteWidth = abs((int)(cub->data.img.height / (transformY)));
-		int drawStartX = -spriteWidth / 2 + spriteScreenX;
-		if (drawStartX < 0)
-			drawStartX = 0;
-		int drawEndX = spriteWidth / 2 + spriteScreenX;
-		if (drawEndX >= cub->data.img.width)
-			drawEndX = cub->data.img.width - 1;
-		int stripe = drawStartX - 1;
-		while (++stripe < drawEndX)
+		int sprite_width = abs((int)(cub->data.img.height / (transform_y)));
+		int draw_start_x = -sprite_width / 2 + sprite_screen_x;
+		if (draw_start_x < 0)
+			draw_start_x = 0;
+		int draw_end_x = sprite_width / 2 + sprite_screen_x;
+		if (draw_end_x >= cub->data.img.width)
+			draw_end_x = cub->data.img.width - 1;
+		int stripe = draw_start_x - 1;
+		while (++stripe < draw_end_x)
 		{
-			int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * cub->sprites[cub->spriteOrder[i]].texture->width / spriteWidth) / 256;
-			if (transformY > 0 && stripe > 0 && stripe < cub->data.img.width && transformY < cub->zBuffer[stripe])
+			int tex_x = (int)(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * cub->sprites[cub->sprite_order[i]].texture->width / sprite_width) / 256;
+			if (transform_y > 0 && stripe > 0 && stripe < cub->data.img.width && transform_y < cub->z_buffer[stripe])
 			{
-				int y = drawStartY - 1;
-				while (++y < drawEndY)
+				int y = draw_start_y - 1;
+				while (++y < draw_end_y)
 				{
-					int d = (y) * 256 - cub->data.img.height * 128 + spriteHeight * 128;
-					int texY = ((d * cub->sprites[cub->spriteOrder[i]].texture->height) / spriteHeight) / 256;
-					int color = cub->sprites[cub->spriteOrder[i]].texture->data[cub->sprites[cub->spriteOrder[i]].texture->width * texY + texX];
+					int d = (y) * 256 - cub->data.img.height * 128 + sprite_height * 128;
+					int tex_y = ((d * cub->sprites[cub->sprite_order[i]].texture->height) / sprite_height) / 256;
+					int color = cub->sprites[cub->sprite_order[i]].texture->data[cub->sprites[cub->sprite_order[i]].texture->width * tex_y + tex_x];
 					if ((color & 0x00FFFFFF) != 0)
 						cub->buffer[y][stripe] = color;
 				}
@@ -96,132 +96,132 @@ void raycasting(t_cub *cub)
 	int x = -1;
     while (++x < cub->data.img.width)
 	{
-		double cameraX = 2 * x / (double)cub->data.img.width - 1;
-		double rayDirX = cub->state.dirX + cub->state.planeX * cameraX;
-		double rayDirY = cub->state.dirY + cub->state.planeY * cameraX;
+		double camera_x = 2 * x / (double)cub->data.img.width - 1;
+		double raydir_x = cub->state.dir_x + cub->state.plane_x * camera_x;
+		double raydir_y = cub->state.dir_y + cub->state.plane_y * camera_x;
 
-		int mapX = (int)cub->state.posX;
-		int mapY = (int)cub->state.posY;
+		int map_x = (int)cub->state.pos_x;
+		int map_y = (int)cub->state.pos_y;
 
-		double sideDistX;
-		double sideDistY;
+		double side_dist_x;
+		double side_dist_y;
 
-		double deltaDistX = (rayDirY == 0) ? 0 : ((rayDirX == 0) ? 1 : fabs(1 / rayDirX));
-      	double deltaDistY = (rayDirX == 0) ? 0 : ((rayDirY == 0) ? 1 : fabs(1 / rayDirY));
-		double perpWallDist;
+		double delta_dist_x = (raydir_y == 0) ? 0 : ((raydir_x == 0) ? 1 : fabs(1 / raydir_x));
+      	double delta_dist_y = (raydir_x == 0) ? 0 : ((raydir_y == 0) ? 1 : fabs(1 / raydir_y));
+		double perp_wall_dist;
 
-		int stepX;
-		int stepY;
+		int step_x;
+		int step_y;
 
 		int hit = 0;
 		int side;
-		if (rayDirX < 0)
+		if (raydir_x < 0)
 		{
-			stepX = -1;
-			sideDistX = (cub->state.posX - mapX) * deltaDistX;
+			step_x = -1;
+			side_dist_x = (cub->state.pos_x - map_x) * delta_dist_x;
 		}
 		else
 		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - cub->state.posX) * deltaDistX;
+			step_x = 1;
+			side_dist_x = (map_x + 1.0 - cub->state.pos_x) * delta_dist_x;
 		}
-		if (rayDirY < 0)
+		if (raydir_y < 0)
 		{
-			stepY = -1;
-			sideDistY = (cub->state.posY - mapY) * deltaDistY;
+			step_y = -1;
+			side_dist_y = (cub->state.pos_y - map_y) * delta_dist_y;
 		}
 		else
 		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - cub->state.posY) * deltaDistY;
+			step_y = 1;
+			side_dist_y = (map_y + 1.0 - cub->state.pos_y) * delta_dist_y;
 		}
 
 		while (hit == 0)
 		{
-			if (sideDistX < sideDistY)
+			if (side_dist_x < side_dist_y)
 			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
+				side_dist_x += delta_dist_x;
+				map_x += step_x;
 				side = 0;
 			}
 			else
 			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
+				side_dist_y += delta_dist_y;
+				map_y += step_y;
 				side = 1;
 			}
-			if (cub->game.worldMap[mapX][mapY] == 1) 
+			if (cub->game.world_map[map_x][map_y] == 1) 
 				hit = 1;
 		}
 
-		int texNum;
+		int tex_num;
 
 		if (side == 0) {
-			perpWallDist = (mapX - cub->state.posX + (1 - stepX) / 2) / rayDirX;
-			if (rayDirX > 0)
-				texNum = 0; // SOUTH
+			perp_wall_dist = (map_x - cub->state.pos_x + (1 - step_x) / 2) / raydir_x;
+			if (raydir_x > 0)
+				tex_num = 0; // SOUTH
 			else
-				texNum = 1; // NORTH
+				tex_num = 1; // NORTH
 		}
 		else {
-			perpWallDist = (mapY - cub->state.posY + (1 - stepY) / 2) / rayDirY;
-			if (rayDirY > 0)
-				texNum = 2; // EAST
+			perp_wall_dist = (map_y - cub->state.pos_y + (1 - step_y) / 2) / raydir_y;
+			if (raydir_y > 0)
+				tex_num = 2; // EAST
 			else
-				texNum = 3; // WEST
+				tex_num = 3; // WEST
 		}
-		int lineHeight = (int)(cub->data.img.height / perpWallDist);
+		int line_height = (int)(cub->data.img.height / perp_wall_dist);
 
-		int drawStart = -lineHeight / 2 + cub->data.img.height / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		int drawEnd = lineHeight / 2 + cub->data.img.height / 2;
-		if (drawEnd >= cub->data.img.height)
-			drawEnd = cub->data.img.height - 1;
+		int draw_start = -line_height / 2 + cub->data.img.height / 2;
+		if (draw_start < 0)
+			draw_start = 0;
+		int draw_end = line_height / 2 + cub->data.img.height / 2;
+		if (draw_end >= cub->data.img.height)
+			draw_end = cub->data.img.height - 1;
 
 		unsigned int color;
 		//texturing calculations
 
-		//calculate value of wallX
-		double wallX; //where exactly the wall was hit
-		if (side == 0) wallX = cub->state.posY + perpWallDist * rayDirY;
-		else           wallX = cub->state.posX + perpWallDist * rayDirX;
-		wallX -= floor((wallX));
+		//calculate value of wall_x
+		double wall_x; //where exactly the wall was hit
+		if (side == 0) wall_x = cub->state.pos_y + perp_wall_dist * raydir_y;
+		else           wall_x = cub->state.pos_x + perp_wall_dist * raydir_x;
+		wall_x -= floor((wall_x));
 
 		//x coordinate on the texture
-		int texX = (int)(wallX * (double)(cub->texture[texNum].width));
-		if(side == 0 && rayDirX > 0) texX = cub->texture[texNum].width - texX - 1;
-		if(side == 1 && rayDirY < 0) texX = cub->texture[texNum].width - texX - 1;
+		int tex_x = (int)(wall_x * (double)(cub->texture[tex_num].width));
+		if(side == 0 && raydir_x > 0) tex_x = cub->texture[tex_num].width - tex_x - 1;
+		if(side == 1 && raydir_y < 0) tex_x = cub->texture[tex_num].width - tex_x - 1;
 	
 		// How much to increase the texture coordinate per screen pixel
-		double step = 1.0 * cub->texture[texNum].height / lineHeight;
+		double step = 1.0 * cub->texture[tex_num].height / line_height;
 		// Starting texture coordinate
-		double texPos = (drawStart - cub->data.img.height / 2 + lineHeight / 2) * step;
-		for (int y = 0; y < drawStart; y++) 
+		double tex_pos = (draw_start - cub->data.img.height / 2 + line_height / 2) * step;
+		for (int y = 0; y < draw_start; y++) 
 		{
-			color = cub->ceilColor;
+			color = cub->ceil_color;
 			cub->buffer[y][x] = color;
 		}
-		for(int y = drawStart; y < drawEnd; y++)
+		for(int y = draw_start; y < draw_end; y++)
 		{
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-			int texY = (int)texPos & (cub->texture[texNum].height - 1);
-			texPos += step;
-			color = cub->texture[texNum].data[cub->texture[texNum].height * texY + texX];
+			int tex_y = (int)tex_pos & (cub->texture[tex_num].height - 1);
+			tex_pos += step;
+			color = cub->texture[tex_num].data[cub->texture[tex_num].height * tex_y + tex_x];
 			//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
 			if(side == 1) color = (color >> 1) & 8355711;
-			if (perpWallDist > 5) color = (color >> 1) & 8355711;
+			if (perp_wall_dist > 5) color = (color >> 1) & 8355711;
 			cub->buffer[y][x] = color;
 		}
-		for (int y = drawEnd; y < cub->data.img.height; y++) 
+		for (int y = draw_end; y < cub->data.img.height; y++) 
 		{
-			color = cub->floorColor;
+			color = cub->floor_color;
 			cub->buffer[y][x] = color;
 		}
-		cub->zBuffer[x] = perpWallDist;
+		cub->z_buffer[x] = perp_wall_dist;
 	}
-	spriteCasting(cub);
-	drawMinimap(cub);
-	drawBuffer(cub);
+	sprite_casting(cub);
+	draw_minimap(cub);
+	draw_buffer(cub);
 	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, cub->data.img.img_ptr, 0, 0);
 }

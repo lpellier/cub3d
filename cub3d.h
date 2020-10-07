@@ -1,21 +1,21 @@
-#ifndef CUB3D_H
+# ifndef CUB3D_H
 # define CUB3D_H
 
-// TO DO LIST
+/* TO DO LIST
 // - Si la taille de fenêtre demandée dans la map est plus grande que celle de l’écran,
 //   la taille de fenêtre doit être celle de l’écran. --> done for mms lib, still need opengl version
 // - map path in first arg --> done
-// - error handling for map
-// - if error, program must return(?) "Error\n" followed by another explication
+// - error handling for map --> done
+// - if error, program must return(?) "Error\n" followed by another explication --> done */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <mlx.h>
-#include <math.h>
-#include <time.h>
-#include <fcntl.h>
-#include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <mlx.h>
+# include <math.h>
+# include <time.h>
+# include <fcntl.h>
+# include <unistd.h>
 
 # define RESX_MAX_MAC 3072
 # define RESY_MAX_MAC 1920
@@ -67,52 +67,51 @@
 
 typedef struct		s_img
 {
-	void			*img_ptr;
-	unsigned int	*data;
-	int				size_l;
-	int				bpp;
-	int				endian;
-	int				height;
-	int				width;
-	char			*path;
-}					t_img;
+	void			   		  *img_ptr;
+	unsigned int		*data;
+	int							size_l;
+	int							bpp;
+	int							endian;
+	int							height;
+	int							width;
+	char					  *path;
+}							t_img;
 
 typedef struct	s_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	double	time_taken;
-	t_img 	img;
-}		t_data;
+	void				*mlx_ptr;
+	void				*win_ptr;
+	double			  time_taken;
+	t_img 				img;
+}						t_data;
 
 typedef struct	s_game
 {
-	int 		**worldMap;
+	int 		**world_map; // [-Y][X]
 	int			keys[66000];
 }		t_game;
 
 typedef struct	s_state
 {
-	double 			posX;
-	double			posY;
-	double			dirX;
-	double			dirY;
-	double			planeX;
-	double 			planeY;
+	double 			pos_x;
+	double			pos_y;
+	double			dir_x;
+	double			dir_y;
+	double			plane_x;
+	double 			plane_y;
 
 
 	int			height;
 	int			width;
 
-	// variables for time.h
 	double			time;
-	double			oldTime;
+	double			old_time;
 }		t_state;
 
 typedef struct s_sprite
 {
-	double posX;
-	double posY;
+	double pos_x;
+	double pos_y;
 	t_img *texture;
 } t_sprite;
 
@@ -128,81 +127,87 @@ typedef struct s_cub
 	t_game game;
 	t_state state;
 	t_img minimap;
-	t_img texture[4];  // 0 -> SO || 1 -> NO || 2 -> EA || 3 -> WE
+	t_img texture[4];  /* 0 -> SO || 1 -> NO || 2 -> EA || 3 -> WE */
 
-	t_img sprite[3]; // sprites tex
-	t_sprite *sprites; // actual sprites on map
+	t_img sprite[3]; /* sprites tex */
+	t_sprite *sprites; /* actual sprites on map */
 	t_sprt *sprt;
-	double *zBuffer; // 1d buffer for sprites
-	int numSprites; // number of actual objects (sprites) in the map 
-	int	spriteIndex; // only used in map parsing
-	int *spriteOrder; // sort of sprites
-	double *spriteDistance;
+	double *z_buffer; /* 1d buffer for sprites */
+	int num_sprites; /* number of actual objects (sprites) in the map */ 
+	int	sprite_index; /* only used in map parsing */
+	int *sprite_order; /* sort of sprites */
+	double *sprite_distance;
 
-	int floorColor;
-	int ceilColor;
+	int floor_color;
+	int ceil_color;
 	int **buffer;
 
 	clock_t t;
 }	t_cub;
 
-// Init functions
+/* Init functions */
 
-int initBuffer(t_cub *cub);
-void initState(t_cub *cub);
-int getTexture(t_cub *cub, int index);
-int getSprite(t_cub *cub, int index);
-int getTexSprite(t_cub *cub);
+int init_buffer(t_cub *cub);
+void init_state(t_cub *cub);
+int get_texture(t_cub *cub, int index);
+int get_sprite(t_cub *cub, int index);
+int get_tex_sprite(t_cub *cub);
 
-// Engine functions
+/* Engine functions */
 
-void putPixel(t_img *img, int x, int y, unsigned int color);
+void put_pixel(t_img *img, int x, int y, unsigned int color);
 void raycasting(t_cub *cub);
-void putSquare(t_cub *cub, int x, int y, int width, int height, unsigned int color);
+void put_square(t_cub *cub, int x, int y, int width, int height, unsigned int color);
 
-void drawMinimap(t_cub *cub);
+void draw_minimap(t_cub *cub);
 
-void 	drawBuffer(t_cub *cub);
+void 	draw_buffer(t_cub *cub);
 
-int		freeAndDestroy(t_cub *cub);
+int		free_and_destroy(t_cub *cub);
 
-// Event functions
+/* Event functions */
 
 int		framer(clock_t t, t_cub *cub);
 
 void loop(t_cub *cub);
 
 int				update(t_cub *cub);
-int				release(int keyCode, void *param);
-int				events(int keyCode, void *param);
-int				exitWdw(int event, void *param);
+int				release(int key_code, void *param);
+int				events(int key_code, void *param);
+int				exit_wdw(int event, void *param);
 
-void		moveForward(t_cub *cub);
-void		moveBackwards(t_cub *cub);
-void		strafeLeft(t_cub *cub);
-void		strafeRight(t_cub *cub);
-void		rotateLeft(t_cub *cub);
-void		rotateRight(t_cub *cub);
+void		move_forward(t_cub *cub);
+void		move_backwards(t_cub *cub);
+void		strafe_left(t_cub *cub);
+void		strafe_right(t_cub *cub);
+void		rotate_left(t_cub *cub);
+void		rotate_right(t_cub *cub);
 
-// Map Parsing functions
+/* Map Parsing functions */
 
-void sortSprites(t_cub *cub);
-void countSprites(t_cub *cub, char *str);
-int					lineIsMap(char *str);
-int 				fileParsing(t_cub *cub, char *mapPath);
-void 				getPos(int x, int y, char orientation, t_state *state);
+int			next_number(char *str, int *index);
+int			next_color(char *str, int *index);
+int			check_textures(t_cub *cub, char *str);
+int			check_sprite(t_cub *cub, char *str);
+int			check_colors(t_cub *cub, char *str);
+void sort_sprites(t_cub *cub);
+void count_sprites(t_cub *cub, char *str);
+int					line_is_map(char *str);
+int 				file_parsing(t_cub *cub, char *map_path);
+void 				get_pos(int x, int y, char orientation, t_state *state);
+void		get_pos2(char orientation, t_state *state);
 int					*strto_intp(char *str, int height, t_cub *cub);
-int				getMap(t_cub *cub, char *mapPath);
+int				get_map(t_cub *cub, char *map_path);
 
-// Utility functions
+/* Utility functions */
 
+int	put_error(char *str);
 int			get_next_line(int fd, char **line);
 int			check_n(char *stock);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(const char *s1, const char *s2);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
 size_t		ft_strlen(const char *s1);
-// static char	*ft_strrev(char *str);
 char		*ft_itoa(int n);
 
 #endif

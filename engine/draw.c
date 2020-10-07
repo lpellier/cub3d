@@ -2,17 +2,17 @@
 
 // USED FUNCTIONS
 
-void putPixel(t_img *img, int x, int y, unsigned int color) {
+void put_pixel(t_img *img, int x, int y, unsigned int color) {
 	img->data[y * img->width + x] = color;
 }
 
-void drawBuffer(t_cub *cub) {
+void draw_buffer(t_cub *cub) {
 	int i = 0;
 	int j;
 	while (i < cub->data.img.height) {
 		j = 0;
 		while (j < cub->data.img.width) {
-			putPixel(&cub->data.img, j, i, cub->buffer[i][j]);
+			put_pixel(&cub->data.img, j, i, cub->buffer[i][j]);
 			j++;
 		}
 		i++;
@@ -21,7 +21,7 @@ void drawBuffer(t_cub *cub) {
 
 // NOT SO USED FUNCTIONS
 
-void putSquare(t_cub *cub, int x, int y, int width, int height, unsigned int color) {
+void put_square(t_cub *cub, int x, int y, int width, int height, unsigned int color) {
 	int i = y;
 	int j;
 	while (i < height + y) {
@@ -34,7 +34,7 @@ void putSquare(t_cub *cub, int x, int y, int width, int height, unsigned int col
 	}
 }
 
-void drawMinimap(t_cub *cub)
+void draw_minimap(t_cub *cub)
 {
 	int rx = cub->data.img.width / 3;
 	int ry = cub->data.img.height / 3;
@@ -48,11 +48,11 @@ void drawMinimap(t_cub *cub)
 	{
 		j = -1;
 		while (++j < cub->state.height) {
-			if (cub->game.worldMap[j][i] == 1)
-				putSquare(cub, (int)(i * resx), (int)(j * resy), resx, resy, WHITE);
-			else if (cub->game.worldMap[j][i] >= 2)
-				putSquare(cub, (int)(i * resx), (int)(j * resy), resx, resy, BLUE);
+			if (cub->game.world_map[j][i] == 1)
+				put_square(cub, (int)(i * resx), (int)(j * resy), resx, resy, WHITE);
+			else if (cub->game.world_map[j][i] >= 2)
+				put_square(cub, (int)(i * resx), (int)(j * resy), resx, resy, BLUE);
 		}
 	}
-	putSquare(cub, (int)(cub->state.posY * resx), (int)(cub->state.posX * resy), 10, 10, GREEN);
+	put_square(cub, (int)(cub->state.pos_y * resx), (int)(cub->state.pos_x * resy), 10, 10, GREEN);
 }
