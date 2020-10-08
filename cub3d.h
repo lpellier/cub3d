@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
+/*   Updated: 2020/10/08 19:02:38 by lpellier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # ifndef CUB3D_H
 # define CUB3D_H
 
@@ -122,9 +134,54 @@ typedef struct s_sprt
 } t_sprt;
 
 typedef struct s_ray
-{
-	double dist;
-	int order;
+{	
+	// ray casting
+	double camera_x;
+	double raydir_x;
+	double raydir_y;
+	double side_dist_x;
+	double side_dist_y;
+	double delta_dist_x;
+	double delta_dist_y;
+	double perp_wall_dist;
+	double wall_x;
+	double step;
+	double tex_pos;
+
+	int map_x;
+	int map_y;
+	int step_x;
+	int step_y;
+	int hit;
+	int side;
+	int tex_num;
+	int line_height;
+	int draw_start;
+	int draw_end;
+	int j;
+	int tex_x;
+	int tex_y;
+
+	//sprite casting
+	double sprite_x;
+	double sprite_y;
+	double inv_det;
+	double transform_x;
+	double transform_y;
+
+	int sprite_screen_x;
+	int sprite_height;
+	int draw_start_y;
+	int draw_end_y;
+	int sprite_width;
+	int draw_start_x;
+	int draw_end_x;
+	int stripe;
+	int tex_sprite_x;
+	int y;
+	int d;
+	int tex_sprite_y;
+	int color;
 } t_ray;
 
 typedef struct s_cub

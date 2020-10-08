@@ -6,13 +6,13 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 21:09:25 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/07 21:12:34 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/08 19:17:59 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int cmp(const void *left, const void *right)
+int			cmp(const void *left, const void *right)
 {
 	t_sprt *a;
 	t_sprt *b;
@@ -27,24 +27,26 @@ int cmp(const void *left, const void *right)
 		return ((a->order < b->order) - (b->order < a->order));
 }
 
-void sort_sprites(t_cub *cub)
+void		sort_sprites(t_cub *cub)
 {
 	int i;
 
 	i = -1;
-	while (++i < cub->num_sprites) {
+	while (++i < cub->num_sprites)
+	{
 		cub->sprt[i].dist = cub->sprite_distance[i];
-		cub->sprt[i].order = cub->sprite_order[i];	
+		cub->sprt[i].order = cub->sprite_order[i];
 	}
 	qsort(cub->sprt, cub->num_sprites, sizeof(t_sprt), cmp);
 	i = -1;
-	while (++i < cub->num_sprites) {
+	while (++i < cub->num_sprites)
+	{
 		cub->sprite_distance[i] = cub->sprt[cub->num_sprites - i - 1].dist;
 		cub->sprite_order[i] = cub->sprt[cub->num_sprites - i - 1].order;
 	}
 }
 
-void sprite_casting(t_cub *cub) 
+void		sprite_casting(t_cub *cub)
 {
 	int i;
 
@@ -52,193 +54,222 @@ void sprite_casting(t_cub *cub)
 	while (++i < cub->num_sprites)
 	{
 		cub->sprite_order[i] = i;
-		cub->sprite_distance[i] = ((cub->state.pos_x - cub->sprites[i].pos_x) * (cub->state.pos_x - cub->sprites[i].pos_x) \
-		+ (cub->state.pos_y - cub->sprites[i].pos_y) * (cub->state.pos_y - cub->sprites[i].pos_y));
+		cub->sprite_distance[i] = ((cub->state.pos_x - cub->sprites[i].pos_x)\
+		* (cub->state.pos_x - cub->sprites[i].pos_x) + (cub->state.pos_y - \
+		cub->sprites[i].pos_y) * (cub->state.pos_y - cub->sprites[i].pos_y));
 	}
 	sort_sprites(cub);
 	i = -1;
-	// printf("player pos : x = %f, y = %f\n", cub->state.pos_x, cub->state.pos_y);
 	while (++i < cub->num_sprites)
 	{
-		double sprite_x = cub->sprites[cub->sprite_order[i]].pos_x - cub->state.pos_x;
-		double sprite_y = cub->sprites[cub->sprite_order[i]].pos_y - cub->state.pos_y;
-		// printf("i = %d && order = %d\n", i, cub->sprite_order[i]);
-		// printf("sprite_x = %f, sprite_y = %f\n", sprite_x, sprite_y);
-		// printf("x = %f && y = %f\n\n", cub->sprites[cub->sprite_order[i]].pos_x, cub->sprites[cub->sprite_order[i]].pos_y);
-		double inv_det = 1.0 / (cub->state.plane_x * cub->state.dir_y - cub->state.dir_x * cub->state.plane_y);
-
-		double transform_x = inv_det * (cub->state.dir_y * sprite_x - cub->state.dir_x * sprite_y);
-		double transform_y = inv_det * (-cub->state.plane_y * sprite_x + cub->state.plane_x * sprite_y);
-		// printf("%f %f\n", transform_x, transform_y);
-		int sprite_screen_x = (int)((cub->data.img.width / 2) * (1 + transform_x / transform_y));
-
-		int sprite_height = abs((int)(cub->data.img.height / (transform_y)));
-
-		int draw_start_y = -sprite_height / 2 + cub->data.img.height / 2;
-		if (draw_start_y < 0)
-			draw_start_y = 0;
-		int draw_end_y = sprite_height / 2 + cub->data.img.height / 2;
-		if (draw_end_y >= cub->data.img.height)
-			draw_end_y = cub->data.img.height - 1;
-		
-		int sprite_width = abs((int)(cub->data.img.height / (transform_y)));
-		int draw_start_x = -sprite_width / 2 + sprite_screen_x;
-		if (draw_start_x < 0)
-			draw_start_x = 0;
-		int draw_end_x = sprite_width / 2 + sprite_screen_x;
-		if (draw_end_x >= cub->data.img.width)
-			draw_end_x = cub->data.img.width - 1;
-		int stripe = draw_start_x - 1;
-		while (++stripe < draw_end_x)
+		cub->ray.sprite_x = cub->sprites[cub->sprite_order[i]].pos_x - \
+		cub->state.pos_x;
+		cub->ray.sprite_y = cub->sprites[cub->sprite_order[i]].pos_y - \
+		cub->state.pos_y;
+		cub->ray.inv_det = 1.0 / (cub->state.plane_x * cub->state.dir_y - \
+		cub->state.dir_x * cub->state.plane_y);
+		cub->ray.transform_x = cub->ray.inv_det * (cub->state.dir_y * \
+		cub->ray.sprite_x - cub->state.dir_x * cub->ray.sprite_y);
+		cub->ray.transform_y = cub->ray.inv_det * (-cub->state.plane_y * \
+		cub->ray.sprite_x + cub->state.plane_x * cub->ray.sprite_y);
+		cub->ray.sprite_screen_x = (int)((cub->data.img.width / 2) * \
+		(1 + cub->ray.transform_x / cub->ray.transform_y));
+		cub->ray.sprite_height = abs((int)(cub->data.img.height / \
+		(cub->ray.transform_y)));
+		cub->ray.draw_start_y = -cub->ray.sprite_height / 2 + \
+		cub->data.img.height / 2;
+		if (cub->ray.draw_start_y < 0)
+			cub->ray.draw_start_y = 0;
+		cub->ray.draw_end_y = cub->ray.sprite_height / 2 + \
+		cub->data.img.height / 2;
+		if (cub->ray.draw_end_y >= cub->data.img.height)
+			cub->ray.draw_end_y = cub->data.img.height - 1;
+		cub->ray.sprite_width = abs((int)(cub->data.img.height / \
+		(cub->ray.transform_y)));
+		cub->ray.draw_start_x = -cub->ray.sprite_width / 2 + \
+		cub->ray.sprite_screen_x;
+		if (cub->ray.draw_start_x < 0)
+			cub->ray.draw_start_x = 0;
+		cub->ray.draw_end_x = cub->ray.sprite_width / 2 + \
+		cub->ray.sprite_screen_x;
+		if (cub->ray.draw_end_x >= cub->data.img.width)
+			cub->ray.draw_end_x = cub->data.img.width - 1;
+		cub->ray.stripe = cub->ray.draw_start_x - 1;
+		while (++cub->ray.stripe < cub->ray.draw_end_x)
 		{
-			int tex_x = (int)(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * cub->sprites[cub->sprite_order[i]].texture->width / sprite_width) / 256;
-			if (transform_y > 0 && stripe > 0 && stripe < cub->data.img.width && transform_y < cub->z_buffer[stripe])
+			cub->ray.tex_sprite_x = (int)(256 * (cub->ray.stripe - \
+			(-cub->ray.sprite_width / 2 + cub->ray.sprite_screen_x)) * \
+			cub->sprites[cub->sprite_order[i]].texture->width / \
+			cub->ray.sprite_width) / 256;
+			if (cub->ray.transform_y > 0 && cub->ray.stripe > 0 && \
+			cub->ray.stripe < cub->data.img.width && cub->ray.transform_y < \
+			cub->z_buffer[cub->ray.stripe])
 			{
-				int y = draw_start_y - 1;
-				while (++y < draw_end_y)
+				cub->ray.y = cub->ray.draw_start_y - 1;
+				while (++cub->ray.y < cub->ray.draw_end_y)
 				{
-					int d = (y) * 256 - cub->data.img.height * 128 + sprite_height * 128;
-					int tex_y = ((d * cub->sprites[cub->sprite_order[i]].texture->height) / sprite_height) / 256;
-					int color = cub->sprites[cub->sprite_order[i]].texture->data[cub->sprites[cub->sprite_order[i]].texture->width * tex_y + tex_x];
-					if ((color & 0x00FFFFFF) != 0)
-						cub->buffer[y][stripe] = color;
+					cub->ray.d = (cub->ray.y) * 256 - cub->data.img.height * \
+					128 + cub->ray.sprite_height * 128;
+					cub->ray.tex_sprite_y = ((cub->ray.d * \
+					cub->sprites[cub->sprite_order[i]].texture->height) / \
+					cub->ray.sprite_height) / 256;
+					cub->ray.color = cub->sprites[cub->sprite_order[i]].\
+					texture->data[cub->sprites[cub->sprite_order[i]].texture\
+					->width * cub->ray.tex_sprite_y + cub->ray.tex_sprite_x];
+					if ((cub->ray.color & 0x00FFFFFF) != 0)
+						cub->buffer[cub->ray.y][cub->ray.stripe] = \
+						cub->ray.color;
 				}
 			}
 		}
 	}
 }
 
-void raycasting(t_cub *cub)
+void		raycasting(t_cub *cub)
 {
-	int x = -1;
-    while (++x < cub->data.img.width)
+	int x;
+
+	x = -1;
+	while (++x < cub->data.img.width)
 	{
-		double camera_x = 2 * x / (double)cub->data.img.width - 1;
-		double raydir_x = cub->state.dir_x + cub->state.plane_x * camera_x;
-		double raydir_y = cub->state.dir_y + cub->state.plane_y * camera_x;
-
-		int map_x = (int)cub->state.pos_x;
-		int map_y = (int)cub->state.pos_y;
-
-		double side_dist_x;
-		double side_dist_y;
-
-		double delta_dist_x = (raydir_y == 0) ? 0 : ((raydir_x == 0) ? 1 : fabs(1 / raydir_x));
-      	double delta_dist_y = (raydir_x == 0) ? 0 : ((raydir_y == 0) ? 1 : fabs(1 / raydir_y));
-		double perp_wall_dist;
-
-		int step_x;
-		int step_y;
-
-		int hit = 0;
-		int side;
-		if (raydir_x < 0)
+		cub->ray.camera_x = 2 * x / (double)cub->data.img.width - 1;
+		cub->ray.raydir_x = cub->state.dir_x + cub->state.plane_x * \
+		cub->ray.camera_x;
+		cub->ray.raydir_y = cub->state.dir_y + cub->state.plane_y * \
+		cub->ray.camera_x;
+		cub->ray.map_x = (int)cub->state.pos_x;
+		cub->ray.map_y = (int)cub->state.pos_y;
+		if (cub->ray.raydir_y == 0)
+			cub->ray.delta_dist_x = 0;
+		else if (cub->ray.raydir_x == 0)
+			cub->ray.delta_dist_x = 1;
+		else
+			cub->ray.delta_dist_x = fabs(1 / cub->ray.raydir_x);
+		if (cub->ray.raydir_x == 0)
+			cub->ray.delta_dist_y = 0;
+		else if (cub->ray.raydir_y == 0)
+			cub->ray.delta_dist_y = 0;
+		else
+			cub->ray.delta_dist_y = fabs(1 / cub->ray.raydir_y);
+		cub->ray.hit = 0;
+		if (cub->ray.raydir_x < 0)
 		{
-			step_x = -1;
-			side_dist_x = (cub->state.pos_x - map_x) * delta_dist_x;
+			cub->ray.step_x = -1;
+			cub->ray.side_dist_x = (cub->state.pos_x - cub->ray.map_x) * \
+			cub->ray.delta_dist_x;
 		}
 		else
 		{
-			step_x = 1;
-			side_dist_x = (map_x + 1.0 - cub->state.pos_x) * delta_dist_x;
+			cub->ray.step_x = 1;
+			cub->ray.side_dist_x = (cub->ray.map_x + 1.0 - cub->state.pos_x) * \
+			cub->ray.delta_dist_x;
 		}
-		if (raydir_y < 0)
+		if (cub->ray.raydir_y < 0)
 		{
-			step_y = -1;
-			side_dist_y = (cub->state.pos_y - map_y) * delta_dist_y;
+			cub->ray.step_y = -1;
+			cub->ray.side_dist_y = (cub->state.pos_y - cub->ray.map_y) * \
+			cub->ray.delta_dist_y;
 		}
 		else
 		{
-			step_y = 1;
-			side_dist_y = (map_y + 1.0 - cub->state.pos_y) * delta_dist_y;
+			cub->ray.step_y = 1;
+			cub->ray.side_dist_y = (cub->ray.map_y + 1.0 - cub->state.pos_y) * \
+			cub->ray.delta_dist_y;
 		}
-
-		while (hit == 0)
+		while (cub->ray.hit == 0)
 		{
-			if (side_dist_x < side_dist_y)
+			if (cub->ray.side_dist_x < cub->ray.side_dist_y)
 			{
-				side_dist_x += delta_dist_x;
-				map_x += step_x;
-				side = 0;
+				cub->ray.side_dist_x += cub->ray.delta_dist_x;
+				cub->ray.map_x += cub->ray.step_x;
+				cub->ray.side = 0;
 			}
 			else
 			{
-				side_dist_y += delta_dist_y;
-				map_y += step_y;
-				side = 1;
+				cub->ray.side_dist_y += cub->ray.delta_dist_y;
+				cub->ray.map_y += cub->ray.step_y;
+				cub->ray.side = 1;
 			}
-			if (cub->game.world_map[map_x][map_y] == 1) 
-				hit = 1;
+			if (cub->game.world_map[cub->ray.map_x][cub->ray.map_y] == 1)
+				cub->ray.hit = 1;
 		}
-
-		int tex_num;
-
-		if (side == 0) {
-			perp_wall_dist = (map_x - cub->state.pos_x + (1 - step_x) / 2) / raydir_x;
-			if (raydir_x > 0)
-				tex_num = 0; // SOUTH
+		if (cub->ray.side == 0)
+		{
+			cub->ray.perp_wall_dist = (cub->ray.map_x - cub->state.pos_x + \
+			(1 - cub->ray.step_x) / 2) / cub->ray.raydir_x;
+			if (cub->ray.raydir_x > 0)
+				cub->ray.tex_num = 0;
 			else
-				tex_num = 1; // NORTH
+				cub->ray.tex_num = 1;
 		}
-		else {
-			perp_wall_dist = (map_y - cub->state.pos_y + (1 - step_y) / 2) / raydir_y;
-			if (raydir_y > 0)
-				tex_num = 2; // EAST
+		else
+		{
+			cub->ray.perp_wall_dist = (cub->ray.map_y - cub->state.pos_y + \
+			(1 - cub->ray.step_y) / 2) / cub->ray.raydir_y;
+			if (cub->ray.raydir_y > 0)
+				cub->ray.tex_num = 2;
 			else
-				tex_num = 3; // WEST
+				cub->ray.tex_num = 3;
 		}
-		int line_height = (int)(cub->data.img.height / perp_wall_dist);
-
-		int draw_start = -line_height / 2 + cub->data.img.height / 2;
-		if (draw_start < 0)
-			draw_start = 0;
-		int draw_end = line_height / 2 + cub->data.img.height / 2;
-		if (draw_end >= cub->data.img.height)
-			draw_end = cub->data.img.height - 1;
-
-		unsigned int color;
-		//texturing calculations
-
-		//calculate value of wall_x
-		double wall_x; //where exactly the wall was hit
-		if (side == 0) wall_x = cub->state.pos_y + perp_wall_dist * raydir_y;
-		else           wall_x = cub->state.pos_x + perp_wall_dist * raydir_x;
-		wall_x -= floor((wall_x));
-
-		//x coordinate on the texture
-		int tex_x = (int)(wall_x * (double)(cub->texture[tex_num].width));
-		if(side == 0 && raydir_x > 0) tex_x = cub->texture[tex_num].width - tex_x - 1;
-		if(side == 1 && raydir_y < 0) tex_x = cub->texture[tex_num].width - tex_x - 1;
-	
-		// How much to increase the texture coordinate per screen pixel
-		double step = 1.0 * cub->texture[tex_num].height / line_height;
-		// Starting texture coordinate
-		double tex_pos = (draw_start - cub->data.img.height / 2 + line_height / 2) * step;
-		for (int y = 0; y < draw_start; y++) 
+		cub->ray.line_height = (int)(cub->data.img.height / \
+		cub->ray.perp_wall_dist);
+		cub->ray.draw_start = -cub->ray.line_height / 2 + \
+		cub->data.img.height / 2;
+		if (cub->ray.draw_start < 0)
+			cub->ray.draw_start = 0;
+		cub->ray.draw_end = cub->ray.line_height / 2 + cub->data.img.height / 2;
+		if (cub->ray.draw_end >= cub->data.img.height)
+			cub->ray.draw_end = cub->data.img.height - 1;
+		if (cub->ray.side == 0)
+			cub->ray.wall_x = cub->state.pos_y + cub->ray.perp_wall_dist * \
+			cub->ray.raydir_y;
+		else
+			cub->ray.wall_x = cub->state.pos_x + cub->ray.perp_wall_dist * \
+			cub->ray.raydir_x;
+		cub->ray.wall_x -= floor((cub->ray.wall_x));
+		cub->ray.tex_x = (int)(cub->ray.wall_x * (double)\
+		(cub->texture[cub->ray.tex_num].width));
+		if (cub->ray.side == 0 && cub->ray.raydir_x > 0)
+			cub->ray.tex_x = cub->texture[cub->ray.tex_num].width - \
+			cub->ray.tex_x - 1;
+		if (cub->ray.side == 1 && cub->ray.raydir_y < 0)
+			cub->ray.tex_x = cub->texture[cub->ray.tex_num].width - \
+			cub->ray.tex_x - 1;
+		cub->ray.step = 1.0 * cub->texture[cub->ray.tex_num].height / \
+		cub->ray.line_height;
+		cub->ray.tex_pos = (cub->ray.draw_start - cub->data.img.height / \
+		2 + cub->ray.line_height / 2) * cub->ray.step;
+		cub->ray.j = -1;
+		while (++cub->ray.j < cub->ray.draw_start)
 		{
-			color = cub->ceil_color;
-			cub->buffer[y][x] = color;
+			cub->ray.color = cub->ceil_color;
+			cub->buffer[cub->ray.j][x] = cub->ray.color;
 		}
-		for(int y = draw_start; y < draw_end; y++)
+		cub->ray.j = cub->ray.draw_start - 1;
+		while (++cub->ray.j < cub->ray.draw_end)
 		{
-			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-			int tex_y = (int)tex_pos & (cub->texture[tex_num].height - 1);
-			tex_pos += step;
-			color = cub->texture[tex_num].data[cub->texture[tex_num].height * tex_y + tex_x];
-			//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-			if(side == 1) color = (color >> 1) & 8355711;
-			if (perp_wall_dist > 5) color = (color >> 1) & 8355711;
-			cub->buffer[y][x] = color;
+			cub->ray.tex_y = (int)cub->ray.tex_pos & (cub->texture\
+			[cub->ray.tex_num].height - 1);
+			cub->ray.tex_pos += cub->ray.step;
+			cub->ray.color = cub->texture[cub->ray.tex_num].data[cub->texture\
+			[cub->ray.tex_num].height * cub->ray.tex_y + cub->ray.tex_x];
+			if (cub->ray.side == 1)
+				cub->ray.color = (cub->ray.color >> 1) & 8355711;
+			if (cub->ray.perp_wall_dist > 5)
+				cub->ray.color = (cub->ray.color >> 1) & 8355711;
+			cub->buffer[cub->ray.j][x] = cub->ray.color;
 		}
-		for (int y = draw_end; y < cub->data.img.height; y++) 
+		cub->ray.j = cub->ray.draw_end - 1;
+		while (++cub->ray.j < cub->data.img.height)
 		{
-			color = cub->floor_color;
-			cub->buffer[y][x] = color;
+			cub->ray.color = cub->floor_color;
+			cub->buffer[cub->ray.j][x] = cub->ray.color;
 		}
-		cub->z_buffer[x] = perp_wall_dist;
+		cub->z_buffer[x] = cub->ray.perp_wall_dist;
 	}
 	sprite_casting(cub);
 	draw_minimap(cub);
 	draw_buffer(cub);
-	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, cub->data.img.img_ptr, 0, 0);
+	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, \
+	cub->data.img.img_ptr, 0, 0);
 }
