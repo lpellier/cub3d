@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/09 16:32:40 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/20 16:51:31 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@
 
 # if __APPLE__
 
-#  define KEY_UP		13
-#  define KEY_LEFT		0
-#  define KEY_DOWN		1
-#  define KEY_RIGHT		2
-#  define KEY_W		126
-#  define KEY_A	123
-#  define KEY_S		125
-#  define KEY_D	124
+#  define KEY_UP		126
+#  define KEY_LEFT 123
+#  define KEY_DOWN		125
+#  define KEY_RIGHT		124
+#  define KEY_W		13
+#  define KEY_A	0
+#  define KEY_S		1
+#  define KEY_D	2
 #  define KEY_ESC	53
 
 # else
