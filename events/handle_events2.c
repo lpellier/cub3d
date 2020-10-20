@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../includes/cub3d.h"
 
 int			exit_wdw(int event, void *param)
 {
@@ -26,7 +26,7 @@ void		loop(t_cub *cub)
 	raycasting(cub);
 	mlx_hook(cub->data.win_ptr, 17, 0, exit_wdw, cub);
 	mlx_hook(cub->data.win_ptr, 2, 1L << 0, events, cub);
-	mlx_hook(cub->data.win_ptr, 3, 1L << 0, release, cub);
+	mlx_hook(cub->data.win_ptr, 3, 1L << 1, release, cub);
 	mlx_loop_hook(cub->data.mlx_ptr, update, cub);
 	mlx_loop(cub->data.mlx_ptr);
 }

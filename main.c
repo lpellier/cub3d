@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "includes/cub3d.h"
 
 int			put_error(char *str)
 {
@@ -21,8 +21,6 @@ int			put_error(char *str)
 
 int			init_and_protecc(t_cub *cub, char *map_path)
 {
-	int		screen_x;
-	int		screen_y;
 
 	if (!file_parsing(cub, map_path) || !init_buffer(cub) || \
 	(cub->data.mlx_ptr = mlx_init()) == NULL)
@@ -46,8 +44,6 @@ int			init_and_protecc(t_cub *cub, char *map_path)
 int			main(int ac, char **av)
 {
 	t_cub		cub;
-	int			screen_x;
-	int			screen_y;
 	char		*map_path;
 
 	init_state(&cub);

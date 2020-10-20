@@ -1,29 +1,92 @@
-NAME = cub3d.a
+NAME 		=	cub3d
 
-FLAGS = -Wall -Werror -Wextra
+NAME_BON	=	cub3d_bonus
 
-SRCS =	main.c \
-engine/draw.c engine/raycasting.c engine/raycasting_utils.c engine/sprite_casting_utils.c \
-events/rot_events.c events/move_events.c events/handle_events.c events/handle_events2.c \
-parsing/map_init.c parsing/map_init2.c parsing/file_parsing.c parsing/file_parsing2.c \
-init/init_functions.c \
-utils/utils.c utils/utils2.c utils/utils3.c
+SRCS	= 	./parsing/file_parsing.c								\
+        	./parsing/file_parsing2.c		\
+        	./parsing/map_init.c		\
+        	./parsing/map_init2.c		\
+        	./utils/utils.c									\
+        	./utils/utils2.c								\
+        	./utils/utils3.c								\
+			./engine/draw.c					\
+        	./engine/raycasting_utils.c				\
+        	./engine/raycasting.c							\
+        	./engine/sprite_casting_utils.c					\
+        	./events/handle_events.c				\
+        	./events/handle_events2.c			\
+			./events/move_events.c						\
+        	./events/rot_events.c								\
+			./init/init_functions.c				\
 
-OBJS = $(SRCS:.c=.o)
+BONUS	= 	./parsing/file_parsing.c								\
+        	./parsing/file_parsing2.c		\
+        	./parsing/map_init.c		\
+        	./parsing/map_init2.c		\
+        	./utils/utils.c									\
+        	./utils/utils2.c								\
+        	./utils/utils3.c								\
+			./engine/draw.c					\
+        	./engine/raycasting_utils.c				\
+        	./engine/raycasting.c							\
+        	./engine/sprite_casting_utils.c					\
+        	./events/handle_events.c				\
+        	./events/handle_events2.c			\
+			./events/move_events.c						\
+        	./events/rot_events.c								\
+			./init/init_functions.c				\
 
-all : $(NAME)
+MAIN 		= 	main.c
 
-$(NAME) : $(OBJS)
-	@ar rc $(NAME) $(OBJS)
+OBJS_MAIN 	= 	$(MAIN:.c=.o)
+OBJS		=	$(SRCS:.c=.o)
+OBJ_BON		=	$(BONUS:.c=.o)\
 
-clean :
-	@rm -rf $(OBJS)
+#LFLAGS		=	-lmlx -framework OpenGL -framework AppKit
+LFLAGS		=	-L /usr/local/lib/ -lmlx -lXext -lX11 -lm -lbsd
 
-fclean : clean
-	@rm -rf $(NAME)
-	@rm -rf exec
+CC			=	clang
 
-re : fclean all
+CFLAGS		+=	-Wall -Wextra -Werror -g3 -O3
 
-test : $(NAME)
-	@gcc -O3 -fsanitize=address -g -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit -lz -o exec $(NAME)
+RM			=	rm -f
+
+CLEAN		=	clean
+
+INCLUDES	=	./includes/cub3d.h
+
+
+#########################################################################################
+#										MAKE											#
+#########################################################################################
+
+
+%.o			:	%.c ${INCLUDES}
+				$(CC) $(CFLAGS) -c $< -o $@
+
+all			:	$(NAME)
+
+$(NAME)		:	$(OBJS) $(OBJS_MAIN)
+				${CC} ${CFLAGS} ${OBJS} ${OBJS_MAIN} ${LFLAGS} -o ${NAME}
+
+bonus		:	${NAME_BON}
+
+$(NAME_BON)	:	$(OBJ_BON) $(OBJS_MAIN)
+				${CC} ${CFLAGS} ${OBJ_BON} ${OBJS_MAIN} ${LFLAGS} -o ${NAME_BON}
+
+clean		:
+				$(RM) $(OBJS)
+				$(RM) ${OBJS_MAIN}
+				$(RM) ${OBJ_BON}
+
+fclean		:	clean
+				$(RM) $(NAME)
+				$(RM) $(NAME_BON)
+				# $(RM) cub3d.bmp
+
+re			:	fclean all
+
+install		:
+				sudo bash ./install_mlx.sh
+
+.PHONY		:	all clean fclean re install bonus

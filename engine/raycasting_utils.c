@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../includes/cub3d.h"
 
 void		raycasting7(t_cub *cub, int x)
 {
@@ -41,7 +41,7 @@ void		raycasting7(t_cub *cub, int x)
 	}
 }
 
-void		raycasting6(t_cub *cub, int x)
+void		raycasting6(t_cub *cub)
 {
 	if (cub->ray.draw_end >= cub->data.img.height)
 		cub->ray.draw_end = cub->data.img.height - 1;
@@ -51,7 +51,7 @@ void		raycasting6(t_cub *cub, int x)
 	else
 		cub->ray.wall_x = cub->state.pos_x + cub->ray.perp_wall_dist * \
 		cub->ray.raydir_x;
-	cub->ray.wall_x -= floor((cub->ray.wall_x));
+	cub->ray.wall_x -= (int)(cub->ray.wall_x);
 	cub->ray.tex_x = (int)(cub->ray.wall_x * (double)\
 	(cub->texture[cub->ray.tex_num].width));
 	if (cub->ray.side == 0 && cub->ray.raydir_x > 0)
@@ -67,7 +67,7 @@ void		raycasting6(t_cub *cub, int x)
 	cub->ray.j = -1;
 }
 
-void		raycasting5(t_cub *cub, int x)
+void		raycasting5(t_cub *cub)
 {
 	if (cub->ray.side == 0)
 	{
@@ -96,7 +96,7 @@ void		raycasting5(t_cub *cub, int x)
 	cub->ray.draw_end = cub->ray.line_height / 2 + cub->data.img.height / 2;
 }
 
-void		raycasting4(t_cub *cub, int x)
+void		raycasting4(t_cub *cub)
 {
 	while (cub->ray.hit == 0)
 	{
@@ -117,7 +117,7 @@ void		raycasting4(t_cub *cub, int x)
 	}
 }
 
-void		raycasting3(t_cub *cub, int x)
+void		raycasting3(t_cub *cub)
 {
 	if (cub->ray.raydir_x < 0)
 	{

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../includes/cub3d.h"
 
 int			cmp(const void *left, const void *right)
 {
@@ -81,10 +81,10 @@ void		raycasting(t_cub *cub)
 	while (++x < cub->data.img.width)
 	{
 		raycasting2(cub, x);
-		raycasting3(cub, x);
-		raycasting4(cub, x);
-		raycasting5(cub, x);
-		raycasting6(cub, x);
+		raycasting3(cub);
+		raycasting4(cub);
+		raycasting5(cub);
+		raycasting6(cub);
 		raycasting7(cub, x);
 		cub->z_buffer[x] = cub->ray.perp_wall_dist;
 	}

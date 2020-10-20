@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../includes/cub3d.h"
 
 void		get_pos2(char orientation, t_state *state)
 {
@@ -77,13 +77,14 @@ int			strto_intp2(char c, int cur, int height, t_cub *cub)
 		&cub->sprite[c - 48 - 2];
 		cub->sprite_index += 1;
 	}
+	else
+		ret = -1;
 	return (ret);
 }
 
 int			*strto_intp(char *str, int height, t_cub *cub)
 {
 	int		i;
-	int		count;
 	int		*map;
 
 	if (!(map = malloc(sizeof(int) * cub->state.width - 1)))
