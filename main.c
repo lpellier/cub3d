@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/20 13:09:29 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/20 17:21:54 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int			put_error(char *str)
 
 int			init_and_protecc(t_cub *cub, char *map_path)
 {
-
 	if (!file_parsing(cub, map_path) || !init_buffer(cub) || \
 	(cub->data.mlx_ptr = mlx_init()) == NULL)
 		return (0);
