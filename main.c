@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/09 16:16:59 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/20 13:09:29 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ int			init_and_protecc(t_cub *cub, char *map_path)
 	if (!file_parsing(cub, map_path) || !init_buffer(cub) || \
 	(cub->data.mlx_ptr = mlx_init()) == NULL)
 		return (0);
-	mlx_get_screen_size(cub->data.mlx_ptr, &screen_x, &screen_y);
-	if (cub->data.img.width > screen_x)
-		cub->data.img.width = screen_x;
-	if (cub->data.img.height > screen_y)
-		cub->data.img.height = screen_y;
+	if (cub->data.img.width > RESX_MAX_MAC)
+		cub->data.img.width = RESX_MAX_MAC;
+	if (cub->data.img.height > RESY_MAX_MAC)
+		cub->data.img.height = RESY_MAX_MAC;
 	if ((cub->data.win_ptr = mlx_new_window(cub->data.mlx_ptr, \
 	cub->data.img.width, cub->data.img.height, "cub3d")) == NULL)
 		return (0);
