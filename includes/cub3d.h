@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/20 17:21:24 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/21 18:17:27 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,7 @@ int						init_and_protecc(t_cub *cub, char *map_path);
 int						put_error(char *str);
 int						get_next_line(int fd, char **line);
 int						check_n(char *stock);
+int						ft_strncmp(const char *s1, const char *s2, size_t n);
 
 char					*ft_strdup(const char *s1);
 char					*ft_strjoin(const char *s1, const char *s2);

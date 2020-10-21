@@ -82,11 +82,14 @@ clean		:
 fclean		:	clean
 				$(RM) $(NAME)
 				$(RM) $(NAME_BON)
-				# $(RM) cub3d.bmp
+				$(RM) saved.bmp
 
 re			:	fclean all
 
 install		:
-				sudo bash ./install_mlx.sh
+				sudo bash ./init/install_mlx.sh
+
+norminette	:
+				norminette $(SRCS) $(MAIN)
 
 .PHONY		:	all clean fclean re install bonus
