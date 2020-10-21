@@ -42,8 +42,8 @@ OBJS_MAIN 	= 	$(MAIN:.c=.o)
 OBJS		=	$(SRCS:.c=.o)
 OBJ_BON		=	$(BONUS:.c=.o)\
 
-LFLAGS		=	-lmlx -framework OpenGL -framework AppKit
-# LFLAGS		=	-L /usr/local/lib/ -lmlx -lXext -lX11 -lm -lbsd
+# LFLAGS		=	-lmlx -framework OpenGL -framework AppKit
+LFLAGS		=	-L /usr/local/lib/ -lmlx -lXext -lX11 -lm -lbsd
 
 CC			=	clang
 

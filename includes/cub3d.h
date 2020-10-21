@@ -214,7 +214,7 @@ void					init_state(t_cub *cub);
 int						free_and_destroy(t_cub *cub);
 
 void					put_pixel(t_img *img, int x, int y, unsigned int color);
-void					raycasting(t_cub *cub);
+void					raycasting(t_cub *cub, int saved);
 void					raycasting2(t_cub *cub, int x);
 void					raycasting3(t_cub *cub);
 void					raycasting4(t_cub *cub);
@@ -275,7 +275,7 @@ void					get_pos2(char orientation, t_state *state);
 ** Utility functions
 */
 
-int						init_and_protecc(t_cub *cub, char *map_path);
+int						init_and_protecc(t_cub *cub, char *map_path, int saved);
 int						put_error(char *str);
 int						get_next_line(int fd, char **line);
 int						check_n(char *stock);

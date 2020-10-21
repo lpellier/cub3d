@@ -19,7 +19,7 @@ int			put_error(char *str)
 	return (0);
 }
 
-int			init_and_protecc(t_cub *cub, char *map_path)
+int			init_and_protecc(t_cub *cub, char *map_path, int saved)
 {
 	if (!file_parsing(cub, map_path) || !init_buffer(cub) || \
 	(cub->data.mlx_ptr = mlx_init()) == NULL)
@@ -28,9 +28,10 @@ int			init_and_protecc(t_cub *cub, char *map_path)
 		cub->data.img.width = RESX_MAX_MAC;
 	if (cub->data.img.height > RESY_MAX_MAC)
 		cub->data.img.height = RESY_MAX_MAC;
-	if ((cub->data.win_ptr = mlx_new_window(cub->data.mlx_ptr, \
-	cub->data.img.width, cub->data.img.height, "cub3d")) == NULL)
-		return (0);
+	if (!saved)
+		if ((cub->data.win_ptr = mlx_new_window(cub->data.mlx_ptr, \
+		cub->data.img.width, cub->data.img.height, "cub3d")) == NULL)
+			return (0);
 	if (!get_tex_sprite(cub))
 		return (0);
 	cub->data.img.img_ptr = mlx_new_image(cub->data.mlx_ptr, \
@@ -99,7 +100,7 @@ int			bmp_file(t_cub *cub)
 		put_error("Couldn't save image.");
 		return (0);
 	}
-	raycasting(cub);
+	raycasting(cub, 1);
 	write_bmp_header(cub, fd);
 	write_bmp_img(cub, fd);
 	return (1);
@@ -119,14 +120,14 @@ int			main(int ac, char **av)
 	map_path = ft_strdup(av[1]);
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
 	{
-		if (!init_and_protecc(&cub, map_path) || !bmp_file(&cub))
+		if (!init_and_protecc(&cub, map_path, 1) || !bmp_file(&cub))
 			exit(0);
 	}
 	else
 	{
-		if (!init_and_protecc(&cub, map_path))
+		if (!init_and_protecc(&cub, map_path, 0))
 			exit(0);
-		raycasting(&cub);
+		raycasting(&cub, 0);
 		loop(&cub);
 	}
 	return (1);

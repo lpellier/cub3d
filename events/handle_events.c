@@ -74,7 +74,7 @@ int			update(t_cub *cub)
 		rotate_left(cub);
 	if (upd)
 	{
-		raycasting(cub);
+		raycasting(cub, 0);
 		framer(cub->t, cub);
 	}
 	return (0);

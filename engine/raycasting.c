@@ -73,7 +73,7 @@ void		raycasting2(t_cub *cub, int x)
 	cub->ray.hit = 0;
 }
 
-void		raycasting(t_cub *cub)
+void		raycasting(t_cub *cub, int saved)
 {
 	int x;
 
@@ -91,6 +91,7 @@ void		raycasting(t_cub *cub)
 	sprite_casting(cub);
 	draw_minimap(cub);
 	draw_buffer(cub);
-	mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, \
-	cub->data.img.img_ptr, 0, 0);
+	if (!saved)
+		mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, \
+		cub->data.img.img_ptr, 0, 0);
 }
