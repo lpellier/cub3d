@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:17:49 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/21 18:43:51 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/21 19:14:45 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			exit_wdw(int event, void *param)
 
 	(void)event;
 	cub = (t_cub *)param;
-	exit (0);
+	exit(0);
 }
 
 void		loop(t_cub *cub)
