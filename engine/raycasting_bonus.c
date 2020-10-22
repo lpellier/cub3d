@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   raycasting_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/07 21:09:25 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 18:50:33 by lpellier         ###   ########.fr       */
+/*   Created: 2020/10/22 18:49:53 by lpellier          #+#    #+#             */
+/*   Updated: 2020/10/22 18:50:01 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void		raycasting(t_cub *cub, int saved)
 		cub->z_buffer[x] = cub->ray.perp_wall_dist;
 	}
 	sprite_casting(cub);
+	draw_minimap(cub);
 	draw_buffer(cub);
 	if (!saved)
 		mlx_put_image_to_window(cub->data.mlx_ptr, cub->data.win_ptr, \

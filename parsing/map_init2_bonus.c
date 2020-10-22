@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_init2.c                                        :+:      :+:    :+:   */
+/*   map_init2_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/07 19:53:25 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 17:34:45 by lpellier         ###   ########.fr       */
+/*   Created: 2020/10/22 17:33:01 by lpellier          #+#    #+#             */
+/*   Updated: 2020/10/22 17:33:10 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			strto_intp2(char c, int cur, int height, t_cub *cub)
 		ret = 1;
 	else if (c == '0')
 		ret = 0;
-	else if (c == '2')
+	else if (c >= '2' && c <= '4')
 	{
 		ret = c - 48;
 		cub->sprites[cub->sprite_index].pos_x = height + 0.5;
@@ -94,7 +94,7 @@ int			*strto_intp(char *str, int height, t_cub *cub)
 	{
 		map[i] = strto_intp2(str[i], i, height, cub);
 		if (str[i] != ' ' && str[i] != 'N' && str[i] != 'S' && \
-		str[i] != 'E' && str[i] != 'W' && !(str[i] >= '0' && str[i] <= '2'))
+		str[i] != 'E' && str[i] != 'W' && !(str[i] >= '0' && str[i] <= '4'))
 		{
 			put_error("Map Error");
 			cub->error = 1;

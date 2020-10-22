@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_parsing2.c                                    :+:      :+:    :+:   */
+/*   file_parsing2_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/07 18:53:14 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 18:59:14 by lpellier         ###   ########.fr       */
+/*   Created: 2020/10/22 17:21:15 by lpellier          #+#    #+#             */
+/*   Updated: 2020/10/22 19:07:20 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,14 @@ int			check_sprite(t_cub *cub, char *str)
 	int index;
 
 	str += 1;
-	index = 0;
-	if (*str != 32 && *str != 9 && *str != 10 \
-	&& *str != 11 && *str != 12 && *str != 13)
+	cub->num_diff_sprites++;
+	if (*str == '1')
+		index = 0;
+	else if (*str == '2')
+		index = 1;
+	else if (*str == '3')
+		index = 2;
+	else
 		return (put_error("Your sprite's all fucked up"));
 	str += 1;
 	while (*str == 32 || *str == 9 || *str == 10 \

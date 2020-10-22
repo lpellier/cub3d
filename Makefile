@@ -20,22 +20,22 @@ SRCS	= 	./parsing/file_parsing.c			\
 			./init/init_functions.c				\
 			./bitmap/bmp_functions.c
 
-BONUS	= 	./parsing/file_parsing.c			\
-        	./parsing/file_parsing2.c			\
-        	./parsing/map_init.c				\
-        	./parsing/map_init2.c				\
+BONUS	= 	./parsing/file_parsing_bonus.c		\
+        	./parsing/file_parsing2_bonus.c		\
+        	./parsing/map_init_bonus.c			\
+        	./parsing/map_init2_bonus.c			\
         	./utils/utils.c						\
         	./utils/utils2.c					\
         	./utils/utils3.c					\
-			./engine/draw.c						\
+			./engine/draw_bonus.c						\
         	./engine/raycasting_utils.c			\
-        	./engine/raycasting.c				\
+        	./engine/raycasting_bonus.c				\
         	./engine/sprite_casting_utils.c		\
         	./events/handle_events.c			\
         	./events/handle_events2.c			\
 			./events/move_events.c				\
         	./events/rot_events.c				\
-			./init/init_functions.c				\
+			./init/init_functions_bonus.c		\
 			./bitmap/bmp_functions.c
 
 MAIN 		= 	main.c
@@ -76,6 +76,8 @@ bonus		:	${NAME_BON}
 $(NAME_BON)	:	$(OBJ_BON) $(OBJS_MAIN)
 				${CC} ${CFLAGS} ${OBJ_BON} ${OBJS_MAIN} ${LFLAGS} -o ${NAME_BON}
 
+everything	:	all bonus
+
 clean		:
 				$(RM) $(OBJS)
 				$(RM) ${OBJS_MAIN}
@@ -92,6 +94,6 @@ install		:
 				sudo bash ./init/install_mlx.sh
 
 norminette	:
-				norminette $(SRCS) $(MAIN)
+				norminette $(SRCS) $(MAIN) $(BONUS) includes/cub3d.h
 
 .PHONY		:	all clean fclean re install bonus

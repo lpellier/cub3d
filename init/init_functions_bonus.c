@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_functions.c                                   :+:      :+:    :+:   */
+/*   init_functions_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/07 18:00:58 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 17:19:24 by lpellier         ###   ########.fr       */
+/*   Created: 2020/10/22 17:18:20 by lpellier          #+#    #+#             */
+/*   Updated: 2020/10/22 17:18:30 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,11 @@ int			get_tex_sprite(t_cub *cub)
 		if (!get_texture(cub, i))
 			return (put_error("Texture Error"));
 	}
-	if (!get_sprite(cub, 0))
-		return (put_error("Sprite Error"));
+	i = -1;
+	while (++i < cub->num_diff_sprites)
+	{
+		if (!get_sprite(cub, i))
+			return (put_error("Sprite Error"));
+	}
 	return (1);
 }

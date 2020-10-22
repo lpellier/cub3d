@@ -1,0 +1,23 @@
+R		960		540
+
+C 33, 31, 41
+
+F 184, 179, 198
+
+NO ./textures/minecraft/chiseled_stone_bricks.xpm
+
+SO ./textures/minecraft/cobblestone.xpm
+
+EA ./textures/minecraft/cracked_stone_bricks.xpm
+
+WE ./textures/minecraft/stone.xpm
+
+S1 ./sprites/barrel.xpm
+S2			./sprites/mechahitler.xpm
+S3		./sprites/pillar.xpm
+
+11111111
+14000041
+1E020031
+14000041
+11111111

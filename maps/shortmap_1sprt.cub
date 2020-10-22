@@ -1,0 +1,21 @@
+R		960		540
+
+C 33, 31, 41
+
+F 184, 179, 198
+
+NO ./textures/minecraft/chiseled_stone_bricks.xpm
+
+SO ./textures/minecraft/cobblestone.xpm
+
+EA ./textures/minecraft/cracked_stone_bricks.xpm
+
+WE ./textures/minecraft/stone.xpm
+
+S ./sprites/barrel.xpm
+
+11111111
+12000021
+1E020021
+12000021
+11111111

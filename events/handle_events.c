@@ -6,34 +6,11 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:02:34 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 16:43:56 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:35:53 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-int			framer(clock_t t, t_cub *cub)
-{
-	double		time_taken;
-	double		spf;
-	char		*fps;
-
-	t = clock() - t;
-	time_taken = ((double)t) / CLOCKS_PER_SEC;
-	spf = 1.0 / FPS;
-	if (time_taken < spf)
-	{
-		time_taken = spf;
-		nanosleep(&(struct timespec){0, time_taken * 1000000000}, 0);
-	}
-	cub->data.time_taken = time_taken;
-	fps = ft_itoa((int)(1.0 / time_taken));
-	mlx_string_put(cub->data.mlx_ptr, cub->data.win_ptr,
-			cub->data.img.width - (cub->data.img.width / 8),
-			cub->data.img.height / 16, 255101, fps);
-	free(fps);
-	return (0);
-}
 
 int			free_and_destroy(t_cub *cub)
 {
@@ -80,10 +57,7 @@ int			update(t_cub *cub)
 	else if (cub->game.keys[KEY_LEFT] && (upd = 1))
 		rotate_left(cub);
 	if (upd)
-	{
 		raycasting(cub, 0);
-		framer(cub->t, cub);
-	}
 	return (0);
 }
 

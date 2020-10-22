@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 16:50:37 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/22 19:08:44 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,6 @@ typedef	struct			s_bmp
 	short int		bitpp;
 }						t_bmp;
 
-
 typedef	struct			s_cub
 {
 	t_data			data;
@@ -195,6 +194,7 @@ typedef	struct			s_cub
 	t_bmp			bmp;
 
 	double			*z_buffer;
+	int				num_diff_sprites;
 	int				num_sprites;
 	int				sprite_index;
 	int				*sprite_order;
@@ -250,7 +250,6 @@ void					draw_buffer(t_cub *cub);
 ** Event functions
 */
 
-int						framer(clock_t t, t_cub *cub);
 int						update(t_cub *cub);
 int						release(int key_code, void *param);
 int						events(int key_code, void *param);
@@ -307,5 +306,13 @@ char					*ft_substr(const char *s, unsigned int start, \
 char					*ft_itoa(int n);
 
 size_t					ft_strlen(const char *s1);
+
+/*
+** THINGS LEFT TO DO
+** all bonus parts must be compiled with bonus files :
+** sprites (done) ; framer (put on hold); minimap (done)
+** error handling :
+** gotta check for double element in map file (double res, double sprite etc..)
+*/
 
 #endif

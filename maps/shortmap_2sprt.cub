@@ -10,14 +10,13 @@ SO ./textures/minecraft/cobblestone.xpm
 
 EA ./textures/minecraft/cracked_stone_bricks.xpm
 
-S1 ./sprites/barrel.xpm
-S2 ./sprites/greenlight.xpm
-S3 ./sprites/pillar.xpm
-
 WE ./textures/minecraft/stone.xpm
 
+S1 ./sprites/barrel.xpm
+S2			./sprites/mechahitler.xpm
+
 11111111
-14000041
+12000021
 1E020031
-14000041
+12000021
 11111111
