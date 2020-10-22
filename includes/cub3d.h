@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 19:08:44 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/22 19:10:20 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ typedef	struct			s_cub
 	double			*sprite_distance;
 
 	int				error;
+	int				nbr_elements;
 	int				resx;
 	int				resy;
 

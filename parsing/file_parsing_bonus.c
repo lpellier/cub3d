@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:29:00 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 19:00:05 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/22 19:32:00 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int			check_resolution(t_cub *cub, char *str)
 		return (put_error("Resolution's fucked man"));
 	cub->data.img.width = width;
 	cub->data.img.height = height;
+	cub->nbr_elements++;
 	return (1);
 }
 
@@ -104,6 +105,8 @@ int			file_parsing(t_cub *cub, char *map_path)
 	if (!map_loop(cub, line))
 		return (0);
 	close(fd);
+	if (cub->nbr_elements != (9 + cub->num_diff_sprites - 1))
+		return (put_error("hey something's wrong with your elements"));
 	if (!(cub->sprites = malloc(sizeof(t_sprite) * cub->num_sprites)))
 		return (0);
 	if (!(cub->sprite_order = malloc(sizeof(int) * cub->num_sprites)))

@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:53:14 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 18:59:14 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/22 19:13:07 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int			check_textures(t_cub *cub, char *str)
 		str++;
 	if (!(cub->texture[index].path = ft_strdup(str)))
 		return (put_error("Your texture's all fucked up"));
+	cub->nbr_elements++;
 	return (1);
 }
 
@@ -87,6 +88,7 @@ int			check_sprite(t_cub *cub, char *str)
 		str++;
 	if (!(cub->sprite[index].path = ft_strdup(str)))
 		return (put_error("Your sprite's all fucked up"));
+	cub->nbr_elements++;
 	return (1);
 }
 
@@ -112,7 +114,8 @@ int			check_colors(t_cub *cub, char *str)
 		return (put_error("Color Error - Please choose \
 		three integers between 0 and 255"));
 	*rgb = 65536 * r + 256 * g + b;
-	if (*rgb >= 0 && *rgb <= 2147483647)
-		return (1);
-	return (put_error("Color error my dude"));
+	if (!(*rgb >= 0 && *rgb <= 2147483647))
+		return (put_error("Color error my dude"));
+	cub->nbr_elements++;
+	return (1);
 }
