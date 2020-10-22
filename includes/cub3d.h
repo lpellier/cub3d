@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/21 18:17:27 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/22 16:50:37 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,18 +167,33 @@ typedef	struct			s_ray
 	int				color;
 }						t_ray;
 
+typedef	struct			s_bmp
+{
+	int				file_size;
+	int				header_size;
+	int				pixel_offset;
+	int				none;
+
+	short int		plane;
+	short int		bitpp;
+}						t_bmp;
+
+
 typedef	struct			s_cub
 {
 	t_data			data;
 	t_ray			ray;
 	t_game			game;
 	t_state			state;
+
 	t_img			minimap;
 	t_img			texture[4];
-
 	t_img			sprite[3];
 	t_sprite		*sprites;
 	t_sprt			*sprt;
+
+	t_bmp			bmp;
+
 	double			*z_buffer;
 	int				num_sprites;
 	int				sprite_index;
@@ -275,6 +290,10 @@ void					get_pos2(char orientation, t_state *state);
 ** Utility functions
 */
 
+void					write_bmp_img(t_cub *cub, int fd);
+void					write_bmp_header(t_cub *cub, int fd);
+
+int						bmp_file(t_cub *cub);
 int						init_and_protecc(t_cub *cub, char *map_path, int saved);
 int						put_error(char *str);
 int						get_next_line(int fd, char **line);
