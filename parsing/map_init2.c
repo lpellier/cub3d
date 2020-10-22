@@ -87,7 +87,7 @@ int			*strto_intp(char *str, int height, t_cub *cub)
 	int		i;
 	int		*map;
 
-	if (!(map = malloc(sizeof(int) * cub->state.width - 1)))
+	if (!(map = malloc(sizeof(int) * cub->state.width)))
 		return (NULL);
 	i = -1;
 	while (str[++i])

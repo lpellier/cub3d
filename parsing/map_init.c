@@ -68,7 +68,7 @@ int			get_map(t_cub *cub, char *map_path)
 
 	fd = open(map_path, O_RDONLY);
 	line = NULL;
-	if (!(map = malloc(sizeof(int *) * cub->state.height - 1)))
+	if (!(map = malloc(sizeof(int *) * cub->state.height)))
 		return (0);
 	map = second_map_loop(cub, fd, line, map);
 	close(fd);

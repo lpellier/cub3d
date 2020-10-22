@@ -50,6 +50,16 @@ int			free_and_destroy(t_cub *cub)
 	while (++i < cub->data.img.height)
 		free(cub->buffer[i]);
 	free(cub->buffer);
+	free(cub->z_buffer);
+	i = -1;
+	while (++i < 4)
+		mlx_destroy_image(cub->data.mlx_ptr, cub->texture[i].img_ptr);
+	// i = -1;
+	// while (++i < cub->num_sprites)
+	// 	mlx_destroy_image(cub->data.mlx_ptr, cub->sprite[i].img_ptr);
+	free(cub->sprite_order);
+	free(cub->sprite_distance);
+	free(cub->sprt);
 	mlx_destroy_image(cub->data.mlx_ptr, cub->data.img.img_ptr);
 	mlx_destroy_window(cub->data.mlx_ptr, cub->data.win_ptr);
 	exit(0);

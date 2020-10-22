@@ -53,8 +53,6 @@ int			get_texture(t_cub *cub, int index)
 	if (!(a->img_ptr = mlx_xpm_file_to_image(cub->data.mlx_ptr, a->path, \
 	&a->width, &a->height)))
 		return (0);
-	if (!(a->data = malloc(sizeof(unsigned int) * a->width * a->height)))
-		return (0);
 	a->data = (unsigned int *)mlx_get_data_addr(a->img_ptr, &a->bpp, \
 	&a->size_l, &a->endian);
 	return (1);
@@ -67,8 +65,6 @@ int			get_sprite(t_cub *cub, int index)
 	a = &cub->sprite[index];
 	if (!(a->img_ptr = mlx_xpm_file_to_image(cub->data.mlx_ptr, a->path, \
 	&a->width, &a->height)))
-		return (0);
-	if (!(a->data = malloc(sizeof(unsigned int) * a->width * a->height)))
 		return (0);
 	a->data = (unsigned int *)mlx_get_data_addr(a->img_ptr, &a->bpp, \
 	&a->size_l, &a->endian);
