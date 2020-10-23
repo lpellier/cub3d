@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:32:57 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 19:31:16 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/23 10:49:09 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int			file_parsing(t_cub *cub, char *map_path)
 	if (!map_loop(cub, line))
 		return (0);
 	close(fd);
-	if (cub->nbr_elements != 9)
+	if (cub->nbr_elements != 8)
 		return (put_error("hey something's wrong with your elements"));
 	if (!(cub->sprites = malloc(sizeof(t_sprite) * cub->num_sprites)))
 		return (0);

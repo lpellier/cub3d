@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:31:25 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 17:31:36 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/23 10:47:48 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int			line_is_map(char *str)
 int			map_error(t_cub *cub, int **map)
 {
 	int i;
+	(void) cub;
+	(void) map;
 
 	i = -1;
 	while (++i < cub->state.width)
