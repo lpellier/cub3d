@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:29:00 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/23 10:51:05 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/26 19:19:38 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,16 @@ int			map_loop(t_cub *cub, char *line)
 {
 	int		len;
 
-	if (line_is_map(line))
+	if (line_is_map(line) && cub->nbr_elements == \
+	(SUM_ELEMENTS + cub->num_diff_sprites - 1))
 	{
 		cub->state.height++;
 		if ((len = ft_strlen(line)) > cub->state.width)
 			cub->state.width = len;
 		count_sprites(cub, line);
 	}
+	else if (line_is_map(line))
+		return (put_error("Map should be last element"));
 	else if (!check_file_element(cub, line))
 	{
 		free(line);
@@ -97,15 +100,16 @@ int			file_parsing(t_cub *cub, char *map_path)
 	char		*line;
 
 	line = NULL;
-	if (!(fd = open(map_path, O_RDONLY)))
-		exit(0);
+	if ((fd = open(map_path, O_RDONLY)) < 0)
+		return (put_error("Couldn't read map file"));
 	while (get_next_line(fd, &line))
 		if (!map_loop(cub, line))
 			return (0);
 	if (!map_loop(cub, line))
 		return (0);
 	close(fd);
-	if (cub->nbr_elements != (8 + cub->num_diff_sprites - 1))
+	printf("%d\n", cub->nbr_elements);
+	if (cub->nbr_elements != (SUM_ELEMENTS + cub->num_diff_sprites - 1))
 		return (put_error("hey something's wrong with your elements"));
 	if (!(cub->sprites = malloc(sizeof(t_sprite) * cub->num_sprites)))
 		return (0);

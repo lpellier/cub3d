@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 16:49:33 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/26 15:52:15 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int			put_error(char *str)
 {
-	printf("Error\n");
-	printf("%s\n", str);
+	ft_printf("Error\n");
+	ft_printf("%s\n", str);
 	return (0);
 }
 
@@ -41,6 +41,19 @@ int			init_and_protecc(t_cub *cub, char *map_path, int saved)
 	return (1);
 }
 
+int			check_cub_extension(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	if (str[i - 4] == '.' && str[i - 3] == 'c' && \
+	str[i - 2] == 'u' && str[i - 1] == 'b')
+		return (1);
+	return (0);
+}
+
 int			main(int ac, char **av)
 {
 	t_cub		cub;
@@ -48,11 +61,10 @@ int			main(int ac, char **av)
 
 	init_state(&cub);
 	if ((ac != 2 && ac != 3) || (ac == 3 && !ft_strncmp(av[2], "--save", 7)))
-	{
-		put_error("arg error");
-		exit(0);
-	}
+		exit(put_error("Arg error"));
 	map_path = ft_strdup(av[1]);
+	if (!check_cub_extension(map_path))
+		exit(put_error("File has to end with .cub"));
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
 	{
 		if (!init_and_protecc(&cub, map_path, 1) || !bmp_file(&cub))

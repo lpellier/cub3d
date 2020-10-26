@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:21:15 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 19:13:56 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/26 13:32:51 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,16 @@ int			next_color(char *str, int *index)
 	while (str[i] == 32 || str[i] == 9 || str[i] == 10 \
 	|| str[i] == 11 || str[i] == 12 || str[i] == 13)
 		i++;
+	if (str[i] == '-' || !(str[i] >= '0' && str[i] <= '9'))
+		return (-1);
 	while (str[i] >= '0' && str[i] <= '9' && str[i])
 	{
 		res = res * 10 + str[i] - 48;
 		i++;
 	}
+	if (str[i] != '\0' && str[i] != 32 && str[i] != 9 && str[i] != 10 \
+	&& str[i] != 11 && str[i] != 12 && str[i] != 13 && str[i] != ',')
+		return (-1);
 	*index = i;
 	return (res);
 }
@@ -110,16 +115,17 @@ int			check_colors(t_cub *cub, char *str)
 	else if (*str == 'C')
 		rgb = &cub->ceil_color;
 	str++;
-	r = next_color(str, &index);
+	if ((r = next_color(str, &index)) == -1)
+		return (put_error("Color error my dude"));
 	str += index;
-	g = next_color(str, &index);
+	if ((g = next_color(str, &index)) == -1)
+		return (put_error("Color error my dude"));
 	str += index;
-	b = next_color(str, &index);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (put_error("Color Error - Please choose \
-		three integers between 0 and 255"));
+	if ((b = next_color(str, &index)) == -1)
+		return (put_error("Color error my dude"));
 	*rgb = 65536 * r + 256 * g + b;
-	if (!(*rgb >= 0 && *rgb <= 2147483647))
+	if (r > 255 || g > 255 || b > 255 \
+	|| !(*rgb >= 0 && *rgb <= 2147483647))
 		return (put_error("Color error my dude"));
 	cub->nbr_elements++;
 	return (1);

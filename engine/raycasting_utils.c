@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 16:03:21 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/09 16:03:46 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/26 19:47:39 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void		raycasting7(t_cub *cub, int x)
 		cub->buffer[cub->ray.j][x] = cub->ray.color;
 	}
 	cub->ray.j = cub->ray.draw_start - 1;
+	if (cub->ray.draw_start == cub->ray.draw_end)
+	{
+		printf("%f %f %f\n", cub->state.dir_y, cub->ray.camera_x, cub->state.plane_y);
+	}
 	while (++cub->ray.j < cub->ray.draw_end)
 	{
 		cub->ray.tex_y = (int)cub->ray.tex_pos & (cub->texture\
@@ -87,6 +91,7 @@ void		raycasting5(t_cub *cub)
 		else
 			cub->ray.tex_num = 3;
 	}
+	cub->ray.perp_wall_dist = cub->ray.perp_wall_dist < 0.001 ? 0.001 : cub->ray.perp_wall_dist;
 	cub->ray.line_height = (int)(cub->data.img.height / \
 	cub->ray.perp_wall_dist);
 	cub->ray.draw_start = -cub->ray.line_height / 2 + \

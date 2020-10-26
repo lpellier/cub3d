@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 19:10:20 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/26 18:48:17 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@
 # include <time.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include "libftprintf.h"
 
-# define RESX_MAX_MAC	3072
-# define RESY_MAX_MAC	1920
+# define RESX_MAX_MAC	2560
+# define RESY_MAX_MAC	1440
+
+# define SUM_ELEMENTS 8
 
 # define WHITE			16777215
 # define RED			16711680
@@ -98,6 +101,7 @@ typedef	struct			s_state
 	double			plane_x;
 	double			plane_y;
 
+	int				valid_player;
 	int				height;
 	int				width;
 
@@ -279,6 +283,7 @@ int						strto_intp2(char c, int cur, int height, t_cub *cub);
 int						*strto_intp(char *str, int height, t_cub *cub);
 int						get_map(t_cub *cub, char *map_path);
 int						cmp(const void *left, const void *right);
+int						map_is_valid(t_cub *cub, int **map);
 
 void					sort_sprites(t_cub *cub);
 void					sprite_sorting(t_cub *cub);

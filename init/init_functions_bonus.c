@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:18:20 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 17:18:30 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/26 19:20:22 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void		init_state(t_cub *cub)
 	int		i;
 
 	cub->state.time = (double)clock();
+	cub->state.valid_player = 0;
+	cub->nbr_elements = 0;
 	cub->error = 0;
 	cub->resx = 0;
 	cub->resy = 0;
@@ -40,6 +42,8 @@ void		init_state(t_cub *cub)
 	cub->state.height = 0;
 	cub->num_sprites = 0;
 	cub->sprite_index = 0;
+	cub->num_diff_sprites = 0;
+	cub->ray.draw_start = 0;
 	i = -1;
 	while (++i < 66000)
 		cub->game.keys[i] = 0;

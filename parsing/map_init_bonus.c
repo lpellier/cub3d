@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:31:25 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/23 10:47:48 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/26 14:56:17 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,15 @@ int			line_is_map(char *str)
 int			map_error(t_cub *cub, int **map)
 {
 	int i;
-	(void) cub;
-	(void) map;
 
 	i = -1;
 	while (++i < cub->state.width)
 		if (map[0][i] != 1 || map[cub->state.height - 1][i] != 1)
-			return (put_error("Map not right"));
+			return (0);
 	i = -1;
 	while (++i < cub->state.height)
 		if (map[i][0] != 1 || map[i][cub->state.width - 1] != 1)
-			return (put_error("Map not right"));
+			return (0);
 	return (1);
 }
 
@@ -62,6 +60,28 @@ int			**second_map_loop(t_cub *cub, int fd, char *line, int **map)
 	return (map);
 }
 
+int			map_is_valid(t_cub *cub, int **map)
+{
+	int		i;
+	int		j;
+	int		wall_count;
+
+	wall_count = 0;
+	i = -1;
+	while (++i < cub->state.height)
+	{
+		j = -1;
+		while (++j < cub->state.width)
+		{
+			if (map[i][j] == 1)
+				wall_count++;
+		}
+	}
+	if (wall_count >= 8 && cub->state.valid_player == 1)
+		return (1);
+	return (0);
+}
+
 int			get_map(t_cub *cub, char *map_path)
 {
 	int			fd;
@@ -72,10 +92,12 @@ int			get_map(t_cub *cub, char *map_path)
 	line = NULL;
 	if (!(map = malloc(sizeof(int *) * cub->state.height)))
 		return (0);
+	if (cub->state.height < 1)
+		return (put_error("No map found in file"));
 	map = second_map_loop(cub, fd, line, map);
 	close(fd);
-	if (!map_error(cub, map) || cub->error == 1)
-		return (0);
+	if (!map_is_valid(cub, map) || !map_error(cub, map) || cub->error == 1)
+		return (put_error("Map is invalid"));
 	cub->game.world_map = map;
 	return (1);
 }

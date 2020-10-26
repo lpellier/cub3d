@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 19:53:25 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 17:34:45 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/26 14:49:22 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void		get_pos(int x, int y, char orientation, t_state *state)
 	state->pos_x = y + 0.5;
 	state->pos_y = x + 0.5;
 	orientation -= 48;
+	state->valid_player = 1;
 	if (orientation == 30)
 	{
 		state->dir_x = -1;
@@ -99,6 +100,11 @@ int			*strto_intp(char *str, int height, t_cub *cub)
 			put_error("Map Error");
 			cub->error = 1;
 		}
+	}
+	while (i < cub->state.width)
+	{
+		map[i] = 1;
+		i++;
 	}
 	free(str);
 	return (map);
