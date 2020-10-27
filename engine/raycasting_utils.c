@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 16:03:21 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/27 14:54:58 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/27 15:52:36 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,18 @@ void		raycasting5(t_cub *cub)
 		cub->ray.perp_wall_dist = (cub->ray.map_x - cub->state.pos_x + \
 		(1 - cub->ray.step_x) / 2) / cub->ray.raydir_x;
 		if (cub->ray.raydir_x > 0)
-			cub->ray.tex_num = 0;
-		else
 			cub->ray.tex_num = 1;
+		else
+			cub->ray.tex_num = 0;
 	}
 	else
 	{
 		cub->ray.perp_wall_dist = (cub->ray.map_y - cub->state.pos_y + \
 		(1 - cub->ray.step_y) / 2) / cub->ray.raydir_y;
 		if (cub->ray.raydir_y > 0)
-			cub->ray.tex_num = 2;
-		else
 			cub->ray.tex_num = 3;
+		else
+			cub->ray.tex_num = 2;
 	}
 	cub->ray.perp_wall_dist = cub->ray.perp_wall_dist < 0.001 ? 0.001 : cub->ray.perp_wall_dist;
 	cub->ray.line_height = (int)(cub->data.img.height / \
