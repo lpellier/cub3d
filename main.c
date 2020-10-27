@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/26 15:52:15 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/27 15:00:43 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,21 @@ int			main(int ac, char **av)
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
 	{
 		if (!init_and_protecc(&cub, map_path, 1) || !bmp_file(&cub))
+		{
+			free(map_path);
 			exit(0);
+		}
 	}
 	else
 	{
 		if (!init_and_protecc(&cub, map_path, 0))
+		{
+			free(map_path);
 			exit(0);
+		}
 		raycasting(&cub, 0);
 		loop(&cub);
 	}
+	free(map_path);
 	return (1);
 }
