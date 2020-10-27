@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:29:00 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/26 19:19:38 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/27 13:15:24 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int			file_parsing(t_cub *cub, char *map_path)
 	if (!map_loop(cub, line))
 		return (0);
 	close(fd);
-	printf("%d\n", cub->nbr_elements);
 	if (cub->nbr_elements != (SUM_ELEMENTS + cub->num_diff_sprites - 1))
 		return (put_error("hey something's wrong with your elements"));
 	if (!(cub->sprites = malloc(sizeof(t_sprite) * cub->num_sprites)))

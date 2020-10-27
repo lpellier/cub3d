@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:33:01 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/26 14:49:27 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/27 14:35:40 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		get_pos2(char orientation, t_state *state)
 	}
 	else if (orientation == 39)
 	{
-		state->dir_x = 0;
+		state->dir_x = 0.001;
 		state->dir_y = -1;
 		state->plane_x = -0.66;
 		state->plane_y = 0;
@@ -45,7 +45,7 @@ void		get_pos(int x, int y, char orientation, t_state *state)
 	}
 	else if (orientation == 21)
 	{
-		state->dir_x = 0;
+		state->dir_x = -0.001;
 		state->dir_y = 1;
 		state->plane_x = 0.66;
 		state->plane_y = 0;
