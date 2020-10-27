@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 19:53:25 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/26 14:49:22 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/27 15:50:05 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void		get_pos2(char orientation, t_state *state)
 {
-	if (orientation == 35)
+	if (orientation == 'S')
 	{
 		state->dir_x = 1;
-		state->dir_y = 0;
+		state->dir_y = 0.001;
 		state->plane_x = 0;
 		state->plane_y = -0.66;
 	}
-	else if (orientation == 39)
+	else if (orientation == 'W')
 	{
 		state->dir_x = 0;
 		state->dir_y = -1;
@@ -34,16 +34,15 @@ void		get_pos(int x, int y, char orientation, t_state *state)
 {
 	state->pos_x = y + 0.5;
 	state->pos_y = x + 0.5;
-	orientation -= 48;
 	state->valid_player = 1;
-	if (orientation == 30)
+	if (orientation == 'N')
 	{
 		state->dir_x = -1;
-		state->dir_y = 0;
+		state->dir_y = 0.001;
 		state->plane_x = 0;
 		state->plane_y = 0.66;
 	}
-	else if (orientation == 21)
+	else if (orientation == 'E')
 	{
 		state->dir_x = 0;
 		state->dir_y = 1;
