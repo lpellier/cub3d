@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 16:03:21 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/27 14:37:04 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/27 14:54:58 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void		raycasting6(t_cub *cub)
 		cub->ray.tex_x - 1;
 	cub->ray.step = 1.0 * cub->texture[cub->ray.tex_num].height / \
 	cub->ray.line_height;
-	if (cub->ray.draw_end == cub->ray.draw_start)
-		printf("%f\n", cub->ray.perp_wall_dist);
 	cub->ray.tex_pos = (cub->ray.draw_start - cub->data.img.height / \
 	2 + cub->ray.line_height / 2) * cub->ray.step;
 	cub->ray.j = -1;
