@@ -63,7 +63,7 @@ OBJS		=	$(SRCS:.c=.o)
 OBJ_BON		=	$(BONUS:.c=.o)\
 
 MACLFLAGS		=	-lmlx -framework OpenGL -framework AppKit
-LFLAGS		=	-L /mlx_linux -lmlx -lXext -lX11 -lm -lbsd
+LFLAGS		=	-L ./mlx_linux -lmlx -lXext -lX11 -lm -lbsd
 
 CC			=	clang
 
@@ -88,12 +88,12 @@ INCLUDES	=	./includes/cub3d.h
 all			:	$(NAME)
 
 $(NAME)		:	$(OBJS) $(OBJS_MAIN)
-				${CC} ${CFLAGS} ${OBJS} ${OBJS_MAIN} ${LFLAGS} -o ${NAME}
+				${CC} ${MACCFLAGS} ${OBJS} ${OBJS_MAIN} ${MACLFLAGS} -o ${NAME}
 
 bonus		:	${NAME_BON}
 
 $(NAME_BON)	:	$(OBJ_BON) $(OBJS_MAIN)
-				${CC} ${CFLAGS} ${OBJ_BON} ${OBJS_MAIN} ${LFLAGS} -o ${NAME_BON}
+				${CC} ${MACCFLAGS} ${OBJ_BON} ${OBJS_MAIN} ${MACLFLAGS} -o ${NAME_BON}
 
 everything	:	all bonus
 
