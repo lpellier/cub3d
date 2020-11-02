@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:21:15 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 17:05:51 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:44:05 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,11 @@ int			check_colors(t_cub *cub, char *str)
 	int index;
 	int *rgb;
 
-	if (*str == 'F')
-		rgb = &cub->floor_color;
-	else if (*str == 'C')
-		rgb = &cub->ceil_color;
+	rgb = *str == 'F' ? &cub->floor_color : &cub->ceil_color;
 	cub->check.c_floor_check += *str == 'F' ? 1 : 0;
 	cub->check.c_ceil_check += *str == 'C' ? 1 : 0;
 	str++;
-	if (!white_space(*str))
-		return (put_error("Color error my dude"));
-	if ((r = next_color(str, &index)) == -1)
+	if (!white_space(*str) || (r = next_color(str, &index)) == -1)
 		return (put_error("Color error my dude"));
 	str += index;
 	if ((g = next_color(str, &index)) == -1)
@@ -143,11 +138,5 @@ int			check_colors(t_cub *cub, char *str)
 	if (r > 255 || g > 255 || b > 255 \
 	|| !(*rgb >= 0 && *rgb <= 2147483647) || next_color(str, &index) > 0)
 		return (put_error("Color error my dude"));
-	while (*str)
-	{
-		if (!white_space(*str) && *str != '\0')
-			return (put_error("Color error my dude"));
-		str++;
-	}
-	return (1);
+	return (check_colors2(str));
 }

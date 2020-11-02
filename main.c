@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 14:57:20 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:37:19 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ int			check_cub_extension(char *str)
 	return (0);
 }
 
+int			free_and_ret(char *str)
+{
+	free(str);
+	return (0);
+}
+
 int			main(int ac, char **av)
 {
 	t_cub		cub;
@@ -68,18 +74,12 @@ int			main(int ac, char **av)
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
 	{
 		if (!init_and_protecc(&cub, map_path, 1) || !bmp_file(&cub))
-		{
-			free(map_path);
-			exit(0);
-		}
+			exit(free_and_ret(map_path));
 	}
 	else
 	{
 		if (!init_and_protecc(&cub, map_path, 0))
-		{
-			free(map_path);
-			exit(0);
-		}
+			exit(free_and_ret(map_path));
 		raycasting(&cub, 0);
 		loop(&cub);
 	}

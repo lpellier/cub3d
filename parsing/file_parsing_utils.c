@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:50:51 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 17:01:43 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:43:44 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,15 @@ void			init_checklist(t_cub *cub)
 	cub->check.sprt_check = 0;
 	cub->check.orientation_check = 0;
 	cub->check.map_check = 0;
+}
+
+int				check_colors2(char *str)
+{
+	while (*str)
+	{
+		if (!white_space(*str) && *str != '\0')
+			return (put_error("Color error my dude"));
+		str++;
+	}
+	return (1);
 }
