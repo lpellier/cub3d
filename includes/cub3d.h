@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 12:58:10 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:11:51 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ typedef	struct			s_cub
 	t_ray			ray;
 	t_game			game;
 	t_state			state;
-	t_check		check;
+	t_check			check;
 
 	t_img			minimap;
 	t_img			texture[4];
@@ -239,6 +239,7 @@ int						get_tex_sprite(t_cub *cub);
 
 void					init_checklist(t_cub *cub);
 void					init_state(t_cub *cub);
+void					init_checklist(t_cub *cub);
 
 /*
 ** Engine functions
@@ -285,6 +286,8 @@ void					rotate_right(t_cub *cub);
 ** Map Parsing functions
 */
 
+int						check_elements(t_cub *cub);
+int						map_loop(t_cub *cub, char *line);
 int						next_number(char *str, int *index);
 int						next_color(char *str, int *index);
 int						check_textures(t_cub *cub, char *str);
@@ -297,11 +300,14 @@ int						*strto_intp(char *str, int height, t_cub *cub);
 int						get_map(t_cub *cub, char *map_path);
 int						cmp(const void *left, const void *right);
 int						map_is_valid(t_cub *cub, int **map);
+int						map_is_last(t_cub *cub);
+int						check_file_element(t_cub *cub, char *str);
 
+void					print_map(t_cub *cub);
 void					sort_sprites(t_cub *cub);
 void					sprite_sorting(t_cub *cub);
 void					count_sprites(t_cub *cub, char *str);
-void					get_pos(int x, int y, char orientation, t_state *state);
+void					get_pos(t_cub *cub, int x, int y, char orientation);
 void					get_pos2(char orientation, t_state *state);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:31:25 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 13:10:47 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 16:49:48 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ int			**second_map_loop(t_cub *cub, int fd, char *line, int **map)
 		{
 			map[count_h] = strto_intp(line, count_h, cub);
 			count_h++;
+		}
+		else if (!line_is_map(line) && count_h > 0 && \
+		count_h <= cub->state.height - 1)
+		{
+			cub->error = 1;
+			free(line);
 		}
 		else
 			free(line);

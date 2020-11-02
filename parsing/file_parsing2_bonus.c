@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:21:15 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 13:03:06 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:05:51 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int			check_textures(t_cub *cub, char *str)
 	else if (*str == 'W')
 		index = 3;
 	str += 2;
+	if (!white_space(*str))
+		return (put_error("Your texture's all fucked up"));
 	while (white_space(*str))
 		str++;
 	if (!(cub->texture[index].path = ft_strdup(str)))
@@ -80,7 +82,7 @@ int			check_textures(t_cub *cub, char *str)
 	else if (index == 2)
 		cub->check.ea_text_check += 1;
 	else if (index == 3)
-		cub ->check.we_text_check += 1;
+		cub->check.we_text_check += 1;
 	return (1);
 }
 
@@ -99,6 +101,9 @@ int			check_sprite(t_cub *cub, char *str)
 	else
 		return (put_error("Your sprite's all fucked up"));
 	str += 1;
+	if (*str != 32 && *str != 9 && *str != 10 \
+	&& *str != 11 && *str != 12 && *str != 13)
+		return (put_error("Your sprite's all fucked up"));
 	while (*str == 32 || *str == 9 || *str == 10 \
 	|| *str == 11 || *str == 12 || *str == 13)
 		str++;
@@ -121,8 +126,10 @@ int			check_colors(t_cub *cub, char *str)
 	else if (*str == 'C')
 		rgb = &cub->ceil_color;
 	cub->check.c_floor_check += *str == 'F' ? 1 : 0;
-	cub->check.c_ceil_check += *str == 'C' ? 1 : 0; 
+	cub->check.c_ceil_check += *str == 'C' ? 1 : 0;
 	str++;
+	if (!white_space(*str))
+		return (put_error("Color error my dude"));
 	if ((r = next_color(str, &index)) == -1)
 		return (put_error("Color error my dude"));
 	str += index;

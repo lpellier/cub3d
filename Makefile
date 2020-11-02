@@ -2,7 +2,8 @@ NAME 		=	cub3d
 
 NAME_BON	=	cub3d_bonus
 
-SRCS	= 	./parsing/file_parsing.c					\
+SRCS	= ./parsing/file_parsing_utils.c				\
+			./parsing/file_parsing.c					\
         	./parsing/file_parsing2.c					\
         	./parsing/map_init.c						\
         	./parsing/map_init2.c						\
@@ -29,7 +30,8 @@ SRCS	= 	./parsing/file_parsing.c					\
 			./init/init_functions.c						\
 			./bitmap/bmp_functions.c
 
-BONUS	= 	./parsing/file_parsing_bonus.c				\
+BONUS	= 	./parsing/file_parsing_utils.c				\
+			./parsing/file_parsing_bonus.c				\
         	./parsing/file_parsing2_bonus.c				\
         	./parsing/map_init_bonus.c					\
         	./parsing/map_init2_bonus.c					\
@@ -119,6 +121,6 @@ install		:
 				sudo bash ./init/install_mlx.sh
 
 norminette	:
-				norminette $(SRCS) $(MAIN) $(BONUS) includes/cub3d.h includes/libftprintf.h
+				norminette $(SRCS) $(MAIN) $(BONUS) ./includes/cub3d.h ./includes/libftprintf.h
 
 .PHONY		:	all clean fclean re install bonus

@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 19:53:25 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 13:10:37 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:12:17 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,28 @@ void		get_pos2(char orientation, t_state *state)
 	}
 }
 
-void		get_pos(int x, int y, char orientation, t_state *state)
+void		get_pos(t_cub *cub, int x, int y, char orientation)
 {
-	state->pos_x = y + 0.5;
-	state->pos_y = x + 0.5;
-	state->valid_player = 1;
+	cub->state.pos_x = y + 0.5;
+	cub->state.pos_y = x + 0.5;
+	cub->state.valid_player = 1;
+	cub->check.orientation_check++;
 	if (orientation == 'N')
 	{
-		state->dir_x = -1;
-		state->dir_y = 0.001;
-		state->plane_x = 0;
-		state->plane_y = 0.66;
+		cub->state.dir_x = -1;
+		cub->state.dir_y = 0.001;
+		cub->state.plane_x = 0;
+		cub->state.plane_y = 0.66;
 	}
 	else if (orientation == 'E')
 	{
-		state->dir_x = 0;
-		state->dir_y = 1;
-		state->plane_x = 0.66;
-		state->plane_y = 0;
+		cub->state.dir_x = 0;
+		cub->state.dir_y = 1;
+		cub->state.plane_x = 0.66;
+		cub->state.plane_y = 0;
 	}
 	else
-		get_pos2(orientation, state);
+		get_pos2(orientation, &cub->state);
 }
 
 int			strto_intp2(char c, int cur, int height, t_cub *cub)
@@ -62,8 +63,7 @@ int			strto_intp2(char c, int cur, int height, t_cub *cub)
 	else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		ret = 0;
-		get_pos(cur, height, c, &cub->state);
-		cub->check.orientation_check++;
+		get_pos(cub, cur, height, c);
 	}
 	else if (c == '1')
 		ret = 1;
@@ -96,10 +96,7 @@ int			*strto_intp(char *str, int height, t_cub *cub)
 		map[i] = strto_intp2(str[i], i, height, cub);
 		if (str[i] != ' ' && str[i] != 'N' && str[i] != 'S' && \
 		str[i] != 'E' && str[i] != 'W' && !(str[i] >= '0' && str[i] <= '2'))
-		{
-			put_error("Map Error");
 			cub->error = 1;
-		}
 	}
 	while (i < cub->state.width)
 	{

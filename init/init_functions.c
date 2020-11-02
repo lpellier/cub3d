@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:00:58 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 13:55:51 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:01:01 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ int			init_buffer(t_cub *cub)
 	if (!(cub->z_buffer = malloc(sizeof(double) * cub->data.img.width)))
 		return (0);
 	return (1);
-}
-
-void		init_checklist(t_cub *cub)
-{
-	cub->check.res_check = 0;
-	cub->check.c_floor_check = 0;
-	cub->check.c_ceil_check = 0;
-	cub->check.no_text_check = 0;
-	cub->check.so_text_check = 0;
-	cub->check.ea_text_check = 0;
-	cub->check.we_text_check = 0;
-	cub->check.sprt_check = 0;
-	cub->check.orientation_check = 0;
-	cub->check.map_check = 0;
 }
 
 void		init_state(t_cub *cub)
