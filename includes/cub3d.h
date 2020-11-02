@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 17:45:11 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:55:52 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,7 @@ void					get_pos2(char orientation, t_state *state);
 
 void					write_bmp_img(t_cub *cub, int fd);
 void					write_bmp_header(t_cub *cub, int fd);
+void					free_buffer(t_cub *cub);
 
 int						white_space(char c);
 int						bmp_file(t_cub *cub);
