@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:33:01 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/27 15:44:05 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 13:11:01 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int			strto_intp2(char c, int cur, int height, t_cub *cub)
 	{
 		ret = 0;
 		get_pos(cur, height, c, &cub->state);
+		cub->check.orientation_check++;
 	}
 	else if (c == '1')
 		ret = 1;

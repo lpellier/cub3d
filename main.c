@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/27 15:00:43 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 14:57:20 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int			put_error(char *str)
 {
-	ft_printf("Error\n");
-	ft_printf("%s\n", str);
+	ft_printf("\033[31mError\n");
+	ft_printf("%s\n\033[0m", str);
 	return (0);
 }
 

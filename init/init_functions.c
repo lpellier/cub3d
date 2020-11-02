@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:00:58 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 12:41:01 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 13:55:51 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		init_state(t_cub *cub)
 	cub->state.height = 0;
 	cub->num_sprites = 0;
 	cub->sprite_index = 0;
-	cub->num_diff_sprites = 1;
+	cub->num_diff_sprites = 0;
 	cub->ray.draw_start = 0;
 	init_checklist(cub);
 	i = -1;

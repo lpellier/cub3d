@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 12:40:41 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 12:58:10 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ typedef	struct			s_check
 	int				so_text_check;
 	int				ea_text_check;
 	int				we_text_check;
-	int				*sprt_check;
+	int				sprt_check;
 	int				orientation_check;
 	int				map_check;
 }						t_check;

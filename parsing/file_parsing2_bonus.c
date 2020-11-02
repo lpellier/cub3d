@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:21:15 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 12:48:19 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 13:03:06 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ int			check_textures(t_cub *cub, char *str)
 	if (!(cub->texture[index].path = ft_strdup(str)))
 		return (put_error("Your texture's all fucked up"));
 	if (index == 0)
-		cub->check.so_text_check = 1;
+		cub->check.so_text_check += 1;
 	else if (index == 1)
-		cub->check.no_text_check = 1;
+		cub->check.no_text_check += 1;
 	else if (index == 2)
-		cub->check.ea_text_check = 1;
+		cub->check.ea_text_check += 1;
 	else if (index == 3)
-		cub ->check.we_text_check = 1;
+		cub ->check.we_text_check += 1;
 	return (1);
 }
 
@@ -104,6 +104,7 @@ int			check_sprite(t_cub *cub, char *str)
 		str++;
 	if (!(cub->sprite[index].path = ft_strdup(str)))
 		return (put_error("Your sprite's all fucked up"));
+	cub->check.sprt_check++;
 	return (1);
 }
 
@@ -119,6 +120,8 @@ int			check_colors(t_cub *cub, char *str)
 		rgb = &cub->floor_color;
 	else if (*str == 'C')
 		rgb = &cub->ceil_color;
+	cub->check.c_floor_check += *str == 'F' ? 1 : 0;
+	cub->check.c_ceil_check += *str == 'C' ? 1 : 0; 
 	str++;
 	if ((r = next_color(str, &index)) == -1)
 		return (put_error("Color error my dude"));
