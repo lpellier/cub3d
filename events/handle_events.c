@@ -6,11 +6,21 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:02:34 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 18:35:53 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:54:10 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void	free_buffer(t_cub *cub)
+{
+	int i;
+
+	i = -1;
+	while (++i < cub->data.img.height)
+		free(cub->buffer[i]);
+	free(cub->buffer);
+}
 
 int			free_and_destroy(t_cub *cub)
 {
@@ -23,10 +33,7 @@ int			free_and_destroy(t_cub *cub)
 	i = -1;
 	while (++i < 4)
 		free(cub->texture[i].path);
-	i = -1;
-	while (++i < cub->data.img.height)
-		free(cub->buffer[i]);
-	free(cub->buffer);
+	free_buffer(cub);
 	free(cub->z_buffer);
 	i = -1;
 	while (++i < 4)
