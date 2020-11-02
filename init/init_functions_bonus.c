@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:18:20 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/26 19:20:22 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 12:41:07 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,26 @@ int			init_buffer(t_cub *cub)
 	return (1);
 }
 
+void		init_checklist(t_cub *cub)
+{
+	cub->check.res_check = 0;
+	cub->check.c_floor_check = 0;
+	cub->check.c_ceil_check = 0;
+	cub->check.no_text_check = 0;
+	cub->check.so_text_check = 0;
+	cub->check.ea_text_check = 0;
+	cub->check.we_text_check = 0;
+	cub->check.sprt_check = 0;
+	cub->check.map_check = 0;
+	cub->check.orientation_check = 0;
+}
+
 void		init_state(t_cub *cub)
 {
 	int		i;
 
 	cub->state.time = (double)clock();
 	cub->state.valid_player = 0;
-	cub->nbr_elements = 0;
 	cub->error = 0;
 	cub->resx = 0;
 	cub->resy = 0;
@@ -44,6 +57,7 @@ void		init_state(t_cub *cub)
 	cub->sprite_index = 0;
 	cub->num_diff_sprites = 0;
 	cub->ray.draw_start = 0;
+	init_checklist(cub);
 	i = -1;
 	while (++i < 66000)
 		cub->game.keys[i] = 0;

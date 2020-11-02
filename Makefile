@@ -95,7 +95,10 @@ bonus		:	${NAME_BON}
 $(NAME_BON)	:	$(OBJ_BON) $(OBJS_MAIN)
 				${CC} ${CFLAGS} ${OBJ_BON} ${OBJS_MAIN} ${LFLAGS} -o ${NAME_BON}
 
-mac			:	$(OBJ_BON) $(OBJS_MAIN)
+mac					:	$(OBJS) $(OBJS_MAIN)
+					${CC} ${MACCFLAGS} ${OBJS} ${OBJS_MAIN} ${MACLFLAGS} -o ${NAME}
+
+macbon			:	$(OBJ_BON) $(OBJS_MAIN)
 				${CC} ${MACCFLAGS} ${OBJ_BON} ${OBJS_MAIN} ${MACLFLAGS} -o ${NAME_BON}
 
 everything	:	all bonus

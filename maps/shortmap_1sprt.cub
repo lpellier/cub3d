@@ -1,8 +1,8 @@
-R		960		540
+R		960		540 
 
-C 25, 31, 40
+C 25, 31,  40
 
-F 184, 179, 198 
+F 184, 179, 198
 
 NO ./textures/minecraft/chiseled_stone_bricks.xpm
 
@@ -15,7 +15,7 @@ WE ./textures/minecraft/stone.xpm
 S ./sprites/barrel.xpm
 
 11111111
-1200N021
+1200S021
 10020001
 12000021
 11111111

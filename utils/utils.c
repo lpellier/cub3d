@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:27:40 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/21 15:39:28 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/10/30 16:27:56 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,12 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n)
 		}
 	}
 	return (1);
+}
+
+int				white_space(char c)
+{
+	if (c == 32 || c == 9 || c == 10 \
+	|| c == 11 || c == 12 || c == 13)
+		return (1);
+	return (0);
 }

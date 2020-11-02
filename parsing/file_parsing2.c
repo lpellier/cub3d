@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:53:14 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/26 14:20:26 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 12:44:25 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int			next_number(char *str, int *index)
 
 	res = 0;
 	i = 0;
+	while (white_space(str[i]))
+		i++;
 	while (str[i] >= '0' && str[i] <= '9' && str[i])
 	{
 		res = res * 10 + str[i] - 48;
@@ -35,13 +37,11 @@ int			next_color(char *str, int *index)
 
 	res = 0;
 	i = 0;
-	while (str[i] == 32 || str[i] == 9 || str[i] == 10 \
-	|| str[i] == 11 || str[i] == 12 || str[i] == 13)
+	while (white_space(str[i]))
 		i++;
 	if (str[i] == ',')
 		i++;
-	while (str[i] == 32 || str[i] == 9 || str[i] == 10 \
-	|| str[i] == 11 || str[i] == 12 || str[i] == 13)
+	while (white_space(str[i]))
 		i++;
 	if (str[i] == '-' || !(str[i] >= '0' && str[i] <= '9'))
 		return (-1);
@@ -69,12 +69,18 @@ int			check_textures(t_cub *cub, char *str)
 	else if (*str == 'W')
 		index = 3;
 	str += 2;
-	while (*str == 32 || *str == 9 || *str == 10 \
-	|| *str == 11 || *str == 12 || *str == 13)
+	while (white_space(*str))
 		str++;
 	if (!(cub->texture[index].path = ft_strdup(str)))
 		return (put_error("Your texture's all fucked up"));
-	cub->nbr_elements++;
+	if (index == 0)
+		cub->check.so_text_check = 1;
+	else if (index == 1)
+		cub->check.no_text_check = 1;
+	else if (index == 2)
+		cub->check.ea_text_check = 1;
+	else if (index == 3)
+		cub ->check.we_text_check = 1;
 	return (1);
 }
 
@@ -83,6 +89,7 @@ int			check_sprite(t_cub *cub, char *str)
 	int index;
 
 	str += 1;
+	cub->num_diff_sprites++;
 	index = 0;
 	if (*str != 32 && *str != 9 && *str != 10 \
 	&& *str != 11 && *str != 12 && *str != 13)
@@ -93,7 +100,6 @@ int			check_sprite(t_cub *cub, char *str)
 		str++;
 	if (!(cub->sprite[index].path = ft_strdup(str)))
 		return (put_error("Your sprite's all fucked up"));
-	cub->nbr_elements++;
 	return (1);
 }
 
@@ -118,10 +124,16 @@ int			check_colors(t_cub *cub, char *str)
 	str += index;
 	if ((b = next_color(str, &index)) == -1)
 		return (put_error("Color error my dude"));
+	str += index;
 	*rgb = 65536 * r + 256 * g + b;
 	if (r > 255 || g > 255 || b > 255 \
-	|| !(*rgb >= 0 && *rgb <= 2147483647))
+	|| !(*rgb >= 0 && *rgb <= 2147483647) || next_color(str, &index) > 0)
 		return (put_error("Color error my dude"));
-	cub->nbr_elements++;
+	while (*str)
+	{
+		if (!white_space(*str) && *str != '\0')
+			return (put_error("Color error my dude"));
+		str++;
+	}
 	return (1);
 }

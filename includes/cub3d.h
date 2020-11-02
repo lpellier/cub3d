@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/26 18:48:17 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/02 12:40:41 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 
 # define RESX_MAX_MAC	2560
 # define RESY_MAX_MAC	1440
-
-# define SUM_ELEMENTS 8
 
 # define WHITE			16777215
 # define RED			16711680
@@ -182,12 +180,27 @@ typedef	struct			s_bmp
 	short int		bitpp;
 }						t_bmp;
 
+typedef	struct			s_check
+{
+	int				res_check;
+	int				c_floor_check;
+	int				c_ceil_check;
+	int				no_text_check;
+	int				so_text_check;
+	int				ea_text_check;
+	int				we_text_check;
+	int				*sprt_check;
+	int				orientation_check;
+	int				map_check;
+}						t_check;
+
 typedef	struct			s_cub
 {
 	t_data			data;
 	t_ray			ray;
 	t_game			game;
 	t_state			state;
+	t_check		check;
 
 	t_img			minimap;
 	t_img			texture[4];
@@ -205,7 +218,6 @@ typedef	struct			s_cub
 	double			*sprite_distance;
 
 	int				error;
-	int				nbr_elements;
 	int				resx;
 	int				resy;
 
@@ -225,6 +237,7 @@ int						get_texture(t_cub *cub, int index);
 int						get_sprite(t_cub *cub, int index);
 int						get_tex_sprite(t_cub *cub);
 
+void					init_checklist(t_cub *cub);
 void					init_state(t_cub *cub);
 
 /*
@@ -298,6 +311,7 @@ void					get_pos2(char orientation, t_state *state);
 void					write_bmp_img(t_cub *cub, int fd);
 void					write_bmp_header(t_cub *cub, int fd);
 
+int						white_space(char c);
 int						bmp_file(t_cub *cub);
 int						init_and_protecc(t_cub *cub, char *map_path, int saved);
 int						put_error(char *str);
