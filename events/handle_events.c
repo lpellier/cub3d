@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-void	free_buffer(t_cub *cub)
+void		free_buffer(t_cub *cub)
 {
 	int i;
 
