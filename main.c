@@ -74,9 +74,8 @@ int			main(int ac, char **av)
 		exit(put_error(&cub, "File has to end with .cub"));
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
 	{
-		init_and_protecc(&cub, map_path, 1);
-		bmp_file(&cub);
-		exit(free_and_destroy(&cub, 1));
+		if (!init_and_protecc(&cub, map_path, 1) || !bmp_file(&cub))
+			exit(free_and_destroy(&cub, 1));
 	}
 	else
 	{

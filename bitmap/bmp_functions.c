@@ -59,7 +59,7 @@ int			bmp_file(t_cub *cub)
 {
 	int		fd;
 
-	if ((fd = open("saved.bmp", O_WRONLY | O_CREAT, S_IRWXU | O_TRUNC)) < 0)
+	if ((fd = open("saved.bmp", O_WRONLY | O_CREAT | O_TRUNC)) < 0)
 	{
 		put_error(cub, "Couldn't save image.");
 		return (0);
