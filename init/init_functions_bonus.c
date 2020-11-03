@@ -31,6 +31,21 @@ void		init_state(t_cub *cub)
 {
 	int		i;
 
+	i = -1;
+	while (++i < 4)
+		cub->texture[i].path = NULL;
+	cub->game.world_map = NULL;
+	cub->buffer = NULL;
+	cub->z_buffer = NULL;
+	i = -1;
+	while (++i < 4)
+		cub->texture[i].img_ptr = NULL;
+	cub->game.world_map = NULL;
+	cub->sprite_order = NULL;
+	cub->sprite_distance = NULL;
+	cub->sprt = NULL;
+	cub->data.img.img_ptr = NULL;
+	cub->data.win_ptr = NULL;
 	cub->state.time = (double)clock();
 	cub->state.valid_player = 0;
 	cub->error = 0;

@@ -75,12 +75,12 @@ int			main(int ac, char **av)
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
 	{
 		if (!init_and_protecc(&cub, map_path, 1) || !bmp_file(&cub))
-			exit(free_and_destroy(&cub, 1));
+			exit(free_and_destroy(&cub));
 	}
 	else
 	{
 		if (!init_and_protecc(&cub, map_path, 0))
-			exit(free_and_destroy(&cub, 0));
+			exit(free_and_destroy(&cub));
 		raycasting(&cub, 0);
 		loop(&cub);
 	}

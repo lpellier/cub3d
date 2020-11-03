@@ -17,38 +17,67 @@ void		free_buffer(t_cub *cub)
 	int i;
 
 	i = -1;
-	while (++i < cub->data.img.height)
-		free(cub->buffer[i]);
-	free(cub->buffer);
+
+	if (cub->buffer != NULL)
+	{
+		while (++i < cub->data.img.height)
+		{
+			if (cub->buffer[i] != NULL)
+				free(cub->buffer[i]);
+			cub->buffer[i] =  NULL;
+		}
+		free(cub->buffer);
+	}
+	cub->buffer = NULL;
 }
 
-int			free_and_destroy(t_cub *cub, int saved)
+int			free_and_destroy(t_cub *cub)
 {
 	int		i;
 
 	i = -1;
 	while (++i < cub->state.height)
-		free(cub->game.world_map[i]);
-	if (cub->game.world_map)
+	{
+		if (cub->game.world_map[i] != NULL)
+			free(cub->game.world_map[i]);
+		cub->game.world_map[i] = NULL;
+	}
+	if (cub->game.world_map != NULL)
 		free(cub->game.world_map);
+	cub->game.world_map = NULL;
 	i = -1;
 	while (++i < 4)
-		free(cub->texture[i].path);
-	free_buffer(cub);
-	free(cub->z_buffer);
-	i = -1;
-	if (cub->error == 0)
 	{
-		while (++i < 4)
-			mlx_destroy_image(cub->data.mlx_ptr, cub->texture[i].img_ptr);
+		if (cub->texture[i].path != NULL)
+			free(cub->texture[i].path);
+		cub->texture[i].path = NULL;
 	}
-	free(cub->sprite_order);
-	free(cub->sprite_distance);
-	free(cub->sprt);
-	if (cub->error == 0)
+	free_buffer(cub);
+	if (cub->z_buffer != NULL)
+		free(cub->z_buffer);
+	cub->z_buffer = NULL;
+	i = -1;
+	while (++i < 4)
+	{
+		if (cub->texture[i].img_ptr != NULL)
+			mlx_destroy_image(cub->data.mlx_ptr, cub->texture[i].img_ptr);
+		cub->texture[i].img_ptr = NULL;
+	}
+	if (cub->sprite_order != NULL)
+		free(cub->sprite_order);
+	cub->sprite_order = NULL;
+	if (cub->sprite_distance != NULL)
+		free(cub->sprite_distance);
+	cub->sprite_distance = NULL;
+	if (cub->sprt != NULL)
+		free(cub->sprt);
+	cub->sprt = NULL;
+	if (cub->data.img.img_ptr != NULL)
 		mlx_destroy_image(cub->data.mlx_ptr, cub->data.img.img_ptr);
-	if (!saved)
+	cub->data.img.img_ptr = NULL;
+	if (cub->data.win_ptr != NULL)
 		mlx_destroy_window(cub->data.mlx_ptr, cub->data.win_ptr);
+	cub->data.win_ptr = NULL;
 	exit(0);
 }
 
@@ -90,7 +119,7 @@ int			events(int key_code, void *param)
 	cub = (t_cub *)param;
 	cub->t = clock();
 	if (key_code == KEY_ESC)
-		free_and_destroy(cub, 0);
+		free_and_destroy(cub);
 	if (key_code == KEY_W)
 		cub->game.keys[key_code] = 1;
 	else if (key_code == KEY_S)

@@ -68,6 +68,6 @@ int			bmp_file(t_cub *cub)
 	write_bmp_header(cub, fd);
 	write_bmp_img(cub, fd);
 	close(fd);
-	free_and_destroy(cub, 1);
+	free_and_destroy(cub);
 	return (1);
 }

@@ -8,8 +8,7 @@ C 25, 31,  40
 
 F 184, 179, 198
 
-SO ./textures/minecraft/cobblestone.xp
-
+SO ./textures/minecraft/cobblestone.xpm
 EA ./textures/minecraft/cracked_stone_bricks.xpm
 WE ./textures/minecraft/stone.xpm
 
@@ -19,4 +18,4 @@ WE ./textures/minecraft/stone.xpm
 120S0021
 10020001
 12000021
-1111111
+11111111

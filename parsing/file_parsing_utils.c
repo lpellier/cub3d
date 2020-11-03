@@ -25,11 +25,13 @@ int				map_loop(t_cub *cub, char *line)
 	}
 	else if (line_is_map(line))
 		return (put_error(cub, "Map should be last element of map file."));
-	else if (!check_file_element(cub, line))
+	else if (check_file_element(cub, line) == -1)
 	{
 		free(line);
 		return (put_error(cub, "Element unknown or map error."));
 	}
+	if (cub->error == 1)
+		return (0);
 	free(line);
 	return (1);
 }

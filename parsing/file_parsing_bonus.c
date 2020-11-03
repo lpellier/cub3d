@@ -53,7 +53,7 @@ int			check_file_element(t_cub *cub, char *str)
 	else if (*str == '1' || !*str)
 		return (1);
 	else
-		return (0);
+		return (-1);
 }
 
 void		count_sprites(t_cub *cub, char *str)

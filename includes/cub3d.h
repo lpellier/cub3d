@@ -245,7 +245,7 @@ void					init_checklist(t_cub *cub);
 ** Engine functions
 */
 
-int						free_and_destroy(t_cub *cub, int saved);
+int						free_and_destroy(t_cub *cub);
 
 void					put_pixel(t_img *img, int x, int y, unsigned int color);
 void					raycasting(t_cub *cub, int saved);
