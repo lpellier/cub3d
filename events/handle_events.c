@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:02:34 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 16:16:20 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:25:19 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int			free_and_destroy(t_cub *cub, int saved)
 	i = -1;
 	while (++i < cub->state.height)
 		free(cub->game.world_map[i]);
-	free(cub->game.world_map);
+	if (cub->game.world_map)
+		free(cub->game.world_map);
 	i = -1;
 	while (++i < 4)
 		free(cub->texture[i].path);
