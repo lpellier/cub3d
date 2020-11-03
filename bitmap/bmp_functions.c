@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:49:22 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 15:13:28 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 15:18:49 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		write_bmp_img(t_cub *cub, int fd)
 	int		x;
 	int		y;
 
-	y = cub->data.img.height;
+	y = cub->data.img.height - 1;
 	while (y != -1)
 	{
 		x = 0;
