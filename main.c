@@ -25,10 +25,11 @@ int			init_and_protecc(t_cub *cub, char *map_path, int saved)
 	if (!file_parsing(cub, map_path) || !init_buffer(cub) || \
 	(cub->data.mlx_ptr = mlx_init()) == NULL)
 		return (0);
-	if (cub->data.img.width > RESX_MAX_MAC)
-		cub->data.img.width = RESX_MAX_MAC;
-	if (cub->data.img.height > RESY_MAX_MAC)
-		cub->data.img.height = RESY_MAX_MAC;
+	mlx_get_screen_size(cub->data.mlx_ptr, &cub->rresx, &cub->rresy);
+	if (cub->data.img.width > cub->rresx)
+		cub->data.img.width = cub->rresx;
+	if (cub->data.img.height > cub->rresy)
+		cub->data.img.height = cub->rresy;
 	if (!saved)
 		if ((cub->data.win_ptr = mlx_new_window(cub->data.mlx_ptr, \
 		cub->data.img.width, cub->data.img.height, "cub3d")) == NULL)

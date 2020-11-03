@@ -213,6 +213,8 @@ typedef	struct			s_cub
 	int				num_diff_sprites;
 	int				num_sprites;
 	int				sprite_index;
+	int				rresx;
+	int				rresy;
 	int				*sprite_order;
 	double			*sprite_distance;
 
