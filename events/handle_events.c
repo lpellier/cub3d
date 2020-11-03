@@ -44,6 +44,13 @@ void		free_and_destroy2(t_cub *cub)
 			mlx_destroy_image(cub->data.mlx_ptr, cub->texture[i].img_ptr);
 		cub->texture[i].img_ptr = NULL;
 	}
+	i = -1;
+	while (++i < cub->num_diff_sprites)
+	{
+		if (cub->sprite[i].path != NULL)
+			free(cub->sprite[i].path);
+		cub->sprite[i].path = NULL;
+	}
 	if (cub->sprite_order != NULL)
 		free(cub->sprite_order);
 	cub->sprite_order = NULL;

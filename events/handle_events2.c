@@ -18,6 +18,7 @@ int			exit_wdw(int event, void *param)
 
 	(void)event;
 	cub = (t_cub *)param;
+	free_buffer(cub);
 	exit(0);
 }
 

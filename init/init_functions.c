@@ -46,6 +46,7 @@ void		init_state(t_cub *cub)
 	cub->data.img.img_ptr = NULL;
 	cub->data.win_ptr = NULL;
 	cub->state.valid_player = 0;
+	cub->sprite[0].path = NULL;
 	init_state2(cub);
 	init_checklist(cub);
 	i = -1;

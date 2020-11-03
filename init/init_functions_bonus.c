@@ -45,6 +45,9 @@ void		init_state(t_cub *cub)
 	cub->sprt = NULL;
 	cub->data.img.img_ptr = NULL;
 	cub->data.win_ptr = NULL;
+	i = -1;
+	while (++i < 3)
+		cub->sprite[i].path = NULL;
 	init_state2(cub);
 	init_checklist(cub);
 	i = -1;

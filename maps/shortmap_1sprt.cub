@@ -1,7 +1,7 @@
 R 960		540
 
 S ./sprites/barrel.xpm
-N ./textures/minecraft/chiseled_stone_bricks.xpm
+NO ./textures/minecraft/chiseled_stone_bricks.xpm
 
 
 C 25, 31,  40
