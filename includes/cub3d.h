@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 18:06:21 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 18:29:06 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <string.h>
 # include <mlx.h>
 # include <math.h>
-# include <time.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include "libftprintf.h"

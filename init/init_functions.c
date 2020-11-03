@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:00:58 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 18:06:36 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 18:28:55 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void		init_state(t_cub *cub)
 	cub->data.img.img_ptr = NULL;
 	cub->data.win_ptr = NULL;
 	cub->state.valid_player = 0;
-	cub->state.time = (double)clock();
 	init_state2(cub);
 	init_checklist(cub);
 	i = -1;
