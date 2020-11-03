@@ -31,7 +31,10 @@ int				map_loop(t_cub *cub, char *line)
 		return (put_error(cub, "Element unknown or map error."));
 	}
 	if (cub->error == 1)
+	{
+		free(line);
 		return (0);
+	}
 	free(line);
 	return (1);
 }
