@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:49:22 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 16:04:19 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 18:19:52 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int			bmp_file(t_cub *cub)
 {
 	int		fd;
 
-	if ((fd = open("saved.bmp", O_WRONLY | O_CREAT | O_TRUNC)) < 0)
+	if ((fd = open("cub3d.bmp", O_WRONLY | O_CREAT, S_IRWXU | O_TRUNC)) < 0)
 	{
 		put_error(cub, "Couldn't save image.");
 		return (0);

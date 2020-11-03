@@ -115,7 +115,7 @@ clean		:
 fclean		:	clean
 				$(RM) $(NAME)
 				$(RM) $(NAME_BON)
-				$(RM) saved.bmp
+				$(RM) cub3d.bmp
 
 re			:	fclean all
 
