@@ -68,16 +68,6 @@ int			bmp_file(t_cub *cub)
 	write_bmp_header(cub, fd);
 	write_bmp_img(cub, fd);
 	close(fd);
-	int		i;
-
-	i = -1;
-	while (++i < cub->state.height)
-		free(cub->game.world_map[i]);
-	free(cub->game.world_map);
-	free(cub->z_buffer);
-	i = -1;
-	while (++i < cub->data.img.height)
-		free(cub->buffer[i]);
-	free(cub->buffer);
+	free_and_destroy(cub);
 	return (1);
 }

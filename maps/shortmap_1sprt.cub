@@ -1,6 +1,8 @@
 R 960		540 
 
 
+S ./sprites/barrel.xpm
+
 C 25, 31,  40
 
 F 184, 179, 198
@@ -11,7 +13,6 @@ SO ./textures/minecraft/cobblestone.xpm
 EA ./textures/minecraft/cracked_stone_bricks.xpm
 WE ./textures/minecraft/stone.xpm
 
-S ./sprites/barrel.xpm
 
 
 11111111
