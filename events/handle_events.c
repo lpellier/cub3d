@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:02:34 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 16:09:40 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:16:20 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ int			free_and_destroy(t_cub *cub, int saved)
 	free_buffer(cub);
 	free(cub->z_buffer);
 	i = -1;
-	while (++i < 4)
-		mlx_destroy_image(cub->data.mlx_ptr, cub->texture[i].img_ptr);
+	if (cub->error == 0)
+	{
+		while (++i < 4)
+			mlx_destroy_image(cub->data.mlx_ptr, cub->texture[i].img_ptr);
+	}
 	free(cub->sprite_order);
 	free(cub->sprite_distance);
 	free(cub->sprt);
-	if (check_elements(cub) && cub->error == 0)
+	if (cub->error == 0)
 		mlx_destroy_image(cub->data.mlx_ptr, cub->data.img.img_ptr);
 	if (!saved)
 		mlx_destroy_window(cub->data.mlx_ptr, cub->data.win_ptr);
