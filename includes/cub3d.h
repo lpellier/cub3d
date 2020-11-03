@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 17:55:52 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 15:38:33 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ void					init_checklist(t_cub *cub);
 ** Engine functions
 */
 
-int						free_and_destroy(t_cub *cub);
+int						free_and_destroy(t_cub *cub, int saved);
 
 void					put_pixel(t_img *img, int x, int y, unsigned int color);
 void					raycasting(t_cub *cub, int saved);

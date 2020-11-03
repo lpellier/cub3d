@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:02:34 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 18:18:08 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 15:40:28 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		free_buffer(t_cub *cub)
 	free(cub->buffer);
 }
 
-int			free_and_destroy(t_cub *cub)
+int			free_and_destroy(t_cub *cub, int saved)
 {
 	int		i;
 
@@ -42,7 +42,8 @@ int			free_and_destroy(t_cub *cub)
 	free(cub->sprite_distance);
 	free(cub->sprt);
 	mlx_destroy_image(cub->data.mlx_ptr, cub->data.img.img_ptr);
-	mlx_destroy_window(cub->data.mlx_ptr, cub->data.win_ptr);
+	if (!saved)
+		mlx_destroy_window(cub->data.mlx_ptr, cub->data.win_ptr);
 	exit(0);
 }
 
@@ -84,7 +85,7 @@ int			events(int key_code, void *param)
 	cub = (t_cub *)param;
 	cub->t = clock();
 	if (key_code == KEY_ESC)
-		free_and_destroy(cub);
+		free_and_destroy(cub, 0);
 	if (key_code == KEY_W)
 		cub->game.keys[key_code] = 1;
 	else if (key_code == KEY_S)

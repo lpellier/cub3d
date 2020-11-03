@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 18:07:32 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 15:39:46 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,14 @@ int			main(int ac, char **av)
 		exit(put_error("File has to end with .cub"));
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
 	{
-		if (!init_and_protecc(&cub, map_path, 1) || !bmp_file(&cub))
-			exit(free_and_destroy(&cub));
+		init_and_protecc(&cub, map_path, 1);
+		bmp_file(&cub);
+		exit(free_and_destroy(&cub, 1));
 	}
 	else
 	{
 		if (!init_and_protecc(&cub, map_path, 0))
-			exit(free_and_destroy(&cub));
+			exit(free_and_destroy(&cub, 0));
 		raycasting(&cub, 0);
 		loop(&cub);
 	}

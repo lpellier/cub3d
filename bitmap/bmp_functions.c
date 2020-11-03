@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:49:22 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 15:18:49 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 15:40:20 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ int			bmp_file(t_cub *cub)
 	write_bmp_header(cub, fd);
 	write_bmp_img(cub, fd);
 	close(fd);
-	free_and_destroy(cub);
+	free_and_destroy(cub, 1);
 	return (1);
 }
