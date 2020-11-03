@@ -17,6 +17,7 @@ void		free_buffer(t_cub *cub)
 	int i;
 
 	i = -1;
+	
 	if (cub->buffer != NULL)
 	{
 		while (++i < cub->data.img.height)
@@ -25,12 +26,15 @@ void		free_buffer(t_cub *cub)
 				free(cub->buffer[i]);
 			cub->buffer[i] = NULL;
 		}
-		free(cub->buffer);
+	free(cub->buffer);
 	}
 	cub->buffer = NULL;
 	if (cub->z_buffer != NULL)
 		free(cub->z_buffer);
 	cub->z_buffer = NULL;
+	if (cub->sprites != NULL)
+		free(cub->sprites);
+	cub->sprites = NULL;
 }
 
 void		free_and_destroy2(t_cub *cub)
@@ -73,15 +77,16 @@ int			free_and_destroy(t_cub *cub)
 	int		i;
 
 	i = -1;
-	while (++i < cub->state.height)
-	{
-		if (cub->game.world_map[i] != NULL)
-			free(cub->game.world_map[i]);
-		cub->game.world_map[i] = NULL;
-	}
 	if (cub->game.world_map != NULL)
+	{
+		while (++i < cub->state.height)
+		{
+			free(cub->game.world_map[i]);
+			cub->game.world_map[i] = NULL;
+		}
 		free(cub->game.world_map);
-	cub->game.world_map = NULL;
+		cub->game.world_map = NULL;
+	}
 	i = -1;
 	while (++i < 4)
 	{

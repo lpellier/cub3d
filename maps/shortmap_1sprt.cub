@@ -1,4 +1,4 @@
-R 15000		15000
+R 200		150
 
 S ./sprites/barrel.xpm
 NO ./textures/minecraft/chiseled_stone_bricks.xpm
