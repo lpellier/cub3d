@@ -67,7 +67,6 @@ int			events(int key_code, void *param)
 	t_cub		*cub;
 
 	cub = (t_cub *)param;
-	cub->t = clock();
 	if (key_code == KEY_ESC)
 		free_and_destroy(cub);
 	if (key_code == KEY_W)

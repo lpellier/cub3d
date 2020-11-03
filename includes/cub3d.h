@@ -223,8 +223,6 @@ typedef	struct			s_cub
 	int				floor_color;
 	int				ceil_color;
 	int				**buffer;
-
-	clock_t			t;
 }						t_cub;
 
 /*
