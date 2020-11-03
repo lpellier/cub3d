@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:21:15 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 17:44:05 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:09:13 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ int			check_textures(t_cub *cub, char *str)
 		index = 3;
 	str += 2;
 	if (!white_space(*str))
-		return (put_error("Your texture's all fucked up"));
+		return (put_error(cub, "Your texture's all fucked up"));
 	while (white_space(*str))
 		str++;
 	if (!(cub->texture[index].path = ft_strdup(str)))
-		return (put_error("Your texture's all fucked up"));
+		return (put_error(cub, "Your texture's all fucked up"));
 	if (index == 0)
 		cub->check.so_text_check += 1;
 	else if (index == 1)
@@ -99,16 +99,16 @@ int			check_sprite(t_cub *cub, char *str)
 	else if (*str == '3')
 		index = 2;
 	else
-		return (put_error("Your sprite's all fucked up"));
+		return (put_error(cub, "Your sprite's all fucked up"));
 	str += 1;
 	if (*str != 32 && *str != 9 && *str != 10 \
 	&& *str != 11 && *str != 12 && *str != 13)
-		return (put_error("Your sprite's all fucked up"));
+		return (put_error(cub, "Your sprite's all fucked up"));
 	while (*str == 32 || *str == 9 || *str == 10 \
 	|| *str == 11 || *str == 12 || *str == 13)
 		str++;
 	if (!(cub->sprite[index].path = ft_strdup(str)))
-		return (put_error("Your sprite's all fucked up"));
+		return (put_error(cub, "Your sprite's all fucked up"));
 	cub->check.sprt_check++;
 	return (1);
 }
@@ -126,17 +126,17 @@ int			check_colors(t_cub *cub, char *str)
 	cub->check.c_ceil_check += *str == 'C' ? 1 : 0;
 	str++;
 	if (!white_space(*str) || (r = next_color(str, &index)) == -1)
-		return (put_error("Color error my dude"));
+		return (put_error(cub, "Color error my dude"));
 	str += index;
 	if ((g = next_color(str, &index)) == -1)
-		return (put_error("Color error my dude"));
+		return (put_error(cub, "Color error my dude"));
 	str += index;
 	if ((b = next_color(str, &index)) == -1)
-		return (put_error("Color error my dude"));
+		return (put_error(cub, "Color error my dude"));
 	str += index;
 	*rgb = 65536 * r + 256 * g + b;
 	if (r > 255 || g > 255 || b > 255 \
 	|| !(*rgb >= 0 && *rgb <= 2147483647) || next_color(str, &index) > 0)
-		return (put_error("Color error my dude"));
-	return (check_colors2(str));
+		return (put_error(cub, "Color error my dude"));
+	return (check_colors2(cub, str));
 }

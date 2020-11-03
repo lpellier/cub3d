@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:32:57 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 16:52:17 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:07:21 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int			check_resolution(t_cub *cub, char *str)
 	str++;
 	if (*str != 32 && *str != 9 && *str != 10 \
 	&& *str != 11 && *str != 12 && *str != 13)
-		return (put_error("Resolution's fucked man"));
+		return (put_error(cub, "Resolution's fucked man"));
 	width = next_number(str, &index);
 	str += index;
 	height = next_number(str, &index);
 	str += index;
 	if (width <= 0 || height <= 0 || next_number(str, &index) > 0)
-		return (put_error("Resolution's fucked man"));
+		return (put_error(cub, "Resolution's fucked man"));
 	cub->data.img.width = width;
 	cub->data.img.height = height;
 	cub->check.res_check += 1;
@@ -86,7 +86,7 @@ int			file_parsing(t_cub *cub, char *map_path)
 
 	line = NULL;
 	if ((fd = open(map_path, O_RDONLY)) < 0)
-		return (put_error("Couldn't read map file"));
+		return (put_error(cub, "Couldn't read map file"));
 	while (get_next_line(fd, &line))
 		if (!map_loop(cub, line))
 			return (0);

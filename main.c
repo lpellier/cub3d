@@ -6,16 +6,17 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 15:39:46 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:09:58 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
-int			put_error(char *str)
+int			put_error(t_cub *cub, char *str)
 {
 	ft_printf("\033[31mError\n");
 	ft_printf("%s\n\033[0m", str);
+	cub->error = 1;
 	return (0);
 }
 
@@ -67,10 +68,10 @@ int			main(int ac, char **av)
 
 	init_state(&cub);
 	if ((ac != 2 && ac != 3) || (ac == 3 && !ft_strncmp(av[2], "--save", 7)))
-		exit(put_error("Arg error"));
+		exit(put_error(&cub, "Arg error"));
 	map_path = ft_strdup(av[1]);
 	if (!check_cub_extension(map_path))
-		exit(put_error("File has to end with .cub"));
+		exit(put_error(&cub, "File has to end with .cub"));
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
 	{
 		init_and_protecc(&cub, map_path, 1);

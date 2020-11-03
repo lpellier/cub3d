@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 15:38:33 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:09:05 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,7 @@ int						next_color(char *str, int *index);
 int						check_textures(t_cub *cub, char *str);
 int						check_sprite(t_cub *cub, char *str);
 int						check_colors(t_cub *cub, char *str);
-int						check_colors2(char *str);
+int						check_colors2(t_cub *cub, char *str);
 int						line_is_map(char *str);
 int						file_parsing(t_cub *cub, char *map_path);
 int						strto_intp2(char c, int cur, int height, t_cub *cub);
@@ -322,7 +322,7 @@ void					free_buffer(t_cub *cub);
 int						white_space(char c);
 int						bmp_file(t_cub *cub);
 int						init_and_protecc(t_cub *cub, char *map_path, int saved);
-int						put_error(char *str);
+int						put_error(t_cub *cub, char *str);
 int						get_next_line(int fd, char **line);
 int						check_n(char *stock);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);

@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:50:51 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 17:43:44 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:08:41 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int				map_loop(t_cub *cub, char *line)
 		count_sprites(cub, line);
 	}
 	else if (line_is_map(line))
-		return (put_error("Map should be last element of map file."));
+		return (put_error(cub, "Map should be last element of map file."));
 	else if (!check_file_element(cub, line))
 	{
 		free(line);
-		return (put_error("Element unknown or map error."));
+		return (put_error(cub, "Element unknown or map error."));
 	}
 	free(line);
 	return (1);
@@ -63,26 +63,26 @@ void			print_map(t_cub *cub)
 int				check_elements(t_cub *cub)
 {
 	if (cub->check.res_check != 1)
-		return (put_error("Gotta have one resolution  in map file."));
+		return (put_error(cub, "Gotta have one resolution  in map file."));
 	else if (cub->check.c_ceil_check != 1)
-		return (put_error("Gotta have one ceiling color in map file."));
+		return (put_error(cub, "Gotta have one ceiling color in map file."));
 	else if (cub->check.c_floor_check != 1)
-		return (put_error("Gotta have one floor color in map file."));
+		return (put_error(cub, "Gotta have one floor color in map file."));
 	else if (cub->check.no_text_check != 1)
-		return (put_error("Gotta have one NO texture in map file."));
+		return (put_error(cub, "Gotta have one NO texture in map file."));
 	else if (cub->check.so_text_check != 1)
-		return (put_error("Gotta have one SO texture in map file."));
+		return (put_error(cub, "Gotta have one SO texture in map file."));
 	else if (cub->check.ea_text_check != 1)
-		return (put_error("Gotta have one EA texture in map file."));
+		return (put_error(cub, "Gotta have one EA texture in map file."));
 	else if (cub->check.we_text_check != 1)
-		return (put_error("Gotta have one WE texture in map file."));
+		return (put_error(cub, "Gotta have one WE texture in map file."));
 	else if (cub->check.sprt_check != cub->num_diff_sprites)
-		return (put_error("Wrong number of sprites (usually one, \
+		return (put_error(cub, "Wrong number of sprites (usually one, \
 		two or three for bonus) in map file."));
 	else if (cub->check.orientation_check != 1)
-		return (put_error("Gotta have one player in map."));
+		return (put_error(cub, "Gotta have one player in map."));
 	else if (cub->check.map_check != 1)
-		return (put_error("Gotta have one map in map file."));
+		return (put_error(cub, "Gotta have one map in map file."));
 	print_map(cub);
 	return (1);
 }
@@ -101,12 +101,12 @@ void			init_checklist(t_cub *cub)
 	cub->check.map_check = 0;
 }
 
-int				check_colors2(char *str)
+int				check_colors2(t_cub *cub, char *str)
 {
 	while (*str)
 	{
 		if (!white_space(*str) && *str != '\0')
-			return (put_error("Color error my dude"));
+			return (put_error(cub, "Color error my dude"));
 		str++;
 	}
 	return (1);

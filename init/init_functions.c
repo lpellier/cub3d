@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:00:58 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/02 17:01:01 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:04:46 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int			get_tex_sprite(t_cub *cub)
 	while (++i < 4)
 	{
 		if (!get_texture(cub, i))
-			return (put_error("Texture Error"));
+			return (put_error(cub, "Texture Error"));
 	}
 	if (!get_sprite(cub, 0))
-		return (put_error("Sprite Error"));
+		return (put_error(cub, "Sprite Error"));
 	return (1);
 }
