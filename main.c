@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 16:09:58 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 18:08:24 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,24 @@ int			check_cub_extension(char *str)
 	return (0);
 }
 
-int			free_and_ret(char *str)
+void		init_everything(t_cub *cub, char *map_path, int saved)
 {
-	free(str);
-	return (0);
+	if (saved)
+	{
+		if (!init_and_protecc(cub, map_path, 1) || !bmp_file(cub))
+		{
+			free(map_path);
+			exit(free_and_destroy(cub));
+		}
+	}
+	else
+	{
+		if (!init_and_protecc(cub, map_path, 0))
+		{
+			free(map_path);
+			exit(free_and_destroy(cub));
+		}
+	}
 }
 
 int			main(int ac, char **av)
@@ -73,20 +87,10 @@ int			main(int ac, char **av)
 	if (!check_cub_extension(map_path))
 		exit(put_error(&cub, "File has to end with .cub"));
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
-	{
-		if (!init_and_protecc(&cub, map_path, 1) || !bmp_file(&cub))
-		{
-			free(map_path);
-			exit(free_and_destroy(&cub));
-		}
-	}
+		init_everything(&cub, map_path, 1);
 	else
 	{
-		if (!init_and_protecc(&cub, map_path, 0))
-		{
-			free(map_path);
-			exit(free_and_destroy(&cub));
-		}
+		init_everything(&cub, map_path, 0);
 		raycasting(&cub, 0);
 		loop(&cub);
 	}

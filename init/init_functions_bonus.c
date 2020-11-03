@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:18:20 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 16:04:33 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 18:06:54 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void		init_state(t_cub *cub)
 	i = -1;
 	while (++i < 4)
 		cub->texture[i].path = NULL;
-	cub->game.world_map = NULL;
 	cub->buffer = NULL;
 	cub->z_buffer = NULL;
 	i = -1;
@@ -47,17 +46,7 @@ void		init_state(t_cub *cub)
 	cub->data.img.img_ptr = NULL;
 	cub->data.win_ptr = NULL;
 	cub->state.time = (double)clock();
-	cub->state.valid_player = 0;
-	cub->error = 0;
-	cub->resx = 0;
-	cub->resy = 0;
-	cub->state.old_time = 0;
-	cub->state.width = 0;
-	cub->state.height = 0;
-	cub->num_sprites = 0;
-	cub->sprite_index = 0;
-	cub->num_diff_sprites = 0;
-	cub->ray.draw_start = 0;
+	init_state2(cub);
 	init_checklist(cub);
 	i = -1;
 	while (++i < 66000)

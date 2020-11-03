@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:02:34 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 16:25:19 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 18:10:51 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,48 @@ void		free_buffer(t_cub *cub)
 	int i;
 
 	i = -1;
-
 	if (cub->buffer != NULL)
 	{
 		while (++i < cub->data.img.height)
 		{
 			if (cub->buffer[i] != NULL)
 				free(cub->buffer[i]);
-			cub->buffer[i] =  NULL;
+			cub->buffer[i] = NULL;
 		}
 		free(cub->buffer);
 	}
 	cub->buffer = NULL;
+	if (cub->z_buffer != NULL)
+		free(cub->z_buffer);
+	cub->z_buffer = NULL;
+}
+
+void		free_and_destroy2(t_cub *cub)
+{
+	int i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		if (cub->texture[i].img_ptr != NULL)
+			mlx_destroy_image(cub->data.mlx_ptr, cub->texture[i].img_ptr);
+		cub->texture[i].img_ptr = NULL;
+	}
+	if (cub->sprite_order != NULL)
+		free(cub->sprite_order);
+	cub->sprite_order = NULL;
+	if (cub->sprite_distance != NULL)
+		free(cub->sprite_distance);
+	cub->sprite_distance = NULL;
+	if (cub->sprt != NULL)
+		free(cub->sprt);
+	cub->sprt = NULL;
+	if (cub->data.img.img_ptr != NULL)
+		mlx_destroy_image(cub->data.mlx_ptr, cub->data.img.img_ptr);
+	cub->data.img.img_ptr = NULL;
+	if (cub->data.win_ptr != NULL)
+		mlx_destroy_window(cub->data.mlx_ptr, cub->data.win_ptr);
+	cub->data.win_ptr = NULL;
 }
 
 int			free_and_destroy(t_cub *cub)
@@ -53,84 +83,6 @@ int			free_and_destroy(t_cub *cub)
 		cub->texture[i].path = NULL;
 	}
 	free_buffer(cub);
-	if (cub->z_buffer != NULL)
-		free(cub->z_buffer);
-	cub->z_buffer = NULL;
-	i = -1;
-	while (++i < 4)
-	{
-		if (cub->texture[i].img_ptr != NULL)
-			mlx_destroy_image(cub->data.mlx_ptr, cub->texture[i].img_ptr);
-		cub->texture[i].img_ptr = NULL;
-	}
-	if (cub->sprite_order != NULL)
-		free(cub->sprite_order);
-	cub->sprite_order = NULL;
-	if (cub->sprite_distance != NULL)
-		free(cub->sprite_distance);
-	cub->sprite_distance = NULL;
-	if (cub->sprt != NULL)
-		free(cub->sprt);
-	cub->sprt = NULL;
-	if (cub->data.img.img_ptr != NULL)
-		mlx_destroy_image(cub->data.mlx_ptr, cub->data.img.img_ptr);
-	cub->data.img.img_ptr = NULL;
-	if (cub->data.win_ptr != NULL)
-		mlx_destroy_window(cub->data.mlx_ptr, cub->data.win_ptr);
-	cub->data.win_ptr = NULL;
+	free_and_destroy2(cub);
 	exit(0);
-}
-
-int			update(t_cub *cub)
-{
-	int		upd;
-
-	upd = 0;
-	if (cub->game.keys[KEY_W] && (upd = 1))
-		move_forward(cub);
-	else if (cub->game.keys[KEY_S] && (upd = 1))
-		move_backwards(cub);
-	if (cub->game.keys[KEY_A] && (upd = 1))
-		strafe_left(cub);
-	else if (cub->game.keys[KEY_D] && (upd = 1))
-		strafe_right(cub);
-	if (cub->game.keys[KEY_RIGHT] && (upd = 1))
-		rotate_right(cub);
-	else if (cub->game.keys[KEY_LEFT] && (upd = 1))
-		rotate_left(cub);
-	if (upd)
-		raycasting(cub, 0);
-	return (0);
-}
-
-int			release(int key_code, void *param)
-{
-	t_cub		*cub;
-
-	cub = (t_cub *)param;
-	cub->game.keys[key_code] = 0;
-	return (0);
-}
-
-int			events(int key_code, void *param)
-{
-	t_cub		*cub;
-
-	cub = (t_cub *)param;
-	cub->t = clock();
-	if (key_code == KEY_ESC)
-		free_and_destroy(cub);
-	if (key_code == KEY_W)
-		cub->game.keys[key_code] = 1;
-	else if (key_code == KEY_S)
-		cub->game.keys[key_code] = 1;
-	if (key_code == KEY_A)
-		cub->game.keys[key_code] = 1;
-	else if (key_code == KEY_D)
-		cub->game.keys[key_code] = 1;
-	if (key_code == KEY_RIGHT)
-		cub->game.keys[key_code] = 1;
-	else if (key_code == KEY_LEFT)
-		cub->game.keys[key_code] = 1;
-	return (0);
 }

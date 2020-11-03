@@ -28,6 +28,7 @@ SRCS	= ./parsing/file_parsing_utils.c				\
 			./events/move_events.c						\
         	./events/rot_events.c						\
 			./init/init_functions.c						\
+			./init/init_utils.c						\
 			./bitmap/bmp_functions.c
 
 BONUS	= 	./parsing/file_parsing_utils.c				\
@@ -56,6 +57,7 @@ BONUS	= 	./parsing/file_parsing_utils.c				\
 			./events/move_events.c						\
         	./events/rot_events.c						\
 			./init/init_functions_bonus.c				\
+			./init/init_utils.c						\
 			./bitmap/bmp_functions.c
 
 MAIN 		= 	main.c
