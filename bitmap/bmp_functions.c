@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:49:22 by lpellier          #+#    #+#             */
-/*   Updated: 2020/10/22 17:30:27 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/03 15:13:28 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,16 @@ int			bmp_file(t_cub *cub)
 	write_bmp_header(cub, fd);
 	write_bmp_img(cub, fd);
 	close(fd);
+	int		i;
+
+	i = -1;
+	while (++i < cub->state.height)
+		free(cub->game.world_map[i]);
+	free(cub->game.world_map);
+	free(cub->z_buffer);
+	i = -1;
+	while (++i < cub->data.img.height)
+		free(cub->buffer[i]);
+	free(cub->buffer);
 	return (1);
 }
