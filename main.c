@@ -29,7 +29,6 @@ int			init_and_protecc(t_cub *cub, char *map_path, int saved)
 		cub->data.img.width = cub->rresx;
 	if (cub->data.img.height > cub->rresy)
 		cub->data.img.height = cub->rresy;
-	printf("%d %d", cub->data.img.height, cub->data.img.width);
 	if (!init_buffer(cub))
 		return (0);
 	if (!saved)
