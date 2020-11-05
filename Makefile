@@ -3,6 +3,7 @@ NAME 		=	cub3d
 NAME_BON	=	cub3d_bonus
 
 SRCS	= ./parsing/file_parsing_utils.c				\
+			./parsing/file_parsing_utils2.c				\
 			./parsing/file_parsing.c					\
         	./parsing/file_parsing2.c					\
         	./parsing/map_init.c						\
@@ -32,6 +33,7 @@ SRCS	= ./parsing/file_parsing_utils.c				\
 			./bitmap/bmp_functions.c
 
 BONUS	= 	./parsing/file_parsing_utils.c				\
+			./parsing/file_parsing_utils2.c				\
 			./parsing/file_parsing_bonus.c				\
         	./parsing/file_parsing2_bonus.c				\
         	./parsing/map_init_bonus.c					\

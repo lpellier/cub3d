@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/05 15:43:25 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/05 17:45:53 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,7 @@ void					rotate_right(t_cub *cub);
 ** Map Parsing functions
 */
 
+int						check_resolution(t_cub *cub, char *str);
 int						check_map_line(char *str);
 int						check_elements(t_cub *cub);
 int						map_loop(t_cub *cub, char *line);

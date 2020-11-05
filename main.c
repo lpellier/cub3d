@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:20:38 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/05 14:56:43 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/05 17:26:08 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int			put_error(t_cub *cub, char *str)
 
 int			init_and_protecc(t_cub *cub, char *map_path, int saved)
 {
-	if ((cub->data.mlx_ptr = mlx_init()) == NULL || !file_parsing(cub, map_path))
+	if ((cub->data.mlx_ptr = mlx_init()) == NULL || \
+	!file_parsing(cub, map_path))
 		return (0);
 	mlx_get_screen_size(cub->data.mlx_ptr, &cub->rresx, &cub->rresy);
 	if (cub->data.img.width > cub->rresx)

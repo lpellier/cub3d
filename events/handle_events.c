@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:02:34 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 18:10:51 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/05 17:45:13 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void		free_buffer(t_cub *cub)
 	int i;
 
 	i = -1;
-	
 	if (cub->buffer != NULL)
 	{
 		while (++i < cub->data.img.height)
@@ -35,6 +34,20 @@ void		free_buffer(t_cub *cub)
 	if (cub->sprites != NULL)
 		free(cub->sprites);
 	cub->sprites = NULL;
+}
+
+void		free_sprite(t_cub *cub)
+{
+	if (cub->sprite_order != NULL)
+		free(cub->sprite_order);
+	cub->sprite_order = NULL;
+	if (cub->sprite_distance != NULL)
+		free(cub->sprite_distance);
+	cub->sprite_distance = NULL;
+	if (cub->sprt != NULL)
+		free(cub->sprt);
+	cub->sprt = NULL;
+	free(cub->map_path);
 }
 
 void		free_and_destroy2(t_cub *cub)
@@ -55,15 +68,7 @@ void		free_and_destroy2(t_cub *cub)
 			free(cub->sprite[i].path);
 		cub->sprite[i].path = NULL;
 	}
-	if (cub->sprite_order != NULL)
-		free(cub->sprite_order);
-	cub->sprite_order = NULL;
-	if (cub->sprite_distance != NULL)
-		free(cub->sprite_distance);
-	cub->sprite_distance = NULL;
-	if (cub->sprt != NULL)
-		free(cub->sprt);
-	cub->sprt = NULL;
+	free_sprite(cub);
 	if (cub->data.img.img_ptr != NULL)
 		mlx_destroy_image(cub->data.mlx_ptr, cub->data.img.img_ptr);
 	cub->data.img.img_ptr = NULL;
