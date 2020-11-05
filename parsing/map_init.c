@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:55:26 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 16:08:01 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/05 17:19:48 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ int			get_map(t_cub *cub, char *map_path)
 		return (put_error(cub, "No map found in file"));
 	map = second_map_loop(cub, fd, line, map);
 	close(fd);
+	cub->game.world_map = map;
 	if (!map_is_valid(cub, map) || !map_error(cub, map) || cub->error == 1)
 		return (put_error(cub, "Map is invalid"));
-	cub->game.world_map = map;
 	cub->check.map_check++;
 	return (1);
 }
