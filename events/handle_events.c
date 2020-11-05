@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:02:34 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/05 17:45:13 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/05 17:55:30 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ void		free_buffer(t_cub *cub)
 
 void		free_sprite(t_cub *cub)
 {
+	int		i;
+
+	i = -1;
+	while (++i < cub->num_diff_sprites)
+	{
+		if (cub->sprite[i].img_ptr != NULL)
+			mlx_destroy_image(cub->data.mlx_ptr, cub->sprite[i].img_ptr);
+		cub->sprite[i].img_ptr = NULL;
+	}
 	if (cub->sprite_order != NULL)
 		free(cub->sprite_order);
 	cub->sprite_order = NULL;
