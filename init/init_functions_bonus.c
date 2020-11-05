@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:18:20 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 18:29:03 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:55:59 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void		init_state(t_cub *cub)
 	int		i;
 
 	i = -1;
-	while (++i < 4)
-		cub->texture[i].path = NULL;
+	while (++i < 3)
+		cub->sprite[i].path = NULL;
 	cub->buffer = NULL;
 	cub->z_buffer = NULL;
 	i = -1;
@@ -45,9 +45,8 @@ void		init_state(t_cub *cub)
 	cub->sprt = NULL;
 	cub->data.img.img_ptr = NULL;
 	cub->data.win_ptr = NULL;
-	i = -1;
-	while (++i < 3)
-		cub->sprite[i].path = NULL;
+	cub->state.valid_player = 0;
+	cub->sprite[0].path = NULL;
 	init_state2(cub);
 	init_checklist(cub);
 	i = -1;

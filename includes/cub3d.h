@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:02:37 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 18:29:06 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:55:23 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,8 +206,9 @@ typedef	struct			s_cub
 	t_img			sprite[3];
 	t_sprite		*sprites;
 	t_sprt			*sprt;
-
 	t_bmp			bmp;
+
+	char			*map_path;
 
 	double			*z_buffer;
 	int				num_diff_sprites;
