@@ -6,7 +6,7 @@
 /*   By: lpellier <lpellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:32:57 by lpellier          #+#    #+#             */
-/*   Updated: 2020/11/03 16:07:21 by lpellier         ###   ########.fr       */
+/*   Updated: 2020/11/05 15:41:02 by lpellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ int			check_resolution(t_cub *cub, char *str)
 	return (1);
 }
 
+int			check_map_line(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '0' && str[i] != '1' && str[i] != '2')
+			return (-1);
+		i++;
+	}
+	return (1);
+}
+
 int			check_file_element(t_cub *cub, char *str)
 {
 	while (*str == 32 || *str == 9 || *str == 10 \
@@ -51,7 +65,7 @@ int			check_file_element(t_cub *cub, char *str)
 	else if (*str == 'F' || *str == 'C')
 		return (check_colors(cub, str));
 	else if (*str == '1' || !*str)
-		return (1);
+		return (check_map_line(str));
 	else
 		return (-1);
 }
