@@ -26,7 +26,7 @@ void		free_buffer(t_cub *cub)
 				free(cub->buffer[i]);
 			cub->buffer[i] = NULL;
 		}
-	free(cub->buffer);
+		free(cub->buffer);
 	}
 	cub->buffer = NULL;
 	if (cub->z_buffer != NULL)

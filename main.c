@@ -22,14 +22,16 @@ int			put_error(t_cub *cub, char *str)
 
 int			init_and_protecc(t_cub *cub, char *map_path, int saved)
 {
-	if (!file_parsing(cub, map_path) || !init_buffer(cub) || \
-	(cub->data.mlx_ptr = mlx_init()) == NULL)
+	if ((cub->data.mlx_ptr = mlx_init()) == NULL || !file_parsing(cub, map_path))
 		return (0);
 	mlx_get_screen_size(cub->data.mlx_ptr, &cub->rresx, &cub->rresy);
 	if (cub->data.img.width > cub->rresx)
 		cub->data.img.width = cub->rresx;
 	if (cub->data.img.height > cub->rresy)
 		cub->data.img.height = cub->rresy;
+	printf("%d %d", cub->data.img.height, cub->data.img.width);
+	if (!init_buffer(cub))
+		return (0);
 	if (!saved)
 		if ((cub->data.win_ptr = mlx_new_window(cub->data.mlx_ptr, \
 		cub->data.img.width, cub->data.img.height, "cub3d")) == NULL)
