@@ -15,26 +15,9 @@
 int			exit_wdw(int event, void *param)
 {
 	t_cub		*cub;
-	int				i;
 
 	(void)event;
-	i = -1;
 	cub = (t_cub *)param;
-	free(cub->sprite_order);
-	while (++i < 3)
-		if (cub->sprite[i].path != NULL)
-			free(cub->sprite[i].path);
-	free(cub->map_path);
-	free(cub->sprt);
-	free(cub->sprites);
-	i = -1;
-	while (++i < cub->state.height)
-		free(cub->game.world_map[i]);
-	free(cub->game.world_map);
-	i = -1;
-	while (++i < 4)
-		free(cub->texture[i].path);
-	free_buffer(cub);
 	exit(0);
 }
 

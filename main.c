@@ -85,17 +85,17 @@ int			main(int ac, char **av)
 	init_state(&cub);
 	if ((ac != 2 && ac != 3) || (ac == 3 && !ft_strncmp(av[2], "--save", 7)))
 		exit(put_error(&cub, "Arg error"));
-	cub->map_path = ft_strdup(av[1]);
-	if (!check_cub_extension(cub->map_path))
+	cub.map_path = ft_strdup(av[1]);
+	if (!check_cub_extension(cub.map_path))
 		exit(put_error(&cub, "File has to end with .cub"));
 	if (ac == 3 && ft_strncmp(av[2], "--save", 7))
-		init_everything(&cub, cub->map_path, 1);
+		init_everything(&cub, cub.map_path, 1);
 	else
 	{
-		init_everything(&cub, cub->map_path, 0);
+		init_everything(&cub, cub.map_path, 0);
 		raycasting(&cub, 0);
 		loop(&cub);
 	}
-	free(cub->map_path);
+	free(cub.map_path);
 	return (1);
 }
