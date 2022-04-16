@@ -14,10 +14,8 @@
 
 int			exit_wdw(int event, void *param)
 {
-	t_cub		*cub;
-
 	(void)event;
-	cub = (t_cub *)param;
+	(void)param;
 	exit(0);
 }
 
