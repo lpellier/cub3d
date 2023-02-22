@@ -32,8 +32,8 @@
 
 # define BUFFER_SIZE	32
 # define FPS			60
-# define MOV			0.10
-# define ROT			0.07
+# define MOV			0.015
+# define ROT			0.005
 
 # define ENNEMYMOV		0.1
 
